@@ -1,15 +1,57 @@
+::[Bat To Exe Converter]
+::
+::YAwzoRdxOk+EWAjk
+::fBw5plQjdCqDJGyX8VAjFChBTg2OPWWGIrAP4/z0/9al7EQeW4I=
+::YAwzuBVtJxjWCl3EqQJgSA==
+::ZR4luwNxJguZRRnk
+::Yhs/ulQjdF+5
+::cxAkpRVqdFKZSDk=
+::cBs/ulQjdF+5
+::ZR41oxFsdFKZSDk=
+::eBoioBt6dFKZSDk=
+::cRo6pxp7LAbNWATEpCI=
+::egkzugNsPRvcWATEpCI=
+::dAsiuh18IRvcCxnZtBJQ
+::cRYluBh/LU+EWAnk
+::YxY4rhs+aU+IeA==
+::cxY6rQJ7JhzQF1fEqQJiZksaHErSXA==
+::ZQ05rAF9IBncCkqN+0xwdVsEAlTMbyXrZg==
+::ZQ05rAF9IAHYFVzEqQISKQ9XREShM2WpCbkZiA==
+::eg0/rx1wNQPfEVWB+kM9LVsJDBG9G1mCOb0Z6eTP9dWg40MFd80NXa+Oug==
+::fBEirQZwNQPfEVWB+kM9LVsJDBGFKgs=
+::cRolqwZ3JBvQF1fEqQK35NfQlugG5KE9712aFCSb
+::dhA7uBVwLU+EWHuF4AK1+e7TiN4K8qMyyG+bNiyb
+::YQ03rBFzNR3SWATEVotwARVASRaMOX/a
+::dhAmsQZ3MwfNWATEx3ECZyhBTg2OPWXa
+::ZQ0/vhVqMQ3MEVWAtB9wSA==
+::Zg8zqx1/OA3MEVWAtB9wSA==
+::dhA7pRFwIByZRRnk
+::Zh4grVQjdCqDJGyX8VAjFChBTg2OPWWGIrAP4/z0/9alo1keXKIcd4HI1biLYLBduAXXO5M10xo=
+::YB416Ek+ZW8=
+::
+::
+::978f952a14a936cc963da21a135fa983
 :reload
+set devlock=false
+set enablenewcommand=false
+set newcommand= 
+if exist data\commands\commanding.load goto comload
+:comload.back
+if exist %appdata%\Console\dpass.int goto passload.dev
+:passload.back
 set filepath=C:\
 set unman=false
 setlocal enabledelayedexpansion
 setlocal enableextensions
 set devenable=false
-if exist C:\consetInfo.set goto skipmd
 ::MAKEDIR
+md %appdata%\Console\ 1>nul 2>nul
 md C:\ 1>nul 2>nul
 md C:\svd\ 1>nul 2>nul
+md data\ 1>nul 2>nul
+md data\commands\ 1>nul 2>nul
+:inv
 echo invalid unicode preview. > C:\consetInfo.set
-:skipmd
 cd.> %systemdrive%\Windows\System32\test.txt || set unman=true
 if "%unman%"=="false" del %systemdrive%\Windows\System32\test.txt 1>nul 2>nul
 if exist C:\Devmode.aty set devmode=true
@@ -50,9 +92,10 @@ goto main
 cls
 if "%unman%"=="true" echo 当前可能无法使用管理员权限，可能会影响部分功能的正确执行。
 color 0F
-echo Batch Console [V0.1]
+echo Batch Console [v0.2]
 echo 输入 help 查看帮助
 :int
+title Batch Console
 set /p con=%username%~^>
 if "%con%"=="help" goto help
 if "%con%"=="?" goto help
@@ -78,9 +121,172 @@ if "%con%"=="help -cmd" help & goto int
 if "%con:~0,2%"=="do" goto do.choose
 if "%con:~0,6%"=="config" goto cfg.choose
 if "%con%"=="about" goto about
+if "%con%"=="whatsnew" goto whatsnew
+if "%con:~0,4%"=="make" goto make.choose
+if "%con%"=="dcom" goto dcom
+if "%con:~0,5%"=="sleep" goto sleep
+if "%con:~0,9%"=="hibernate" goto hib
+if "%con:~0,8%"=="shutdown" goto shutdown
+if "%con:~0,7%"=="restart" goto restart
+if "%con:~0,4%"=="open" goto open.choose
+if "%con%"=="cls" goto main
+if "%enablenewcommand%"=="false" goto enter
+if "%con%"=="%commandnamem%" %commandinm% & goto int
 :enter
 %con% %func.outputsystemerror%
 set con= 
+goto int
+
+:open.choose
+if "%con:~5%"=="-?" goto open.help
+if "%con:~5%"=="/?" goto open.help
+if /i "%con:~5%"=="font" start %systemdrive%\Windows\Fonts & goto int
+if /i "%con:~5%"=="fonts" start %systemdrive%\Windows\Fonts & goto int
+if /i "%con:~5%"=="字体" start %systemdrive%\Windows\Fonts & goto int
+if /i "%con:~5%"=="fon" start %systemdrive%\Windows\Fonts & goto int
+if /i "%con:~5%"=="用户" start %userprofile% & goto int
+if /i "%con:~5%"=="userprofile" start %userprofile% & goto int
+if /i "%con:~5%"=="用户档案" start %userprofile% & goto int
+if /i "%con:~5%"=="user" start %userprofile% & goto int
+if /i "%con:~5%"=="%username%" start %userprofile% & goto int
+if /i "%con:~5%"=="windows" start %systemdrive%\Windows & goto int
+if /i "%con:~5%"=="系统" start %systemdrive%\Windows & goto int
+if /i "%con:~5%"=="win" start %systemdrive%\Windows & goto int
+if /i "%con:~5%"=="hosts" start %systemdrive%\Windows\System32\drivers\etc & goto int
+if /i "%con:~5%"=="host" start %systemdrive%\Windows\System32\drivers\etc & goto int
+if /i "%con:~5%"=="system32" start %systemdrive%\Windows\System32 & goto int
+if /i "%con:~5%"=="32" start %systemdrive%\Windows\System32 & goto int
+if /i "%con:~5%"=="system64" start %systemdrive%\Windows\SysWOW64 & goto int
+if /i "%con:~5%"=="64" start %systemdrive%\Windows\SysWOW64 & goto int
+if /i "%con:~5%"=="syswow64" start %systemdrive%\Windows\SysWOW64 & goto int
+if /i "%con:~5%"=="programs32" start "%systemdrive%\Program Files (x86)" & goto int
+if /i "%con:~5%"=="programfiles32" start "%systemdrive%\Program Files (x86)" & goto int
+if /i "%con:~5%"=="program files32" start "%systemdrive%\Program Files (x86)" & goto int
+if /i "%con:~5%"=="program file32" start "%systemdrive%\Program Files (x86)" & goto int
+if /i "%con:~5%"=="program32" start "%systemdrive%\Program Files (x86)" & goto int
+if /i "%con:~5%"=="软件32" start "%systemdrive%\Program Files (x86)" & goto int
+if /i "%con:~5%"=="programs64" start "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="programfiles64" start "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="program files64" start "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="program file64" start "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="program64" start "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="软件64" start "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="programs" start "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="program files" start "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="program file" start "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="programfiles" start "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="program" start "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="软件" start "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="old" start %systemdrive%\Windows.old & goto int
+if /i "%con:~5%"=="windows.old" start %systemdrive%\Windows.old & goto int
+if /i "%con:~5%"=="oldwindows" start %systemdrive%\Windows.old & goto int
+if /i "%con:~5%"=="music" start %userprofile%\Music & goto int
+if /i "%con:~5%"=="音乐" start %userprofile%\Music & goto int
+if /i "%con:~5%"=="乐曲" start %userprofile%\Music & goto int
+if /i "%con:~5%"=="musics" start %userprofile%\Music & goto int
+if /i "%con:~5%"=="desktop" start %userprofile%\Desktop & goto int
+if /i "%con:~5%"=="desk" start %userprofile%\Desktop & goto int
+if /i "%con:~5%"=="桌面" start %userprofile%\Desktop & goto int
+if /i "%con:~5%"=="download" start %userprofile%\Downloads & goto int
+if /i "%con:~5%"=="downloads" start %userprofile%\Downloads & goto int
+if /i "%con:~5%"=="down" start %userprofile%\Downloads & goto int
+if /i "%con:~5%"=="downs" start %userprofile%\Downloads & goto int
+if /i "%con:~5%"=="下载" start %userprofile%\Downloads & goto int
+if /i "%con:~5%"=="onedrive" start %userprofile%\OneDrive & goto int
+if /i "%con:~5%"=="appdata" start %userprofile%\AppData\ & goto int
+if /i "%con:~5%"=="roaming" start %AppData% & goto int
+if /i "%con:~5%"=="local" start %userprofile%\AppData\Local & goto int
+if /i "%con:~5%"=="locallow" start %userprofile%\AppData\LocalLow & goto int
+echo 找不到 %con:~5%
+goto int
+
+:restart
+if "%con:~8%"=="-o" shutdown -r -o
+if "%con:~8%"=="/o" shutdown -r -o
+if "%con:~8%"=="-?" goto restart.help
+if "%con:~8%"=="/?" goto restart.help
+shutdown -r
+:shutdown
+if "%con:~9%"=="-?" goto shutdown.help
+if "%con:~9%"=="/?" goto shutdown.help
+shutdown -s -t 0
+:hib
+if "%con:~10%"=="-?" goto hibernate.help
+if "%con:~10%"=="/?" goto hibernate.help
+shutdown -h
+:sleep
+if "%con:~6%"=="-?" goto sleep.help
+if "%con:~6%"=="/?" goto sleep.help
+powercfg -h off 1>nul 2>nul
+rundll32.exe powrprof.dll,SetSuspendState 0,1,0
+powercfg -h on 1>nul 2>nul
+goto int
+
+:dcom
+if exist %cd%\data\commands\commanding.load goto dcc
+echo 目前不存在被定义的指令。
+goto int
+:dcc
+set /p yn=删除(y/n):
+if "%yn%"=="y" goto delcommand
+echo 用户取消操作。
+goto int
+:delcommand
+del %cd%\data\commands\commanding.load
+del %cd%\data\commands\commandname.load
+echo 已删除%commandnamem%
+set enablenewcommand=false
+goto int
+
+:make.choose
+if "%con:~5,3%"=="dir" goto makedir
+if "%con:~5,3%"=="com" goto makecom
+if "%con:~5%"=="-?" goto make.help
+if "%con:~5%"=="/?" goto make.help
+echo %con:~5% 不是有效的 make 参数。
+goto int
+
+:makecom
+set command=%con:~9%
+title 指令设置向导 - %command%
+echo 目前正在编辑%command%
+set /p commc=
+echo 是否确定将%command%的效用内容存储为%commc%？
+set /p yn=(y/n):
+if "%yn%"=="y" goto savecom
+echo 已放弃编辑 %con:~9%。
+goto int
+:savecom
+echo read.commandname >> data\commands\commandname.load
+echo %command% >> data\commands\commandname.load
+echo read.commanding >> data\commands\commanding.load
+echo %commc% >> data\commands\commanding.load
+echo 已存储 %command% 内容为 %commc%
+set enablenewcommand=true
+echo 该指令将在配置文件存在的情况下生效。
+goto int
+
+
+:makedir
+set dirpath=%con:~9%
+echo %con:~9% > nul | find " " && goto makefile.space
+md %dirpath%
+echo 已创建 %dirpath%
+goto int
+:makefile.space
+md "%dirpath%"
+echo 已创建 %dirpath%
+goto int
+
+:whatsnew
+cls
+color 1A
+title What's new
+echo Indev 测试计划已启动(但尚未开展)！
+echo Console 的指令由你来自定义
+echo 史无前例*的指令判定机制:
+echo 看上去疑似很垃圾 ——网友评价
+echo 注*: 不保证该词语前后语境的权威性
 goto int
 
 :about
@@ -103,10 +309,23 @@ if "%con:~7%"=="user" goto user.cfg
 if "%con:~7%"=="hardware" goto hdw.cfg
 if "%con:~7%"=="/?" goto cfg.help
 if "%con:~7%"=="-?" goto cfg.help
+if "%con:~7%"=="log" goto log.cfg
 echo 无效的参数 %con:~7%
 goto int
 
 ::Config
+:log.cfg
+echo [UpdateLog Config]
+echo v0.2 更新日志信息
+echo - 新增休眠/睡眠/关机/重启 指令
+echo - 新增指令
+echo · whatsnew
+echo · make
+echo · open
+echo - 新增 Dev 指令
+echo · info
+echo 该指令用来讲述 Batch Console 的详细结构和相关信息
+goto int
 :sys.cfg
 echo [System Config]
 echo 加载中...
@@ -130,8 +349,8 @@ goto int
 :user.cfg
 echo [User Config]
 echo 加载中...
-echo systeminfo > NUL | find "登录服务器"
-echo systeminfo > NUL | find "主机名"
+systeminfo | find "登录服务器"
+echo 主机名: %computername%
 echo 用户名: %username%
 echo 用户文件夹: %userprofile%
 echo AppData: %AppData%
@@ -503,6 +722,9 @@ echo 已成功打开关于 %nec:~4% 的 FTP 链接。
 goto var
 
 :main.dev
+if "%dev.lock%"=="true" goto dev-login
+:dev.logon
+if exist C:\svd\devmodeTrue.svd set devmode=true
 if "%devmode%"=="true" goto dev-enter
 if "%devmode%"=="false" echo 请检查 DEVMODE 是否被允许开启。 & goto int
 echo 丢失正确的布尔值。 & goto let
@@ -521,10 +743,83 @@ if "%mad:~0,8%"=="function" goto func.choose
 if "%mad:~0,4%"=="save" goto save
 if "%mad:~0,5%"=="clear" goto clear
 if "%mad:~0,5%"=="debug" goto debug.choose
+if "%mad%"=="info" goto info
+if "%mad:~0,4%"=="lock" goto lock.choose
 echo %mad% 不是一个可用的开发者指令。
 goto let
 
+:dev-login
+echo 登录 Devmode
+set /p dev.passwordc=dev.password~^>
+if "%dev.passwordc%"=="%dev.password%" goto welcome.dev
+echo 错误的密码: %dev.passwordc%
+goto int
+:welcome.dev
+cls
+color 2F
+echo 欢迎回来，%username%！
+ping 127.0.0.1 -n 2 >nul
+goto dev.logon
+
+:lock.remove
+if "%dev.lock%"=="false" echo 尚未设置密码 & goto let
+title Devmode ^> Delete Lock
+echo 请输入先前的密码
+set /p dev.passwordc=
+if "%dev.passwordc%"=="%dev.password%" goto dev.dellock
+echo 错误的密码: %dev.passwordc%
+goto let
+:dev.dellock
+del %appdata%\Console\dpass.int
+set dev.lock=false
+set dev.password= 
+set dev.passwordc= 
+echo 已删除密码保护
+goto let
+
+:lock.choose
+if "%mad:~5%"=="-?" goto lock.help
+if "%mad:~5%"=="/?" goto lock.help
+if "%mad:~5%"=="-add" goto lock.add
+if "%mad:~5%"=="-remove" goto lock.remove
+echo 无效参数。
+goto let
+
+:lock.add
+if "%unman%"=="true" echo 权限不足 & goto let
+title Devmode ^> Lock
+echo [Lock Genius]
+echo 创建密码:
+set /p dev.password=
+ping 127.0.0.1 -n 1 >nul
+goto lock.comp
+:lock.comp
+echo Password Save >> %Appdata%\Console\dpass.int
+echo %dev.password% >> %Appdata%\Console\dpass.int
+set dev.lock=true
+echo 已成功设置密码
+goto let
+
+:info
+cls
+title Information
+echo About: 0.2
+echo 目前，Batch Console 新增了一个 data 目录
+echo 一般会自动创建于 Batch Console 存在的目录
+echo 该目录目前仅有 commands 一个目录用来存储
+echo make 指令创建的命令和相关信息。
+echo 其次，Devmode 新增了锁定机制。
+echo 输入 lock 来了解。
+echo.
+echo Information 界面会将每个版本的特殊更新放入内置
+echo 并加以不专业的详细解释。
+echo 若你感兴趣，不妨在每个版本都来这里一趟。
+pause
+goto main.dev
+
 :clear
+if "%mad:~6%"=="-?" goto clear.help
+if "%mad:~6%"=="/?" goto clear.help
 echo 当前没有缓存/临时文件。
 goto let
 
@@ -548,6 +843,8 @@ echo %mad:~12% 不是可被 EDIT 的函数。
 goto let
 
 :save
+if "%mad:~5%"=="-?" goto save.help
+if "%mad:~5%"=="/?" goto save.help
 title Batch Console ^> Developer ^> Save
 if "%unman%"=="true" goto managementerror
 echo 将存储所有变量设置
@@ -698,6 +995,7 @@ echo FUNCTION [-ADD/-REMOVE/-CALL] 对功能的指定性操作。
 echo SAVE 存储当前所有已知变量到单独文件。
 echo CLEAR 删除所有缓存/临时文件。
 echo DEBUG [-view/-edit] [FUNCTION] 处理函数状态。
+echo LOCK [-add/-remove] 添加或删除密码保护
 pause
 goto let
 :help
@@ -710,16 +1008,83 @@ echo OUTPUT [STRING] 输出字符串到指定位置。
 echo SETOUTPUT [PATH] 设置输出字符串的位置。
 echo CONTROL [CPLNAME] 打开指定的控制面板项(CPL)。
 echo RELOAD 重新载入初始变量。(已存储的不会被覆盖)
-echo DO [-L (times)/-T] [COMMAND] 运行/循环某一指令或文件
-echo CONFIG [STRING] 显示指定项目名称的 Config 信息
+echo DO [-L (times)/-T] [COMMAND] 运行/循环某一指令或文件。
+echo CONFIG [STRING] 显示指定项目名称的 Config 信息。
+echo WHATSNEW 查看并不专业的基本信息。
+echo MAKE [DIR/COM] 批量制作目录或独有指令。
+echo DCOM 删除存储的指令。
+echo OPEN [PATHNAME] 快速打开目录。
+echo SLEEP/SHUTDOWN/RESTART[/O]/HIBERNATE 快速睡眠/关机/重启/休眠。
 echo EXIT 不保存并退出。
-echo 更多请输入 help -cmd
 pause
+goto main
+:lock.help
+echo Usage: LOCK [-add/-remove]
+echo 输入后会进入设置向导
+echo 设置成功后，此密码将会在除了人为删除的任何情况下存在。
+echo 参数 -remove 需要依赖原密码。
+goto let
+:clear.help
+echo Usage: CLEAR
+echo 删除未被及时清理的缓存、临时文件。
+echo 通常这些文件存在于系统根目录或批处理所在位置。
+echo 也许他们是隐藏的。
+goto let
+:save.help
+echo Usage: SAVE
+echo 存储变量信息到单独文件。
+echo 一般包括 Devmode 的启用情况等。
+echo 不包括密码等敏感信息。
+goto let
+:open.help
+echo Usage: OPEN [PATHNAME]
+echo 其中 PATHNAME 为基本上可被猜中的名称
+echo 比如 programfiles, appdata, desktop 等
+echo 由同系列的 PathFinder 移植而来。
+echo 目前 PathFinder 已停止更新。
+goto int
+:sleep.help
+echo Usage: SLEEP
+echo 调用 RUNDLL 32 实现睡眠功能。
+goto int
+:shutdown.help
+echo Usage: SHUTDOWN
+echo 可以按照系统用法进行。
+echo 纯输入SHUTDOWN则会立即关机。
+goto int
+:restart.help
+echo Usage: RESTART [/O]
+echo 重新启动计算机。
+echo 参数 -O 用于在重新启动计算机后自动进入高级管理页面。
+echo 常常用作进行硬盘调试和双系统切换。
+goto int
+:hibernate.help
+echo Usage: HIBERNATE
+echo 该功能依靠于系统指令 shutdown -h
+echo 休眠会保留所有工作与缓存数据，之后完全关闭计算机
+echo 并将所有工作与缓存数据存入至硬盘
+echo 下一次开启计算机后，会保留关闭前的窗口和任务进度
+echo 如果电脑较差，推荐使用休眠而不是关机。
+echo 对于休眠时的耗电问题，与关机是一样的，丝毫不费电。
+goto int
+:make.help
+echo Usage: MAKE [DIR/COM]
+echo MAKE COM [COMMAND_STRING] 进入指令设置向导。
+echo 批量制作目录或制作命令。
+echo 对于指令，将存储于data\commands\下。
+echo 指令被存储后，除非使用DCOM指令或人为删除，否则不会丢失。
+echo 批量制作目录的用法：
+echo - make dir [DIRPATH\]
+echo 其中 DIRPATH 必须以 \ 结尾
+echo 紧跟在 \ 后面的为目录的名称，若要创建多个，以空格分隔
+echo Batch Console Dev 保证此指令没有通过 for 实现。
+echo e.g. make dir C:\Windows\System32\1 2 3 test helloworld
+echo 则会在C:\Windows\System32\目录下创建名为1、2、3、test、helloworld的5个目录。
 goto int
 :cfg.help
 echo Usage: CONFIG [STRING]
 echo 目前可用的STRING项包括
-echo hardware, system, user等
+echo hardware, system, user, log等
 goto int
 :do.help
 echo Usage: DO [-L (times)/-T] [COMMAND]
@@ -774,3 +1139,20 @@ set devenable=false
 set devmode=true
 echo cannot read the file in dos mode > C:\Devmode.aty
 goto begin
+
+:comload
+if exist data\commands\commandname.load goto continue.comload
+echo 缺少LOAD文件。 & goto comload.back
+:continue.comload
+set enablenewcommand=true
+call :ReadSpecialLine data\commands\commanding.load 1 commandinm
+call :ReadSpecialLine data\commands\commandname.load 1 commandnameo
+set commandnamem=%commandnameo:~0,-1%
+goto comload.back
+
+:passload.dev
+echo 初始化密码
+call :ReadSpecialLine %appdata%\Console\dpass.int 1 dev.password
+set dev.password=%dev.password:~0,-1%
+set dev.lock=true
+goto passload.back
