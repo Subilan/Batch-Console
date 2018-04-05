@@ -1,7 +1,7 @@
 ::[Bat To Exe Converter]
 ::
 ::YAwzoRdxOk+EWAjk
-::fBw5plQjdCqDJGyX8VAjFChBTg2OPWWGIrAP4/z0/9al7EQeW4I=
+::fBw5plQjdCyDJGyX8VAjFEoMGFfbAE+1EbsQ5+n//Nal7EQeW4I=
 ::YAwzuBVtJxjWCl3EqQJgSA==
 ::ZR4luwNxJguZRRnk
 ::Yhs/ulQjdF+5
@@ -14,27 +14,32 @@
 ::dAsiuh18IRvcCxnZtBJQ
 ::cRYluBh/LU+EWAnk
 ::YxY4rhs+aU+IeA==
-::cxY6rQJ7JhzQF1fEqQJiZksaHErSXA==
-::ZQ05rAF9IBncCkqN+0xwdVsEAlTMbyXrZg==
+::cxY6rQJ7JhzQF1fEqQJgZksaH0rTXA==
+::ZQ05rAF9IBncCkqN+0xwdVsEAlTMbCXrZg==
 ::ZQ05rAF9IAHYFVzEqQISKQ9XREShM2WpCbkZiA==
-::eg0/rx1wNQPfEVWB+kM9LVsJDBG9G1mCOb0Z6eTP9dWg40MFd80NXa+Oug==
-::fBEirQZwNQPfEVWB+kM9LVsJDBGFKgs=
-::cRolqwZ3JBvQF1fEqQK35NfQlugG5KE9712aFCSb
+::eg0/rx1wNQPfEVWB+kM9LVsJDCW1HUybIJwyz83Vjw==
+::fBEirQZwNQPfEVWB+kM9LVsJDCW1HUybIJwyz83Vjw==
+::cRolqwZ3JBvQF1fEqQK1+Obcg/EFyKM8/WGZAih/NTABQoqYuBS4gmvT37iephbKb5kL82voUKGbEB3fiMO49vpn6fXQpG9Js3MMyycaYu1iqqrp
 ::dhA7uBVwLU+EWHuF4AK1+e7TiN4K8qMyyG+bNiyb
-::YQ03rBFzNR3SWATEVotwARVASRaMOX/a
-::dhAmsQZ3MwfNWATEx3ECZyhBTg2OPWXa
-::ZQ0/vhVqMQ3MEVWAtB9wSA==
-::Zg8zqx1/OA3MEVWAtB9wSA==
-::dhA7pRFwIByZRRnk
-::Zh4grVQjdCqDJGyX8VAjFChBTg2OPWWGIrAP4/z0/9alo1keXKIcd4HI1biLYLBduAXXO5M10xo=
+::YQ03rBFzNR3SWATEVotwGh5XSQqWXA==
+::dhAmsQZ3MwfNWATEx3ECSA==
+::ZQ0/vhVqMQ3MEVWAtB9wGylkeEulDF/a
+::Zg8zqx1/OA3MEVWAtB9wHTx1LA==
+::dhA7pRFwIByZRRmnwmN8aEkEHVzi
+::Zh4grVQjdCyDJGyX8VAjFEoMGFfbAE+/Fb4I5/jHzeuToUVdd+0xa4DX3/SYcK5AqnaqcI4otg==
 ::YB416Ek+ZW8=
 ::
 ::
 ::978f952a14a936cc963da21a135fa983
 :reload
+set path=%~dp0
+set color=0F
 set devlock=false
 set enablenewcommand=false
 set newcommand= 
+set errormessage.bool=false
+if exist data\files\errormessage.save set errormessage.bool=true & goto errmsgload
+:errmsg.back
 if exist data\commands\commanding.load goto comload
 :comload.back
 if exist %appdata%\Console\dpass.int goto passload.dev
@@ -50,6 +55,7 @@ md C:\ 1>nul 2>nul
 md C:\svd\ 1>nul 2>nul
 md data\ 1>nul 2>nul
 md data\commands\ 1>nul 2>nul
+md data\files\ 1>nul 2>nul
 :inv
 echo invalid unicode preview. > C:\consetInfo.set
 cd.> %systemdrive%\Windows\System32\test.txt || set unman=true
@@ -90,9 +96,10 @@ goto main
 
 :main
 cls
+:resolve
 if "%unman%"=="true" echo 当前可能无法使用管理员权限，可能会影响部分功能的正确执行。
-color 0F
-echo Batch Console [v0.2]
+color %color%
+echo Batch Console [v0.3]
 echo 输入 help 查看帮助
 :int
 title Batch Console
@@ -121,7 +128,6 @@ if "%con%"=="help -cmd" help & goto int
 if "%con:~0,2%"=="do" goto do.choose
 if "%con:~0,6%"=="config" goto cfg.choose
 if "%con%"=="about" goto about
-if "%con%"=="whatsnew" goto whatsnew
 if "%con:~0,4%"=="make" goto make.choose
 if "%con%"=="dcom" goto dcom
 if "%con:~0,5%"=="sleep" goto sleep
@@ -131,6 +137,8 @@ if "%con:~0,7%"=="restart" goto restart
 if "%con:~0,4%"=="open" goto open.choose
 if "%con%"=="cls" goto main
 if "%enablenewcommand%"=="false" goto enter
+if "%con%"=="wmic" echo 禁止内部切换：WMIC & goto int
+if "%con%"=="cmd" echo 禁止内部切换：CMD & goto int
 if "%con%"=="%commandnamem%" %commandinm% & goto int
 :enter
 %con% %func.outputsystemerror%
@@ -278,17 +286,6 @@ md "%dirpath%"
 echo 已创建 %dirpath%
 goto int
 
-:whatsnew
-cls
-color 1A
-title What's new
-echo Indev 测试计划已启动(但尚未开展)！
-echo Console 的指令由你来自定义
-echo 史无前例*的指令判定机制:
-echo 看上去疑似很垃圾 ——网友评价
-echo 注*: 不保证该词语前后语境的权威性
-goto int
-
 :about
 cls
 color 1A
@@ -316,15 +313,18 @@ goto int
 ::Config
 :log.cfg
 echo [UpdateLog Config]
-echo v0.2 更新日志信息
-echo - 新增休眠/睡眠/关机/重启 指令
-echo - 新增指令
-echo · whatsnew
-echo · make
-echo · open
-echo - 新增 Dev 指令
-echo · info
-echo 该指令用来讲述 Batch Console 的详细结构和相关信息
+echo v0.3 更新日志信息
+echo - 修复Bug
+echo · do 无法正常识别数字的问题
+echo - set 项增加
+echo · errormsg 自定义错误信息
+echo · color 快捷设置字体
+echo · 更多请输入 set -? 查看详情
+echo - help 项增加
+echo · set 的项的一一说明
+echo - 取消 What's New 界面
+echo - 优化路径算法
+echo · 目前你所在的路径是%~dp0
 goto int
 :sys.cfg
 echo [System Config]
@@ -359,6 +359,7 @@ goto int
 :ReadSpecialLine
 setlocal
 for /f "delims=" %%a in ('more +%2 %1') do endlocal&set "%3=%%a"&goto:eof
+
 :hdw.cfg
 if "%unman%"=="true" echo 权限不足。 & goto int
 echo [Hardware Config]
@@ -389,7 +390,7 @@ wmic cpu get name > C:\cpuname.txt
 call :ReadSpecialLine C:\cpuname.txt 1 line
 set cpuname=%line%
 echo 硬盘名称: %diskname%
-echo 硬盘容量: %disksize%MB
+echo 硬盘容量: %disksize%MiB
 echo 硬盘类型: %kindS%
 echo 主板厂商: %basename%
 echo 主板型号: %prod%
@@ -416,11 +417,8 @@ goto int
 
 :do.loop
 set comm=%con:~8%
-set loops=%con:~6,!cut!%
-set /a test=%loops%+1 1>nul 2>nul || goto loop.fail-num
-if %loops% GTR 9 goto loop.fail-num
-if %loops% LSS 1 goto loop.fail-num
 set time=-1
+set loops=!con:~6,%cut%!
 :doit
 set /a time=%time%+1
 if "%time%"=="%loops%" goto dol.comp
@@ -458,6 +456,15 @@ del %con:~4% %func.quickdelete%
 goto int
 
 :set.choose
+if "%unman%"=="true" echo fatal: managementerror 无权限。 & goto int
+if "%con:~4%"=="errormsg -?" goto errmsg.set.help
+if "%con:~4%"=="color -?" goto color.set.help
+if "%con:~4%"=="quickdelete -?" goto quickdelete.help
+if "%con:~4%"=="devmode -?" goto devmode.help
+if "%con:~4%"=="outputsystemerror -?" goto outputsystemerror.help
+if "%con:~4%"=="loops -?" goto loopset.help
+if "%con:~4,8%"=="errormsg" goto errmsg.set
+if "%con:~4,5%"=="color" goto color.set
 if "%con:~4,11%"=="quickdelete" goto quickdelete
 if "%con:~4,7%"=="devmode" goto devmode
 if "%con:~4,17%"=="outputsystemerror" goto outputsystemerror
@@ -467,12 +474,12 @@ if "%con:~4%"=="-?" goto set.help
 %con%
 goto int
 
-::function manage
+::settings
 :loopset
+if %con:~10% lss 1 goto lfail
 set /a test=%con:~10%+1 || goto lfail
 set cut=%con:~10%
 goto int
-
 :lfail
 echo 不正确的数字 %con:~10%
 goto int
@@ -489,7 +496,34 @@ goto int
 :outputsystemerror
 if "%con:~22%"=="true" set outputsystemerror=true & set func.outputsystemerror= & echo 已启用输出系统错误 & echo unkown host. > C:\svd\opseTrue.svd & goto int
 if "%con:~22%"=="false" set outputsystemerror=false & set func.outputsystemerror=2^>nul ^|^| goto error & echo 已禁用输出系统错误 & del C:\svd\opseTrue.svd 1>nul 2>nul & goto int
-
+:color.set
+if "%con:~10%"=="red" set color=0C & goto resolve
+if "%con:~10%"=="blue" set color=01 & goto resolve
+if "%con:~10%"=="yellow" set color=0E & goto resolve
+if "%con:~10%"=="green" set color=0A & goto resolve
+if "%con:~10%"=="purple" set color=05 & goto resolve
+if "%con:~10%"=="white" set color=0F & goto resolve
+if "%con:~10%"=="orange" echo 批处理内暂无橙色可供选择。 & goto resolve
+if "%con:~10%"=="indigo" set color=03 & goto resolve
+if %con:~10,1% equ %con:~-1% echo 不能设置相同的颜色: %con:~10% & goto int
+set test1=%con:~10,1% & set test2=%con:~-1%
+set /a test=%test1%+%test2% && echo 错误的颜色指定：%con:~10%
+:cont
+set color=%con:~10%
+echo 已将默认颜色更换为%color%的指代。
+goto resolve
+:color.fail
+echo FATAL ERROR: 未知的函数引用：test=test1+test2
+echo 其输出位于$param %con:~10%
+echo 在color上无效。
+goto int
+:errmsg.set
+if "%con:~13%"=="default" set errormessage.bool=false & echo 已还原至默认信息 & goto int
+set errormessage=%con:~13%
+echo 已将错误信息设置为%errormessage%。
+echo ERRORMESSAGE SAVES > %path%\data\files\errormessage.save
+echo %errormessage% > %path%\data\files\errormessage.save
+goto int
 :devset
 set devc-eof=echo off
 set devc-eoo=echo on
@@ -566,7 +600,11 @@ if "%con:~8%"=="system" control sysdm.cpl
 goto int
 
 :error
-echo %con% 不是可执行的BC指令或CMD指令。
+if "%errormessage.bool%"=="false" goto normal.error
+echo %errormessage%
+goto int
+:normal.error
+echo %con% 不是存在或被定义的指令
 goto int
 
 :mode.choose
@@ -1003,6 +1041,7 @@ title Batch Console ^> Help Files ^> Normal
 cls
 echo 欢迎查看帮助。
 echo.
+echo SET [VARIABLE] [STRING/BOOL] 设置系统变量、自定义变量或者BC变量以达到不一样的设置效果。
 echo MODE [MODENAME] 切换到指定模式以完成特殊操作。
 echo OUTPUT [STRING] 输出字符串到指定位置。
 echo SETOUTPUT [PATH] 设置输出字符串的位置。
@@ -1010,7 +1049,6 @@ echo CONTROL [CPLNAME] 打开指定的控制面板项(CPL)。
 echo RELOAD 重新载入初始变量。(已存储的不会被覆盖)
 echo DO [-L (times)/-T] [COMMAND] 运行/循环某一指令或文件。
 echo CONFIG [STRING] 显示指定项目名称的 Config 信息。
-echo WHATSNEW 查看并不专业的基本信息。
 echo MAKE [DIR/COM] 批量制作目录或独有指令。
 echo DCOM 删除存储的指令。
 echo OPEN [PATHNAME] 快速打开目录。
@@ -1100,7 +1138,47 @@ echo SET [BC_SETTINGVAR] [BOOL]/[STRING/NUM]
 echo 设置一个变量以进行临时调用或修改 Batch Console 的相应变量布尔值
 echo 以达到另外的设置效果。一些布尔值在设置后会被保存，不会被重置。
 echo 目前受支持的 BC_SETTINGVAR 包括
-echo devmode, outputsystemerror, quickdelete, loops等。
+echo devmode, outputsystemerror, quickdelete, 
+echo loops, color, errormsg等。
+echo 有关每一项的相关用法，请使用 set [VARIABLE_NAME] -?
+goto int
+:errmsg.set.help
+echo Usage: set errormsg [STRING]
+echo 设置自定义的错误信息，会在执行命令失败后显示。
+echo 此信息将会被存储至 data\files\errormessage.save
+goto int
+:color.set.help
+echo Usage: set color [COLORNAME/COLORCODE ATTR]
+echo 修改主控页面的颜色。可以直接输入COLORNAME，诸如
+echo RED YELLOW GREEN INDIGO BLUE PURPLE
+echo 或者颜色的ATTR。
+goto int
+:quickdelete.help
+echo BOOL CONTROL
+echo 此项用于控制是否快速删除一个文件，会默认附带有系统权限、管理员权限
+echo 和安静模式（如果可用的话）。
+echo 适用于del指令。
+goto int
+:outputsystemerror.help
+echo BOOL CONTROL
+echo 此项控制是否输出系统错误。若BOOL为true时，在报错时
+echo 会主动显示默认的错误或者用户自定义的错误。
+echo 若BOOL为false时，在报错时会显示系统的错误。
+goto int
+:devmode.help
+echo BOOL CONTROL
+echo 此项控制 devmode 是否被启用。
+goto int
+:loopset.help
+echo Usage: set loops [NUMBERS]
+echo 修改 do -l 时循环的判定格数。
+echo 在对于字符串截取时，这里的文字决定了截取的位数。
+echo 譬如要执行do -l 10 echo 2
+echo 那么loops必须为2，因为10是2位数，以此类推。
+echo 若是要切换不同位数的数字，需要随时修改该变量。
+echo 此项的出现来源于批处理自身的字符控制缺陷。
+echo.
+echo 若错误的位数与错误的数字相匹配执行，则有可能造成一个指令的无限循环。
 goto int
 :control.help
 echo Usage: CONTROL [CPLNAME] 
@@ -1127,7 +1205,6 @@ echo 创建可保存的功能函数(独立BAT文件)，并且可每次重新调取。
 echo FUNCTION 的函数与 Batch Console 内部函数不冲突。
 echo FUNCTION 的函数无法参与 Debug。
 goto let
-
 
 :devset.intro
 set devc-eof=echo off
@@ -1156,3 +1233,10 @@ call :ReadSpecialLine %appdata%\Console\dpass.int 1 dev.password
 set dev.password=%dev.password:~0,-1%
 set dev.lock=true
 goto passload.back
+
+:errmsgload
+call :ReadSpecialLineForERRMSG %path%\data\files\errormessage.save 1 errormessage
+goto errmsg.back
+:ReadSpecialLineForERRMSG
+setlocal
+for /f "delims=" %%a in ('more +%2 %1') do endlocal&set "%3=%%a"&goto:eof
