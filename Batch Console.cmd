@@ -1,47 +1,23 @@
-::[Bat To Exe Converter]
-::
-::YAwzoRdxOk+EWAjk
-::fBw5plQjdCyDJGyX8VAjFEoMGFfbAE+1EbsQ5+n//Nal7EQeW4I=
-::YAwzuBVtJxjWCl3EqQJgSA==
-::ZR4luwNxJguZRRnk
-::Yhs/ulQjdF+5
-::cxAkpRVqdFKZSDk=
-::cBs/ulQjdF+5
-::ZR41oxFsdFKZSDk=
-::eBoioBt6dFKZSDk=
-::cRo6pxp7LAbNWATEpCI=
-::egkzugNsPRvcWATEpCI=
-::dAsiuh18IRvcCxnZtBJQ
-::cRYluBh/LU+EWAnk
-::YxY4rhs+aU+IeA==
-::cxY6rQJ7JhzQF1fEqQJgZksaH0rTXA==
-::ZQ05rAF9IBncCkqN+0xwdVsEAlTMbCXrZg==
-::ZQ05rAF9IAHYFVzEqQISKQ9XREShM2WpCbkZiA==
-::eg0/rx1wNQPfEVWB+kM9LVsJDCW1HUybIJwyz83Vjw==
-::fBEirQZwNQPfEVWB+kM9LVsJDCW1HUybIJwyz83Vjw==
-::cRolqwZ3JBvQF1fEqQK1+Obcg/EFyKM8/WGZAih/NTABQoqYuBS4gmvT37iephbKb5kL82voUKGbEB3fiMO49vpn6fXQpG9Js3MMyycaYu1iqqrp
-::dhA7uBVwLU+EWHuF4AK1+e7TiN4K8qMyyG+bNiyb
-::YQ03rBFzNR3SWATEVotwGh5XSQqWXA==
-::dhAmsQZ3MwfNWATEx3ECSA==
-::ZQ0/vhVqMQ3MEVWAtB9wGylkeEulDF/a
-::Zg8zqx1/OA3MEVWAtB9wHTx1LA==
-::dhA7pRFwIByZRRmnwmN8aEkEHVzi
-::Zh4grVQjdCyDJGyX8VAjFEoMGFfbAE+/Fb4I5/jHzeuToUVdd+0xa4DX3/SYcK5AqnaqcI4otg==
-::YB416Ek+ZW8=
-::
-::
-::978f952a14a936cc963da21a135fa983
+:: 最后修改：2018/4/21
 :reload
-set path=%~dp0
+set pi=3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
+set sqrtt=1.4142135623730950488016887242096980785696718753769480731766797379907324784621070388503875343276415727
+set e=2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274
+set alpha=2.502907875095892822283902873
+:: ALPHA 27位
+set rho=1.324717957244746025960908854478097340734
+:: RHO 39位
+
+set algor=powershell
+set nowpath=%~dp0
+set data=%nowpath%\data\
 set color=0F
 set devlock=false
 set enablenewcommand=false
 set newcommand= 
 set errormessage.bool=false
-if exist data\files\errormessage.save set errormessage.bool=true & goto errmsgload
+if exist %nowpath%data\files\errormessage.save set errormessage.bool=true & goto errmsgload
 :errmsg.back
-if exist data\commands\commanding.load goto comload
-:comload.back
 if exist %appdata%\Console\dpass.int goto passload.dev
 :passload.back
 set filepath=C:\
@@ -53,9 +29,10 @@ set devenable=false
 md %appdata%\Console\ 1>nul 2>nul
 md C:\ 1>nul 2>nul
 md C:\svd\ 1>nul 2>nul
-md data\ 1>nul 2>nul
-md data\commands\ 1>nul 2>nul
-md data\files\ 1>nul 2>nul
+md %nowpath%data\ 1>nul 2>nul
+md %nowpath%data\commands\ 1>nul 2>nul
+md %nowpath%data\files\ 1>nul 2>nul
+md %nowpath%data\calc\ 1>nul 2>nul
 :inv
 echo invalid unicode preview. > C:\consetInfo.set
 cd.> %systemdrive%\Windows\System32\test.txt || set unman=true
@@ -97,9 +74,11 @@ goto main
 :main
 cls
 :resolve
+if exist %nowpath%data\commands\commanding.load goto comload
+:comload.back
 if "%unman%"=="true" echo 当前可能无法使用管理员权限，可能会影响部分功能的正确执行。
 color %color%
-echo Batch Console [v0.3]
+echo Batch Console [v0.4]
 echo 输入 help 查看帮助
 :int
 title Batch Console
@@ -133,12 +112,12 @@ if "%con%"=="dcom" goto dcom
 if "%con:~0,5%"=="sleep" goto sleep
 if "%con:~0,9%"=="hibernate" goto hib
 if "%con:~0,8%"=="shutdown" goto shutdown
-if "%con:~0,7%"=="restart" goto restart
+if "%con:~0,7%"=="reboot" goto restart
 if "%con:~0,4%"=="open" goto open.choose
 if "%con%"=="cls" goto main
-if "%enablenewcommand%"=="false" goto enter
 if "%con%"=="wmic" echo 禁止内部切换：WMIC & goto int
 if "%con%"=="cmd" echo 禁止内部切换：CMD & goto int
+if "%enablenewcommand%"=="false" goto enter
 if "%con%"=="%commandnamem%" %commandinm% & goto int
 :enter
 %con% %func.outputsystemerror%
@@ -209,10 +188,10 @@ echo 找不到 %con:~5%
 goto int
 
 :restart
-if "%con:~8%"=="-o" shutdown -r -o
-if "%con:~8%"=="/o" shutdown -r -o
-if "%con:~8%"=="-?" goto restart.help
-if "%con:~8%"=="/?" goto restart.help
+if "%con:~7%"=="-o" shutdown -r -o
+if "%con:~7%"=="/o" shutdown -r -o
+if "%con:~7%"=="-?" goto reboot.help
+if "%con:~7%"=="/?" goto reboot.help
 shutdown -r
 :shutdown
 if "%con:~9%"=="-?" goto shutdown.help
@@ -231,7 +210,7 @@ powercfg -h on 1>nul 2>nul
 goto int
 
 :dcom
-if exist %cd%\data\commands\commanding.load goto dcc
+if exist %nowpath%data\commands\commanding.load goto dcc
 echo 目前不存在被定义的指令。
 goto int
 :dcc
@@ -240,8 +219,8 @@ if "%yn%"=="y" goto delcommand
 echo 用户取消操作。
 goto int
 :delcommand
-del %cd%\data\commands\commanding.load
-del %cd%\data\commands\commandname.load
+del %nowpath%data\commands\commanding.load
+del %nowpath%data\commands\commandname.load
 echo 已删除%commandnamem%
 set enablenewcommand=false
 goto int
@@ -265,11 +244,13 @@ if "%yn%"=="y" goto savecom
 echo 已放弃编辑 %con:~9%。
 goto int
 :savecom
-echo read.commandname >> data\commands\commandname.load
-echo %command% >> data\commands\commandname.load
-echo read.commanding >> data\commands\commanding.load
-echo %commc% >> data\commands\commanding.load
+echo read.commandname > %nowpath%data\commands\commandname.load
+echo %command% >> %nowpath%data\commands\commandname.load
+echo read.commanding >> %nowpath%data\commands\commanding.load
+echo %commc% >> %nowpath%data\commands\commanding.load
 echo 已存储 %command% 内容为 %commc%
+call :ReadSpecialLine %nowpath%data\commands\commandname.load 1 commandnamem
+call :ReadSpecialLine %nowpath%data\commands\commanding.load 1 commandinm
 set enablenewcommand=true
 echo 该指令将在配置文件存在的情况下生效。
 goto int
@@ -313,18 +294,14 @@ goto int
 ::Config
 :log.cfg
 echo [UpdateLog Config]
-echo v0.3 更新日志信息
-echo - 修复Bug
-echo · do 无法正常识别数字的问题
-echo - set 项增加
-echo · errormsg 自定义错误信息
-echo · color 快捷设置字体
-echo · 更多请输入 set -? 查看详情
-echo - help 项增加
-echo · set 的项的一一说明
-echo - 取消 What's New 界面
-echo - 优化路径算法
-echo · 目前你所在的路径是%~dp0
+echo v0.4 更新日志信息
+echo - 全新的do -l识别机制
+echo · 这将在以后的版本中大大改善指令的执行效率
+echo - Bug Fix
+echo · 当 enablenewcommands=true 时出现此时不应出现^&并闪退
+echo - Batch Wmic Que 内嵌版本推出
+echo - Batch Calc 内嵌版本推出
+echo · 输入 mode /? 查看更多
 goto int
 :sys.cfg
 echo [System Config]
@@ -416,9 +393,23 @@ echo DO.CHH 未知参数或指令错误。
 goto int
 
 :do.loop
-set comm=%con:~8%
+:: a=6即do\n-l\n的格数
+:: zl为输入指令的内容
+set a=6
+set zl=%con%
+:xh
+if "!zl:~%a%,1!"==" " goto over
+if "!zl:~%a%,1!"=="" goto err
+set /a a=%a%+1
+goto xh
+:over
+set /a b=%a%+1
+set /a a=%a%-6
+set comm=!zl:~%b%!
+::命令部分
 set time=-1
-set loops=!con:~6,%cut%!
+set loops=!zl:~6,%a%!
+::数字部分
 :doit
 set /a time=%time%+1
 if "%time%"=="%loops%" goto dol.comp
@@ -469,12 +460,19 @@ if "%con:~4,11%"=="quickdelete" goto quickdelete
 if "%con:~4,7%"=="devmode" goto devmode
 if "%con:~4,17%"=="outputsystemerror" goto outputsystemerror
 if "%con:~4,5%"=="loops" goto loopset
+if "%con:~4,16%"=="enablenewcommand" goto enablenewcommands
 if "%con:~4%"=="/?" goto set.help
 if "%con:~4%"=="-?" goto set.help
 %con%
 goto int
 
 ::settings
+:enablenewcommands
+if "%con:~4,16%"=="enablenewcommand" set con=set enablenewcommands %con:~21%
+if "%con:~22%"=="true" set enablenewcommand=true & echo 已启用自定义指令。 & goto int
+if "%con:~22%"=="false" set enablenewcommand=false & echo 已禁用自定义指令。  & goto int
+echo "%con:~22%" 不是有效的布尔值。
+goto int
 :loopset
 if %con:~10% lss 1 goto lfail
 set /a test=%con:~10%+1 || goto lfail
@@ -521,8 +519,8 @@ goto int
 if "%con:~13%"=="default" set errormessage.bool=false & echo 已还原至默认信息 & goto int
 set errormessage=%con:~13%
 echo 已将错误信息设置为%errormessage%。
-echo ERRORMESSAGE SAVES > %path%\data\files\errormessage.save
-echo %errormessage% > %path%\data\files\errormessage.save
+echo ERRORMESSAGESAVES > %nowpath%\data\files\errormessage.save
+echo %errormessage% >> %nowpath%\data\files\errormessage.save
 goto int
 :devset
 set devc-eof=echo off
@@ -612,6 +610,16 @@ if "%con:~5%"=="net" goto main.net
 if "%con:~5%"=="web" goto main.net
 if "%con:~5%"=="network" goto main.net
 if "%con:~5%"=="dev" goto main.dev
+if "%con:~5%"=="wmic" goto main.wmic
+if "%con:~5%"=="calc" goto main.calc
+if "%con:~5%"=="/?" goto mode.help
+if "%con:~5%"=="-?" goto mode.help
+if "%con:~5%"=="net -?" goto mode.help-net
+if "%con:~5%"=="web -?" goto mode.help-net
+if "%con:~5%"=="network -?" goto mode.help-net
+if "%con:~5%"=="dev -?" goto mode.help-dev
+if "%con:~5%"=="wmic -?" goto mode.help-wmic
+if "%con:~5%"=="calc -?" goto mode.help-calc
 echo 不正确的 MODE 选择: %con:~5%。
 goto int
 
@@ -781,7 +789,6 @@ if "%mad:~0,8%"=="function" goto func.choose
 if "%mad:~0,4%"=="save" goto save
 if "%mad:~0,5%"=="clear" goto clear
 if "%mad:~0,5%"=="debug" goto debug.choose
-if "%mad%"=="info" goto info
 if "%mad:~0,4%"=="lock" goto lock.choose
 echo %mad% 不是一个可用的开发者指令。
 goto let
@@ -837,23 +844,6 @@ echo %dev.password% >> %Appdata%\Console\dpass.int
 set dev.lock=true
 echo 已成功设置密码
 goto let
-
-:info
-cls
-title Information
-echo About: 0.2
-echo 目前，Batch Console 新增了一个 data 目录
-echo 一般会自动创建于 Batch Console 存在的目录
-echo 该目录目前仅有 commands 一个目录用来存储
-echo make 指令创建的命令和相关信息。
-echo 其次，Devmode 新增了锁定机制。
-echo 输入 lock 来了解。
-echo.
-echo Information 界面会将每个版本的特殊更新放入内置
-echo 并加以不专业的详细解释。
-echo 若你感兴趣，不妨在每个版本都来这里一趟。
-pause
-goto main.dev
 
 :clear
 if "%mad:~6%"=="-?" goto clear.help
@@ -1052,8 +1042,10 @@ echo CONFIG [STRING] 显示指定项目名称的 Config 信息。
 echo MAKE [DIR/COM] 批量制作目录或独有指令。
 echo DCOM 删除存储的指令。
 echo OPEN [PATHNAME] 快速打开目录。
-echo SLEEP/SHUTDOWN/RESTART[/O]/HIBERNATE 快速睡眠/关机/重启/休眠。
+echo SLEEP/SHUTDOWN/REBOOT[/O]/HIBERNATE 快速睡眠/关机/重启/休眠。
 echo EXIT 不保存并退出。
+echo.
+echo 提示：输入指令后跟上-?参数即可查看详细帮助。
 pause
 goto main
 :lock.help
@@ -1090,8 +1082,8 @@ echo Usage: SHUTDOWN
 echo 可以按照系统用法进行。
 echo 纯输入SHUTDOWN则会立即关机。
 goto int
-:restart.help
-echo Usage: RESTART [/O]
+:reboot.help
+echo Usage: REBOOT [/O]
 echo 重新启动计算机。
 echo 参数 -O 用于在重新启动计算机后自动进入高级管理页面。
 echo 常常用作进行硬盘调试和双系统切换。
@@ -1205,7 +1197,71 @@ echo 创建可保存的功能函数(独立BAT文件)，并且可每次重新调取。
 echo FUNCTION 的函数与 Batch Console 内部函数不冲突。
 echo FUNCTION 的函数无法参与 Debug。
 goto let
-
+:mode.help
+echo Usage: MODE [MODENAME]
+echo 切入专有的模式以便启用插件或者更高效率地进行操作。
+echo 目前支持的MODENAME包括但不仅限于
+echo net, dev, wmic, calc
+echo 有关模式的详细信息，请输入 MODE [MODENAME] -?
+goto int
+:mode.help-net
+echo Net 模式用于进行普通或者新颖的网络操作
+echo 诸如 FTP 发送、SPING（线程响应模式）发包等。
+goto int
+:mode.help-dev
+echo Developer 模式用于对 Batch Console 的相关开发说明。
+echo 对于一般情况，Developer 的更新将会滞后。
+echo 一般并不建议切换到此模式，且需要DEVMODE变量的支持。
+goto int
+:mode.help-wmic
+echo Wmic 模式基于 Windows Wmic 的基础上，在Batch内进行了简化操作。
+echo 实现的方式是对于一个主体指令采取do -l 的读取算法而进行变量代入。
+echo 在 wmic 模式下输入的一切 dos 指令都会调用 wmic 进行执行。
+goto int
+:mode.help-calc
+echo 该功能由前身 Batch Calc 移植而来。
+echo 以后次次更新将独立更新此一个模式程序。
+goto int
+:calc.help
+title Calculator Help
+cls
+echo 该功能由 Batch Calc v0.1 移植而来
+echo 该功能采用的算法是Powershell的算法，并适当地移入了
+echo 一些Powershell无法实现的计算方法，从而使方法更加全面。
+echo =====================================================
+echo 目前支持独立表达式：
+echo + - * / 四则运算
+echo 运算函数：
+echo power -乘方
+echo fact(orial) -阶乘
+echo sqrt -算数平方根
+echo loop -循环
+echo addon -范围求和
+echo rand(om) -范围随机数
+echo copy -复制最近一次的结果
+echo show -显示常量(见show -?)
+echo ======================================================
+echo 输入指定的函数名或全名，可调用相关函数进行操作。
+echo 其中，许多函数的算法采用的是Batch原生。
+echo 为了避免出现大规模的计算错误或溢出，会出现限制量。
+echo 若不存在以上文件请自行创建。
+pause
+goto main.calc
+:show.help
+title Show Help
+echo Usage: SHOW (CONSTANT_NAME) (DIGIT)
+echo 支持的CONSTANT_NAME有：
+echo pi、e、sqrt2、rho、alpha
+echo ========================
+echo PI 圆周率π(支持100位)
+echo E 自然常数e(支持100位)
+echo RHO 塑胶数(支持39位)
+echo ALPHA 第二费根鲍姆常数(支持27位)
+echo SQRT2 根号下2(支持100位)
+echo ========================
+echo 以上数值仅作收集用。
+pause
+goto main.calc
 :devset.intro
 set devc-eof=echo off
 set devc-eoo=echo on
@@ -1218,12 +1274,13 @@ echo cannot read the file in dos mode > C:\Devmode.aty
 goto begin
 
 :comload
-if exist data\commands\commandname.load goto continue.comload
+if exist %nowpath%data\commands\commandname.load goto continue.comload
 echo 缺少LOAD文件。 & goto comload.back
 :continue.comload
 set enablenewcommand=true
-call :ReadSpecialLine data\commands\commanding.load 1 commandinm
-call :ReadSpecialLine data\commands\commandname.load 1 commandnameo
+call :ReadSpecialLine %nowpath%data\commands\commanding.load 1 commandinmo
+call :ReadSpecialLine %nowpath%data\commands\commandname.load 1 commandnameo
+set commandinm=%commandinmo:~0,-1%
 set commandnamem=%commandnameo:~0,-1%
 goto comload.back
 
@@ -1235,8 +1292,257 @@ set dev.lock=true
 goto passload.back
 
 :errmsgload
-call :ReadSpecialLineForERRMSG %path%\data\files\errormessage.save 1 errormessage
+call :ReadSpecialLine1 %nowpath%\data\files\errormessage.save 1 errormessage
+echo %errormessage%
 goto errmsg.back
-:ReadSpecialLineForERRMSG
+:ReadSpecialLine1
 setlocal
 for /f "delims=" %%a in ('more +%2 %1') do endlocal&set "%3=%%a"&goto:eof
+
+:main.calc
+if exist "%nowpath%\data\calc\power_max.txt" (call :ReadSpecialLine %nowpath%\data\calc\power_max.txt 1 powerMAX) else (set powerMAX=30)
+cls
+:main.calc-skipcls
+color 0E
+echo Batch Calc [v1.0]
+echo 输入 ? 查看帮助
+:char-output
+if not "%opt%"=="" echo %opt%
+:char
+set /p cal=
+if "%cal%"=="?" goto calc.help
+if "%cal%"=="power" goto calc.power
+if "%cal%"=="fact" goto calc.factorial
+if "%cal%"=="factorial" goto calc.factorial
+if "%cal%"=="rand" goto calc.random
+if "%cal%"=="random" goto calc.random
+if "%cal%"=="loop" goto calc.loop
+if "%cal%"=="addon" goto calc.loop-addon
+if "%cal%"=="sqrt" goto calc.sqrt
+if "%cal%"=="back" goto main
+if "%cal%"=="copy" echo %cliphood% | clip & echo %cliphood% 已复制到剪贴板 & goto char
+if "%cal:~0,4%"=="show" goto calc.show
+call :calc.core
+:calc.output
+set cliphood=%opt%
+goto char-output
+
+:calc.core
+for /f "delims=" %%a in ('powershell "%cal%"') do set opt=%%a & goto :eof
+
+:calc.err
+echo 不正确的表达式或函数。
+goto char
+
+:calc.power
+set /p dishu=请输入"底数":
+set /p zhishu=请输入"指数":
+if %zhishu% gtr %powerMAX% echo 限制：指数不能大于%powerMAX%。 & goto char
+echo 将计算%dishu%^^%zhishu%
+pause
+echo on LOOP at %dishu% %zhishu%
+echo loop core (r) 2018
+echo set times=1
+echo local respond in WIN platform
+set time=1
+set dimshu=%dishu%
+ping 127.0.0.1 -n 1 >nul
+cls
+goto power.loop
+:power.loop
+set /a dimshu=%dimshu%*%dishu%
+set /a time=%time%+1
+if "%time%"=="%zhishu%" goto power.end
+goto power.loop
+:power.end
+set opt=%dimshu%
+set cliphood=%opt%
+goto char-output
+
+:calc.factorial
+set /p fact=请输入"阶乘操作数":
+if %fact% GTR 16 echo 限制：阶乘操作数不能大于16。 & goto char
+if "%fact%"=="1" echo 1 & set cliphood=1 & goto char
+if "%fact%"=="0" echo 0 & set cliphood=0 & goto char
+goto factorial
+:factorial
+set a=%fact%
+set b=%fact%
+:fact.loop
+set /a a=%a%-1
+set /a b=%b%*%a%
+if %errorlevel% NEQ 0 echo 未知错误：返回值NEQ 0 & goto char
+if "%a%"=="1" set opt=%b% & set cliphood=%b% & goto char-output
+goto fact.loop
+
+:calc.random
+set /p r1=请输入"范围最小值":
+set /p r2=请输入"范围最大值":
+if %r2% LSS %r1% echo 错误：最大值最小值冲突。 & goto char
+set /a r3=%r2%-%r1%-1
+set /a randem=%random%%%%r3% +%r1%
+echo %randem%
+set cliphood=%randem%
+goto char
+
+:calc.sqrt
+set /p sqrt=请输入"被开方数":
+if %sqrt% LSS 1 echo 不能计算虚数。 & goto char
+if %sqrt% GTR 214748 echo 限制：被开方数不能大于2147428。 & goto char
+:sqroot
+set a=%sqrt%
+set /a a*=10000,b=a
+for /l %%a in (1,1,100) do set /a b=(b+a/b)/2
+set /a c=b*b,a/=10000
+set sqr=%b:~,-2%.%b:~-2%
+set sqrr=%b:~-2%
+if "%sqrr%"=="00" set sqr=%sqr:~0,-3% & set cliphood=%sqr:~0,-3% & echo %sqr:~0,-3% & goto char
+echo 约%sqr%
+set cliphood=%sqr%
+goto char
+
+:calc.loop
+set times= 
+set time= 
+set /p times=请输入"循环次数":
+set /a test=%times%+1 || goto loop.fail
+set /p mem=请输入"操作数"(即算式最开头的那个数, 如6):
+set /p doin=请输入"操作表达式"(即要对这个数操作的表达式, 如+72-9*3):
+echo 循环：执行%%number%%%doin% 并进行输出
+echo 任务规划显示：启用
+set /a test=%mem%%doin% 1>nul 2>nul || goto loop.fail
+set time=0
+:loopon
+set /a mem=%mem%%doin%
+set /a time=%time%+1
+if %time% EQU %times% goto loopend
+goto loopon
+:loopend
+set opt=%mem%
+set cliphood=%opt%
+goto char-output
+:loop.fail
+echo 错误：未知的表达式或数字
+goto char
+
+:calc.loop-addon
+set /p from=请输入"起始项":
+if %from% lss 0 echo 目前无法进行负数求和运算。 & goto char
+set /p to=请输入"终项":
+if %to% lss %from% echo 错误：终末项大小冲突。 & goto char
+set /a test=%from%+%to% || goto addon.fail
+set /a adden=%from%+1
+set test=%from%
+:addon.loop
+set /a test=%test%+%adden%
+set /a adden=%adden%+1
+if %adden% equ %to% goto addon.end
+goto addon.loop
+:addon.end
+set /a opt=%test%+%to%
+if %to% equ 1 set opt=%from%
+set cliphood=%opt%
+goto char-output
+:addon.fail
+echo 无法识别的项数。
+goto char
+
+:calc.show
+if "%cal:~5,2%"=="pi" goto show.pi
+if "%cal:~5,3%"=="rho" goto show.rho
+if "%cal:~5,1%"=="e" goto show.e
+if "%cal:~5,5%"=="sqrt2" goto show.sqrtt
+if "%cal:~5,5%"=="alpha" goto show.alpha
+echo %cal:~5% 不是一个有效的常量名称。
+goto char
+
+:show.pi
+set nume=%cal:~8%
+if %nume% lss 1 echo 最低支持1位π。 & goto char
+if %nume% gtr 100 echo 最高支持100位π。 & goto char
+set /a test=%nume%+1 || goto show.err
+set /a nume=%nume%+2
+set show=!pi:~0,%nume%!
+set cliphood=%show%
+echo %show%
+goto char
+:show.e
+set nume=%cal:~7%
+if %nume% lss 1 echo 最低支持1位e。 & goto char
+if %nume% gtr 100 echo 最高支持100位e。 & goto char
+set /a test=%nume%+1 || goto show.err
+set /a nume=%nume%+2
+set show=!e:~0,%nume%!
+set cliphood=%show%
+echo %show%
+goto char
+:show.rho
+set nume=%cal:~9%
+if %nume% lss 1 echo 最低支持1位rho。 & goto char
+if %nume% gtr 39 echo 最高支持39位rho。 & goto char
+set /a test=%nume%+1 || goto show.err
+set /a nume=%nume%+2
+set show=!rho:~0,%nume%!
+set cliphood=%show%
+echo %show%
+goto char
+:show.sqrtt
+set nume=%cal:~11%
+if %nume% lss 1 echo 最低支持1位sqrt2。 & goto char
+if %nume% gtr 100 echo 最高支持100位sqrt2。 & goto char
+set /a test=%nume%+1 || goto show.err
+set /a nume=%nume%+2
+set show=!sqrtt:~0,%nume%!
+set cliphood=%show%
+echo %show%
+goto char
+:show.alpha
+set nume=%cal:~11%
+if %nume% lss 1 echo 最低支持1位alpha。 & goto char
+if %nume% gtr 27 echo 最高支持27位alpha。 & goto char
+set /a test=%nume%+1 || goto show.err
+set /a nume=%nume%+2
+set show=!alpha:~0,%nume%!
+set cliphood=%show%
+echo %show%
+goto char
+
+:show.err
+echo 错误：无法识别的截取位数。
+goto char
+
+::////////////////////////////////////////////////////////////
+::///////////////////////////////////////////////////////////
+:://////////////////////////////////////////////////////////
+:://///////////////////////////////////////////////////////
+::////////////////////////////////////////////////////////
+::///////////////////////////////////////////////////////
+:://////////////////////////////////////////////////////
+:://///////////////////////////////////////////////////
+::////////////////////////////////////////////////////
+:wmic.help
+title Wmic //%username%-LOCALHOST -task HelpFunction -add -mode:wmic
+echo WMIC模式 帮助
+echo.
+echo wmic 模式目前只是一个命令输入的简化版
+echo 在未来会进行相关的改动并加入专有指令。
+echo 若要直接执行wmic 指令，可以直接输入回车。
+echo 例如，要进行desktop get name，则直接输入回车即可。
+echo 输入 -? 查看wmic内置帮助。
+echo 输入back返回。
+pause
+goto main.wmic
+:main.wmic
+cls
+color 0A
+title Wmic //%username%-LOCALHOST
+echo Wmic [vBeta]
+echo 输入 ? 以查看帮助
+:sol
+set /p wim=
+if "%wim%"=="?" goto wmic.help
+if "%wim%"=="back" goto main
+if "%wim%"=="-?" wmic -?
+wmic %wim%
+goto sol
+
