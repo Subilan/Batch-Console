@@ -1,4 +1,39 @@
-:: 最后修改：2018/4/21
+::[Bat To Exe Converter]
+::
+::YAwzoRdxOk+EWAjk
+::fBw5plQjdCyDJGyX8VAjFEoMGFfbAFuzBaEJ+u3o08iGtk4VaMBqNobY1dQ=
+::YAwzuBVtJxjWCl3EqQJgSA==
+::ZR4luwNxJguZRRnk
+::Yhs/ulQjdF+5
+::cxAkpRVqdFKZSDk=
+::cBs/ulQjdF+5
+::ZR41oxFsdFKZSDk=
+::eBoioBt6dFKZSDk=
+::cRo6pxp7LAbNWATEpCI=
+::egkzugNsPRvcWATEpCI=
+::dAsiuh18IRvcCxnZtBJQ
+::cRYluBh/LU+EWAnk
+::YxY4rhs+aU+IeA==
+::cxY6rQJ7JhzQF1fEqQJgZksaHErXXA==
+::ZQ05rAF9IBncCkqN+0xwdVsEAlTMbSXvZg==
+::ZQ05rAF9IAHYFVzEqQISKQ9XREShM2WpCbkZqNjp4OCCoVl9
+::eg0/rx1wNQPfEVWB+kM9LVsJDDSQM2G/BaF8
+::fBEirQZwNQPfEVWB+kM9LVsJDC2MKHm1AqAf/OH04aexjWQ5GdINV6X++YDPYYA=
+::cRolqwZ3JBvQF1fEqQJgZk7TpewEwKc12lmaFAh9GToAWKmYpCWwpG67
+::dhA7uBVwLU+EWGqR9ks8KRUaWw2MXA==
+::YQ03rBFzNR3SWATElA==
+::dhAmsQZ3MwfNWATElA==
+::ZQ0/vhVqMQ3MEVWAtB9wSA==
+::Zg8zqx1/OA3MEVWAtB9wSA==
+::dhA7pRFwIByZRRnk
+::Zh4grVQjdCyDJGyX8VAjFEoMGFfbAE+/Fb4I5/jHzeuToUVdd+0xa4DX3/SYcK5GqnaqcI4otg==
+::YB416Ek+ZW8=
+::
+::
+::978f952a14a936cc963da21a135fa983
+:: 最后修改：2018/5/11
+::NEVER RELOAD BY
+set extension-num=1
 :reload
 set pi=3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
 set sqrtt=1.4142135623730950488016887242096980785696718753769480731766797379907324784621070388503875343276415727
@@ -7,24 +42,20 @@ set alpha=2.502907875095892822283902873
 :: ALPHA 27位
 set rho=1.324717957244746025960908854478097340734
 :: RHO 39位
-
 set algor=powershell
 set nowpath=%~dp0
 set data=%nowpath%\data\
 set color=0F
-set devlock=false
 set enablenewcommand=false
 set newcommand= 
 set errormessage.bool=false
 if exist %nowpath%data\files\errormessage.save set errormessage.bool=true & goto errmsgload
 :errmsg.back
-if exist %appdata%\Console\dpass.int goto passload.dev
 :passload.back
 set filepath=C:\
 set unman=false
 setlocal enabledelayedexpansion
 setlocal enableextensions
-set devenable=false
 ::MAKEDIR
 md %appdata%\Console\ 1>nul 2>nul
 md C:\ 1>nul 2>nul
@@ -37,7 +68,6 @@ md %nowpath%data\calc\ 1>nul 2>nul
 echo invalid unicode preview. > C:\consetInfo.set
 cd.> %systemdrive%\Windows\System32\test.txt || set unman=true
 if "%unman%"=="false" del %systemdrive%\Windows\System32\test.txt 1>nul 2>nul
-if exist C:\Devmode.aty set devmode=true
 del %systemdrive%\Windows\System32\test.txt
 if "%return%"=="0" goto return.zero
 cls
@@ -51,7 +81,6 @@ set fnum=1
 set listnum=1
 ::SETTINGS
 if exist C:\svd\savebackTrue.svd set saveback=true & goto skipr
-if exist C:\svd\devmodeTrue.svd set devmode=true & goto skipr
 if exist C:\svd\opseTrue.svd set outputsystemerror=true & set func.outputsystemerror=  & goto skipr
 if exist C:\svd\qdFalse.svd set quickdelete=false & set func.quickdelete=  & goto skipr
 set quickdelete=true
@@ -59,14 +88,6 @@ set func.quickdelete=/f /q
 set outputsystemerror=false
 set func.outputsystemerror=2^>nul ^|^| goto error
 :skipr
-if "%devmode%"=="true" goto devset.intro
-set devmode=false
-set devc-eof=echo 无法在 %%DEVMODE%% 被禁用时使用当前指令。 ^& goto int
-set devc-eoo=echo 无法在 %%DEVMODE%% 被禁用时使用当前指令。 ^& goto int
-set devc-cls=echo 无法在 %%DEVMODE%% 被禁用时使用当前指令。 ^& goto int
-set devc-goto=echo 无法在 %%DEVMODE%% 被禁用时使用当前指令。 ^& goto int
-set devc-color=echo 无法在 %%DEVMODE%% 被禁用时使用当前指令。 ^& goto int
-set into-dev=echo 无法验证您的开发者状态，请重新设置布尔值后重试。 ^& goto int
 :begin
 @echo off
 goto main
@@ -77,10 +98,10 @@ cls
 if exist %nowpath%data\commands\commanding.load goto comload
 :comload.back
 if "%unman%"=="true" echo 当前可能无法使用管理员权限，可能会影响部分功能的正确执行。
-color %color%
-echo Batch Console [v0.4]
+echo Batch Console [v0.5]
 echo 输入 help 查看帮助
 :int
+color %color%
 title Batch Console
 set /p con=%username%~^>
 if "%con%"=="help" goto help
@@ -88,13 +109,12 @@ if "%con%"=="?" goto help
 if "%con:~0,4%"=="mode" goto mode.choose
 if "%con:~0,9%"=="setoutput" goto setoutput
 if "%con:~0,6%"=="output" goto output.choose
-if "%con%"=="echo off" %devc-eof%
-if "%con%"=="echo on" %devc-eoo%
-if "%con%"=="@echo off" %devc-eof%
-if "%con%"=="@echo on" %devc-eoo%
-if "%con%"=="cls" %devc-cls%
-if "%con:~0,4%"=="goto" %devc-goto%
-if "%con:~0,5%"=="color" %devc-color%
+if "%con%"=="echo off" echo 无法关闭回显。 & goto int
+if "%con%"=="echo on" echo 无法打开回显。 & goto int
+if "%con%"=="@echo off" echo 无法关闭回显。 & goto int
+if "%con%"=="@echo on" echo 无法打开回显。 & goto int
+if "%con%"=="cls" echo 无法清屏。 & goto int
+if "%con:~0,4%"=="goto" echo 函数库功能目前不可用。 & goto int
 if "%con:~0,3%"=="ftp" goto int
 if "%con:~0,7%"=="control" goto control.choose
 if "%con:~0,3%"=="del" goto del.faster
@@ -104,6 +124,7 @@ if "%con%"=="reload" goto reload.sure
 if "%con%"=="color 0" echo 不能将 COLOR 设置为0。 & goto int
 if "%con%"=="help-cmd" help & goto int
 if "%con%"=="help -cmd" help & goto int
+if "%con%"=="help -?" goto help.help
 if "%con:~0,2%"=="do" goto do.choose
 if "%con:~0,6%"=="config" goto cfg.choose
 if "%con%"=="about" goto about
@@ -114,7 +135,14 @@ if "%con:~0,9%"=="hibernate" goto hib
 if "%con:~0,8%"=="shutdown" goto shutdown
 if "%con:~0,7%"=="reboot" goto restart
 if "%con:~0,4%"=="open" goto open.choose
-if "%con%"=="cls" goto main
+if "%con:~0,8%"=="function" goto func.choose
+if "%con:~0,5%"=="clear" goto clear
+if "%con:~0,5%"=="debug" goto debug.choose
+if "%con:~0,4%"=="test" goto test.choose
+if "%con:~0,5%"=="uping" goto unlimitedPing
+if "%con:~0,3%"=="ftp" goto ftp
+if "%con:~0,7%"=="startup" goto startup.choose
+if "%con%"=="sping" goto sping
 if "%con%"=="wmic" echo 禁止内部切换：WMIC & goto int
 if "%con%"=="cmd" echo 禁止内部切换：CMD & goto int
 if "%enablenewcommand%"=="false" goto enter
@@ -122,6 +150,15 @@ if "%con%"=="%commandnamem%" %commandinm% & goto int
 :enter
 %con% %func.outputsystemerror%
 set con= 
+goto int
+
+:startup.choose
+if "%con:~8%"=="-?" goto startup.help
+if "%unman%"=="true" goto managementerror
+echo 该项可能引起杀软的阻止，按照自己的需求决定。
+echo copy %con:~8% "%systemdrive%\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\"
+copy "%con:~8%" "%systemdrive%\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\" || echo 复制失败：阻止。 & goto int
+echo 成功添加启动项 %con:~8%
 goto int
 
 :open.choose
@@ -192,7 +229,7 @@ if "%con:~7%"=="-o" shutdown -r -o
 if "%con:~7%"=="/o" shutdown -r -o
 if "%con:~7%"=="-?" goto reboot.help
 if "%con:~7%"=="/?" goto reboot.help
-shutdown -r
+shutdown -r -t 0
 :shutdown
 if "%con:~9%"=="-?" goto shutdown.help
 if "%con:~9%"=="/?" goto shutdown.help
@@ -294,14 +331,15 @@ goto int
 ::Config
 :log.cfg
 echo [UpdateLog Config]
-echo v0.4 更新日志信息
-echo - 全新的do -l识别机制
-echo · 这将在以后的版本中大大改善指令的执行效率
-echo - Bug Fix
-echo · 当 enablenewcommands=true 时出现此时不应出现^&并闪退
-echo - Batch Wmic Que 内嵌版本推出
-echo - Batch Calc 内嵌版本推出
-echo · 输入 mode /? 查看更多
+echo v0.5 更新日志信息
+echo 这是...今年最小的更新哦！
+echo 增添小指令：
+echo - startup 设置开机启动
+echo 取消 Devmode。
+echo 取消 Netmode。
+echo 取消的模式的指令会被转移到主程序（main），可能出现些许Bug。
+echo 添加 help 指令的参数（其实cmd已经存在了只是没有提到）
+echo 以及一些看不到的源码优化。
 goto int
 :sys.cfg
 echo [System Config]
@@ -310,17 +348,17 @@ systeminfo | find "初始安装日期"
 systeminfo | find "系统启动时间"
 systeminfo | find "BIOS 版本"
 systeminfo | find "物理内存总量"
-ver | find "4.0." > NUL && echo 系统版本: Windows 95(太旧了!)
-ver | find "4.10." > NUL && echo 系统版本: Windows 98(太旧了!)
-ver | find "4.90." > NUL && echo 系统版本: Windows ME(太旧了!)
-ver | find "3.51." > NUL && echo 系统版本: Windows NT 3.5(太旧了!)
-ver | find "5.0." > NUL && echo 系统版本: Windows 2000(太旧了!)
-ver | find "5.1." > NUL && echo 系统版本: Windows XP(太旧了!)
-ver | find "5.2." > NUL && echo 系统版本: Windows 2003(太旧了!)
-ver | find "6.0." > NUL && echo 系统版本: Windows Vista(TM)
-ver | find "6.1." > NUL && echo 系统版本: Windows 7(TM)
-ver | find "6.2." > NUL && echo 系统版本: Windows 8(R)
-ver | find "10." > NUL && echo 系统版本: Windows 10(R)
+ver | find "4.0." > NUL && echo System Version: Windows 95(太旧了!)
+ver | find "4.10." > NUL && echo System Version: Windows 98(太旧了!)
+ver | find "4.90." > NUL && echo System Version: Windows ME(太旧了!)
+ver | find "3.51." > NUL && echo System Version: Windows NT 3.5(太旧了!)
+ver | find "5.0." > NUL && echo System Version: Windows 2000(太旧了!)
+ver | find "5.1." > NUL && echo System Version: Windows XP(太旧了!)
+ver | find "5.2." > NUL && echo System Version: Windows 2003(太旧了!)
+ver | find "6.0." > NUL && echo System Version: Windows Vista(TM)
+ver | find "6.1." > NUL && echo System Version: Windows 7(TM)
+ver | find "6.2." > NUL && echo System Version: Windows 8(R)
+ver | find "10." > NUL && echo System Version: Windows 10(R)
 echo 系统安装文件夹: %systemroot%
 goto int
 :user.cfg
@@ -451,13 +489,11 @@ if "%unman%"=="true" echo fatal: managementerror 无权限。 & goto int
 if "%con:~4%"=="errormsg -?" goto errmsg.set.help
 if "%con:~4%"=="color -?" goto color.set.help
 if "%con:~4%"=="quickdelete -?" goto quickdelete.help
-if "%con:~4%"=="devmode -?" goto devmode.help
 if "%con:~4%"=="outputsystemerror -?" goto outputsystemerror.help
 if "%con:~4%"=="loops -?" goto loopset.help
 if "%con:~4,8%"=="errormsg" goto errmsg.set
 if "%con:~4,5%"=="color" goto color.set
 if "%con:~4,11%"=="quickdelete" goto quickdelete
-if "%con:~4,7%"=="devmode" goto devmode
 if "%con:~4,17%"=="outputsystemerror" goto outputsystemerror
 if "%con:~4,5%"=="loops" goto loopset
 if "%con:~4,16%"=="enablenewcommand" goto enablenewcommands
@@ -485,11 +521,6 @@ goto int
 if "%con:~16%"=="true" set quickdelete=true & echo 已启用快速删除 & set func.quickdelete=/f /q & del C:\svd\qdFalse.svd 1>nul 2>nul & goto int
 if "%con:~16%"=="false" set quickdelete=false & echo 已禁用快速删除 & set func.quickdelete=  & echo cannot view the file in dos mode > C:\svd\qdFalse.svd & goto int
 echo "%con:~16%" 不是有效的布尔值。
-goto int
-:devmode
-if "%con:~12%"=="true" set dev=true & echo 已启用开发者模式 & goto devset
-if "%con:~12%"=="false" set dev=false & echo 已禁用开发者模式 & del C:\svd\devmodeTrue.svd 1>nul 2>nul & goto devdis
-echo "%con:~12%" 不是有效的布尔值。
 goto int
 :outputsystemerror
 if "%con:~22%"=="true" set outputsystemerror=true & set func.outputsystemerror= & echo 已启用输出系统错误 & echo unkown host. > C:\svd\opseTrue.svd & goto int
@@ -521,31 +552,6 @@ set errormessage=%con:~13%
 echo 已将错误信息设置为%errormessage%。
 echo ERRORMESSAGESAVES > %nowpath%\data\files\errormessage.save
 echo %errormessage% >> %nowpath%\data\files\errormessage.save
-goto int
-:devset
-set devc-eof=echo off
-set devc-eoo=echo on
-set devc-cls=cls
-set devc-goto=goto enter
-set devc-color=goto enter
-set devenable=false
-set devmode=true
-echo cannot read the file in dos mode > C:\Devmode.aty
-goto int
-:devdis
-set devc-eof= 
-set devc-eoo= 
-set devc-cls= 
-set devc-goto= 
-set devc-color= 
-set into-dev= 
-set devc-eof=echo 无法在 %%DEVMODE%% 被禁用时使用当前指令。 ^& goto int
-set devc-eoo=echo 无法在 %%DEVMODE%% 被禁用时使用当前指令。 ^& goto int
-set devc-cls=echo 无法在 %%DEVMODE%% 被禁用时使用当前指令。 ^& goto int
-set devc-goto=echo 无法在 %%DEVMODE%% 被禁用时使用当前指令。 ^& goto int
-set devc-color=echo 无法在 %%DEVMODE%% 被禁用时使用当前指令。 ^& goto int
-set devmode=false
-del C:\Devmode.aty
 goto int
 
 :control.choose
@@ -606,18 +612,10 @@ echo %con% 不是存在或被定义的指令
 goto int
 
 :mode.choose
-if "%con:~5%"=="net" goto main.net
-if "%con:~5%"=="web" goto main.net
-if "%con:~5%"=="network" goto main.net
-if "%con:~5%"=="dev" goto main.dev
 if "%con:~5%"=="wmic" goto main.wmic
 if "%con:~5%"=="calc" goto main.calc
 if "%con:~5%"=="/?" goto mode.help
 if "%con:~5%"=="-?" goto mode.help
-if "%con:~5%"=="net -?" goto mode.help-net
-if "%con:~5%"=="web -?" goto mode.help-net
-if "%con:~5%"=="network -?" goto mode.help-net
-if "%con:~5%"=="dev -?" goto mode.help-dev
 if "%con:~5%"=="wmic -?" goto mode.help-wmic
 if "%con:~5%"=="calc -?" goto mode.help-calc
 echo 不正确的 MODE 选择: %con:~5%。
@@ -640,52 +638,33 @@ set num=7
 set out=^>^>
 goto int
 
-:main.net
-cls
-color 1F
-title Batch Console ^> Network
-echo Net Core [Valpha]
-echo 输入 help 查看帮助
-:var
-set /p nec=
-title Batch Console ^> Network
-if "%nec:~0,4%"=="test" goto test.choose
-if "%nec:~0,5%"=="uping" goto unlimitedPing
-if "%nec:~0,3%"=="ftp" goto ftp
-if "%nec%"=="help" goto net.help
-if "%nec%"=="?" goto net.help
-if "%nec%"=="back" goto main
-if "%nec%"=="sping" goto sping
-echo %nec% 不是可用的 NET 指令。
-goto var
-
 :sping
 echo back 返回至主菜单
 echo undo 撤销操作
 :sp-lines
 set /p lines=请输入 PING 的线程:
 if %lines% GTR 15 echo 超过此返回可能会导致大量性能下降。
-if "%lines%"=="back" goto main.net
+if "%lines%"=="back" goto main
 if "%lines%"=="undo" echo 尚无可撤销的操作。
 goto sp-packages
 :sp-packages
 set /p packs=请输入每个包的大小(字节):
 if %packs% LSS 1 echo 错误的数字选择: 小于1 & goto sp-packages
 if %packs% GTR 65500 echo 错误的数字选择: 大于65500 & goto sp-packages
-if "%packs%"=="back" goto main.net
+if "%packs%"=="back" goto main
 if "%packs%"=="undo" goto sp-lines
 goto sp-times
 :sp-times
 set /p times=请输入 PING 的次数:
 if %times% GTR 500 echo 错误的数字选择: 大于500 & goto sp-times
 if %times% LSS 1 echo 错误的数字选择: 小于1 & goto sp-times
-if "%times%"=="back" goto main.net
+if "%times%"=="back" goto main
 if "%times%"=="undo" goto sp-packages
 goto sp-ip
 :sp-ip
 set /p ip=请输入 PING 的域名或 IP 地址:
 if "%ip:~0,1%"=="0" echo 不能以0开头。
-if "%ip%"=="back" goto main.net
+if "%ip%"=="back" goto main
 if "%packs%"=="undo" goto sp-times
 pause
 set loop=0
@@ -708,7 +687,7 @@ set loop=0
 set num=1
 :getloop2
 set /a loop2=%loop2%+1
-if "%loop2%"=="%lines%" goto main.net
+if "%loop2%"=="%lines%" goto main
 del ping%num%.bat
 set /a num=%num%+1
 goto getloop2
@@ -719,17 +698,17 @@ goto reload
 
 :unlimitedPing
 ::Just add a "-t"
-echo ping %nec:~6% -t >> sping.cmd
+echo ping %con:~6% -t >> sping.cmd
 start sping.cmd
 set /p d=按 ENTER 键删除并关闭...
 del sping.cmd 1>nul 2>nul || echo 删除失败。
-goto main.net
+goto main
 
 :test.choose
-if "%nec:~5%"=="/?" goto test.help
-if "%nec:~5%"=="-?" goto test.help
-if "%nec:~5,5%"=="-gfw" goto gfw.test
-if "%nec:~5,5%"=="/gfw" goto gfw.test
+if "%con:~5%"=="/?" goto test.help
+if "%con:~5%"=="-?" goto test.help
+if "%con:~5,5%"=="-gfw" goto gfw.test
+if "%con:~5,5%"=="/gfw" goto gfw.test
 goto net.test
 
 :net.test
@@ -741,14 +720,14 @@ set not-ok=Net& set some=不可用& set other=CMD组件损坏& goto test.error
 color 1A
 echo Net 目前可用。
 color 1F
-goto var
+goto int
 
 :test.error
 title Debug - ERROR
 color 1C
 echo %not-ok% 目前%some%或%other%。
 color 1F
-goto var
+goto int
 
 :gfw.test
 title Debug
@@ -759,151 +738,56 @@ set not-ok=GFW& set some=可用& set other=是VPN协议不支持(很可能)& goto test.erro
 color 1A
 echo GFW 目前不可用。
 color 1F
-goto var
+goto int
 
 :return.zero
-echo ftp.exe %nec:~4% > ftp.cmd
+echo ftp.exe %con:~4% > ftp.cmd
 start ftp.cmd
-echo 已成功打开关于 %nec:~4% 的 FTP 链接。
-goto var
-
-:main.dev
-if "%dev.lock%"=="true" goto dev-login
-:dev.logon
-if exist C:\svd\devmodeTrue.svd set devmode=true
-if "%devmode%"=="true" goto dev-enter
-if "%devmode%"=="false" echo 请检查 DEVMODE 是否被允许开启。 & goto int
-echo 丢失正确的布尔值。 & goto let
-:dev-enter
-cls
-color 2F
-echo Dev Mode [Valpha]
-echo 输入 ? 查看帮助
-:let
-title Batch Console ^> Developer
-set /p mad=
-if "%mad%"=="?" goto dev.help
-if "%mad%"=="help" goto dev.help
-if "%mad%"=="back" goto main
-if "%mad:~0,8%"=="function" goto func.choose
-if "%mad:~0,4%"=="save" goto save
-if "%mad:~0,5%"=="clear" goto clear
-if "%mad:~0,5%"=="debug" goto debug.choose
-if "%mad:~0,4%"=="lock" goto lock.choose
-echo %mad% 不是一个可用的开发者指令。
-goto let
-
-:dev-login
-echo 登录 Devmode
-set /p dev.passwordc=dev.password~^>
-if "%dev.passwordc%"=="%dev.password%" goto welcome.dev
-echo 错误的密码: %dev.passwordc%
+echo 已成功打开关于 %con:~4% 的 FTP 链接。
 goto int
-:welcome.dev
-cls
-color 2F
-echo 欢迎回来，%username%！
-ping 127.0.0.1 -n 2 >nul
-goto dev.logon
-
-:lock.remove
-if "%dev.lock%"=="false" echo 尚未设置密码 & goto let
-title Devmode ^> Delete Lock
-echo 请输入先前的密码
-set /p dev.passwordc=
-if "%dev.passwordc%"=="%dev.password%" goto dev.dellock
-echo 错误的密码: %dev.passwordc%
-goto let
-:dev.dellock
-del %appdata%\Console\dpass.int
-set dev.lock=false
-set dev.password= 
-set dev.passwordc= 
-echo 已删除密码保护
-goto let
-
-:lock.choose
-if "%mad:~5%"=="-?" goto lock.help
-if "%mad:~5%"=="/?" goto lock.help
-if "%mad:~5%"=="-add" goto lock.add
-if "%mad:~5%"=="-remove" goto lock.remove
-echo 无效参数。
-goto let
-
-:lock.add
-if "%unman%"=="true" echo 权限不足 & goto let
-title Devmode ^> Lock
-echo [Lock Genius]
-echo 创建密码:
-set /p dev.password=
-ping 127.0.0.1 -n 1 >nul
-goto lock.comp
-:lock.comp
-echo Password Save >> %Appdata%\Console\dpass.int
-echo %dev.password% >> %Appdata%\Console\dpass.int
-set dev.lock=true
-echo 已成功设置密码
-goto let
 
 :clear
-if "%mad:~6%"=="-?" goto clear.help
-if "%mad:~6%"=="/?" goto clear.help
+if "%con:~6%"=="-?" goto clear.help
+if "%con:~6%"=="/?" goto clear.help
 echo 当前没有缓存/临时文件。
-goto let
+goto int
 
 :debug.choose
-if "%mad:~6%"=="-?" goto debug.help
-if "%mad:~6%"=="/?" goto debug.help
-if "%mad:~6,5%"=="-view" goto debug.view
-if "%mad:~6,5%"=="-edit" goto debug.edit
-echo 错误的参数: %mad:~6%
-goto let
+if "%con:~6%"=="-?" goto debug.help
+if "%con:~6%"=="/?" goto debug.help
+if "%con:~6,5%"=="-view" goto debug.view
+if "%con:~6,5%"=="-edit" goto debug.edit
+echo 错误的参数: %con:~6%
+goto int
 
 ::目前尚未出现可以正常预览已存储function的方法，暂时弃坑 Orz
 :debug.view
 title debug fatal
-echo %mad:~12% 不是可被 VIEW 的函数。
-goto let
+echo %con:~12% 不是可被 VIEW 的函数。
+goto int
 
 :debug.edit
 title debug fatal
-echo %mad:~12% 不是可被 EDIT 的函数。
-goto let
-
-:save
-if "%mad:~5%"=="-?" goto save.help
-if "%mad:~5%"=="/?" goto save.help
-title Batch Console ^> Developer ^> Save
-if "%unman%"=="true" goto managementerror
-echo 将存储所有变量设置
-pause
-:: SVD Package
-echo cannot view the file in dos mode > C:\svd\savebackTrue.svd
-if "%devmode%"=="true" echo cannot view the file in dos mode > C:\svd\devmodeTrue.svd
-if "%outputsystemerror%"=="true" echo cannot view the file in dos mode > C:\svd\opseTrue.svd
-if "%quickdelete%"=="false" echo cannot view the file in dos mode > C:\svd\qdFalse.svd
-echo 已成功存储。
-goto let
+echo %con:~12% 不是可被 EDIT 的函数。
+goto int
 
 :managementerror
 title FATAL: Management Error: Windows UAC denied.
 echo FATAL ERROR: 无权限。
 pause
-goto let
+goto int
 
 :func.choose
-if "%mad:~9%"=="-?" goto function.help
-if "%mad:~9%"=="/?" goto function.help
-title Batch Console ^> Developer ^> Function ^> Unkown Parameter
+if "%con:~9%"=="-?" goto function.help
+if "%con:~9%"=="/?" goto function.help
 cd.>%systemdrive%\Windows\System32\test.txt || goto managementerror
 del %systemdrive%\Windows\System32\test.txt
-if "%mad:~9%"=="-add" goto function.add
-if "%mad:~9%"=="-remove" goto function.remove
-if "%mad:~9%"=="-call" goto function.call
-echo %mad:~9% 不是一个有效的参数。
-goto let
+if "%con:~9%"=="-add" goto function.add
+if "%con:~9%"=="-remove" goto function.remove
+if "%con:~9%"=="-call" goto function.call
+echo %con:~9% 不是一个有效的参数。
+goto int
 :function.add
-title Batch Console ^> Developer ^> Function ^> Path Set
 echo 已进入 FUNCTION.PATH 函数。
 echo 请按照以下顺序进行输入:
 echo - 存储函数快捷方式的位置 /saveto [Path\.bat,cmd]
@@ -919,7 +803,6 @@ if "%func:~0,6%"=="/input" goto input.batorcmd
 echo 您尚未设置 SAVETO 路径或 INPUT 路径，或者输入了错误的指令。
 goto leta
 :input.batorcmd
-title Batch Console ^> Developer ^> Function ^> Input
 if "%func:~-1%"=="\" echo 尚未填写文件信息。 & goto leta
 if "%func:~-4%"==".cmd" set svp=%func:~7% & echo 已设置输出路径 & goto inputsth
 if "%func:~-4%"==".bat" set svp=%func:~7% & echo 已设置输出路径 & goto inputsth
@@ -927,13 +810,12 @@ echo 不能设置非 .CMD 或 .BAT 的文件。
 goto leta
 :inputsth
 echo 已导入 %svp%
-title Batch Console ^> Developer ^> Function ^> Save
 set /p funcnum=请输入函数序号(0~9999):
 if %funcnum% LSS 0 goto funcnumerr
 if %funcnum% GTR 9999 goto funcnumerr
 set /p funcname=请输入函数名称:
 set funcpath%funcname%=%svp% & set funcpath%funcnum%==%svp%
-goto main.dev
+goto main
 :batorcmd
 if "%func:~-1%"=="\" goto nameyourfile
 if "%func:~-4%"==".cmd" set svp=%func:~8% & echo 已设置输出路径 & goto letb
@@ -952,7 +834,6 @@ goto batorcmd
 echo @echo off >> %svp%
 echo 键入 /back 以返回
 :letc
-title Batch Console ^> Developer ^> Functions ^> Add
 set /p func=FUNCTION.ADD^>
 if "%func%"=="/back" goto goback
 if "%func%"=="/open" start %svp% & goto letb
@@ -966,66 +847,42 @@ echo %func% >> %svp%
 goto letb
 :goback
 echo 已将函数快捷方式存储至%svp%
-goto main.dev
+goto main
 
 :funcnumerr
 echo 不合适的大小。
 goto savefunc
 
 :savefunc
-title Batch Console ^> Developer ^> Function ^> Save
 set /p funcnum=请输入函数序号(0~9999):
 if %funcnum% LSS 0 goto funcnumerr
 if %funcnum% GTR 9999 goto funcnumerr
 set /p funcname=请输入函数名称:
 set funcpath%funcname%=%svp% & set funcpath%funcnum%==%svp%
-goto main.dev
+goto main
 
 :function.call
-title Batch Console ^> Developer ^> Function ^> Call Functions
 echo 输入 back 以返回。
 :list.select
 set /p ls=请输入函数名称或序号以调用:
-if "%ls%"=="back" goto main.dev
+if "%ls%"=="back" goto main
 set /a dim=%ls%+1 2>nul && call !funcpath%ls%!
 call !funcpath%ls%!
 echo %ls% 不是存在的函数名称或序号。
 pause
-goto main.dev
+goto main
 :function.remove
-title Batch Console ^> Developer ^> Function ^> Remove
 echo 输入 back 以返回。
 :del.select
 set /p ds=请输入函数名称或者序号以删除:
-if "%ds%"=="back" goto main.dev
-set /a dim=%ds%+1 2>nul && del !funcpath%ds%! 1>nul 2>nul & echo 成功删除序号为 %ds% 的函数 & goto main.dev
-del !funcpath%ds%! 1>nul 2>nul& 成功删除 %ds% & goto main.dev
+if "%ds%"=="back" goto main
+set /a dim=%ds%+1 2>nul && del !funcpath%ds%! 1>nul 2>nul & echo 成功删除序号为 %ds% 的函数 & goto main
+del !funcpath%ds%! 1>nul 2>nul& 成功删除 %ds% & goto main
 echo %ds% 不是存在的函数名称或序号。
 pause
-goto main.dev
+goto main
 
 ::HELPS
-:net.help
-title Batch Console ^> Help Files ^> Network
-cls
-echo 欢迎查看帮助
-echo.
-echo FTP [IP/WWW] 使用内置 FTP 进行传输。
-echo UPING [IP/WWW] 无限次(概念上)对地址进行 PING 工作。
-echo SPING 进行多线程 PING 工作。
-echo TEST [-GFW/nul] 测试是否可以连接上某一区域网络。(留空则为万维网)
-pause
-goto main.net
-:dev.help
-title Batch Console ^> Help Files ^> Developer
-echo.
-echo FUNCTION [-ADD/-REMOVE/-CALL] 对功能的指定性操作。
-echo SAVE 存储当前所有已知变量到单独文件。
-echo CLEAR 删除所有缓存/临时文件。
-echo DEBUG [-view/-edit] [FUNCTION] 处理函数状态。
-echo LOCK [-add/-remove] 添加或删除密码保护
-pause
-goto let
 :help
 title Batch Console ^> Help Files ^> Normal
 cls
@@ -1044,28 +901,41 @@ echo DCOM 删除存储的指令。
 echo OPEN [PATHNAME] 快速打开目录。
 echo SLEEP/SHUTDOWN/REBOOT[/O]/HIBERNATE 快速睡眠/关机/重启/休眠。
 echo EXIT 不保存并退出。
+echo FUNCTION [ADD/CALL/REMOVE] 对函数进行编辑和修订工作。
+echo CLEAR 清理缓存或临时文件。
+echo DEBUG 调试存在的函数。
+echo TEST [-GFW] 测试网络/GFW对于BAT协议的可用性
+echo UPING [IP ADD] 使用-t参数对某一IP进行Ping操作。
+echo SPING 使用进程线程进行同时性多PING。
 echo.
 echo 提示：输入指令后跟上-?参数即可查看详细帮助。
 pause
 goto main
-:lock.help
-echo Usage: LOCK [-add/-remove]
-echo 输入后会进入设置向导
-echo 设置成功后，此密码将会在除了人为删除的任何情况下存在。
-echo 参数 -remove 需要依赖原密码。
-goto let
+:startup.help
+echo Usage: STARTUP [PATH]
+echo 将某个文件添加到开机启动项。
+echo 也就是直接用copy复制到startup目录。
+echo 可能会引起杀软的阻止，请根据自己的需求酌情允许。
+pause
+goto int
+:sping.help
+echo Usage: SPING
+echo 同时运行多个CMD线程对某一IP进行ping。
+echo 灵感来源于 Flyfish233 在2016年发布的【Flyfish批量ping】
+echo 感谢！
+pause
+goto int
+:uping.help
+echo Usage: UPING
+echo 没什么特别的，就是加了个-t参数。
+pause
+goto int
 :clear.help
 echo Usage: CLEAR
 echo 删除未被及时清理的缓存、临时文件。
 echo 通常这些文件存在于系统根目录或批处理所在位置。
 echo 也许他们是隐藏的。
-goto let
-:save.help
-echo Usage: SAVE
-echo 存储变量信息到单独文件。
-echo 一般包括 Devmode 的启用情况等。
-echo 不包括密码等敏感信息。
-goto let
+goto int
 :open.help
 echo Usage: OPEN [PATHNAME]
 echo 其中 PATHNAME 为基本上可被猜中的名称
@@ -1130,7 +1000,7 @@ echo SET [BC_SETTINGVAR] [BOOL]/[STRING/NUM]
 echo 设置一个变量以进行临时调用或修改 Batch Console 的相应变量布尔值
 echo 以达到另外的设置效果。一些布尔值在设置后会被保存，不会被重置。
 echo 目前受支持的 BC_SETTINGVAR 包括
-echo devmode, outputsystemerror, quickdelete, 
+echo outputsystemerror, quickdelete, 
 echo loops, color, errormsg等。
 echo 有关每一项的相关用法，请使用 set [VARIABLE_NAME] -?
 goto int
@@ -1157,10 +1027,6 @@ echo 此项控制是否输出系统错误。若BOOL为true时，在报错时
 echo 会主动显示默认的错误或者用户自定义的错误。
 echo 若BOOL为false时，在报错时会显示系统的错误。
 goto int
-:devmode.help
-echo BOOL CONTROL
-echo 此项控制 devmode 是否被启用。
-goto int
 :loopset.help
 echo Usage: set loops [NUMBERS]
 echo 修改 do -l 时循环的判定格数。
@@ -1185,33 +1051,25 @@ echo 测试一般网络是否可用或GFW是否不可用。
 echo 在一般情况下，对于传统的ping方式，无论是否含有代理
 echo 其发包均无法穿越GFW，因此会出现开了代理依然呈现GFW有效的情况。
 echo 目前此问题无法被修复。
-goto var
+goto int
 :debug.help
 echo Usage: DEBUG [-VIEW/-ADD]
 echo 增加一个可被调试项或者预览可被调试项。
 echo 由于CMD的功能局限性，此功能将处于永久开发状态。
-goto let
+goto int
 :function.help
 echo Usage: FUNCTION [-ADD/-REMOVE/-CALL]
 echo 创建可保存的功能函数(独立BAT文件)，并且可每次重新调取。
 echo FUNCTION 的函数与 Batch Console 内部函数不冲突。
 echo FUNCTION 的函数无法参与 Debug。
-goto let
+goto int
 :mode.help
 echo Usage: MODE [MODENAME]
 echo 切入专有的模式以便启用插件或者更高效率地进行操作。
 echo 目前支持的MODENAME包括但不仅限于
-echo net, dev, wmic, calc
+echo wmic, calc
+echo dev与net已于0.5版本删除。
 echo 有关模式的详细信息，请输入 MODE [MODENAME] -?
-goto int
-:mode.help-net
-echo Net 模式用于进行普通或者新颖的网络操作
-echo 诸如 FTP 发送、SPING（线程响应模式）发包等。
-goto int
-:mode.help-dev
-echo Developer 模式用于对 Batch Console 的相关开发说明。
-echo 对于一般情况，Developer 的更新将会滞后。
-echo 一般并不建议切换到此模式，且需要DEVMODE变量的支持。
 goto int
 :mode.help-wmic
 echo Wmic 模式基于 Windows Wmic 的基础上，在Batch内进行了简化操作。
@@ -1240,6 +1098,7 @@ echo addon -范围求和
 echo rand(om) -范围随机数
 echo copy -复制最近一次的结果
 echo show -显示常量(见show -?)
+echo back -返回至main
 echo ======================================================
 echo 输入指定的函数名或全名，可调用相关函数进行操作。
 echo 其中，许多函数的算法采用的是Batch原生。
@@ -1262,16 +1121,13 @@ echo ========================
 echo 以上数值仅作收集用。
 pause
 goto main.calc
-:devset.intro
-set devc-eof=echo off
-set devc-eoo=echo on
-set devc-cls=cls
-set devc-goto=goto enter
-set devc-color=goto enter
-set devenable=false
-set devmode=true
-echo cannot read the file in dos mode > C:\Devmode.aty
-goto begin
+:help.help
+echo Usage: HELP [PARAMETER]
+echo 显示相关的帮助信息。
+echo 目前可用的附带参数有：
+echo ?和cmd
+echo 不带参数代表显示BC内部的帮助。
+goto int
 
 :comload
 if exist %nowpath%data\commands\commandname.load goto continue.comload
@@ -1283,13 +1139,6 @@ call :ReadSpecialLine %nowpath%data\commands\commandname.load 1 commandnameo
 set commandinm=%commandinmo:~0,-1%
 set commandnamem=%commandnameo:~0,-1%
 goto comload.back
-
-:passload.dev
-echo 初始化密码
-call :ReadSpecialLine %appdata%\Console\dpass.int 1 dev.password
-set dev.password=%dev.password:~0,-1%
-set dev.lock=true
-goto passload.back
 
 :errmsgload
 call :ReadSpecialLine1 %nowpath%\data\files\errormessage.save 1 errormessage
@@ -1448,6 +1297,7 @@ echo 无法识别的项数。
 goto char
 
 :calc.show
+if "%cal:~5%"=="-?" goto show.help
 if "%cal:~5,2%"=="pi" goto show.pi
 if "%cal:~5,3%"=="rho" goto show.rho
 if "%cal:~5,1%"=="e" goto show.e
