@@ -13,27 +13,28 @@
 ::egkzugNsPRvcWATEpCI=
 ::dAsiuh18IRvcCxnZtBJQ
 ::cRYluBh/LU+EWAnk
-::YxY4rhs+aU+IeA==
-::cxY6rQJ7JhzQF1fEqQJgZksaHErXXA==
-::ZQ05rAF9IBncCkqN+0xwdVsEAlTMbSXvZg==
-::ZQ05rAF9IAHYFVzEqQISKQ9XREShM2WpCbkZqNjp4OCCoVl9
-::eg0/rx1wNQPfEVWB+kM9LVsJDDSQM2G/BaF8
-::fBEirQZwNQPfEVWB+kM9LVsJDC2MKHm1AqAf/OH04aexjWQ5GdINV6X++YDPYYA=
-::cRolqwZ3JBvQF1fEqQJgZk7TpewEwKc12lmaFAh9GToAWKmYpCWwpG67
-::dhA7uBVwLU+EWGqR9ks8KRUaWw2MXA==
+::YxY4rhs+aU+JeA==
+::cxY6rQJ7JhzQF1fEqQJQ
+::ZQ05rAF9IBncCkqN+0xwdVs0
+::ZQ05rAF9IAHYFVzEqQJQ
+::eg0/rx1wNQPfEVWB+kM9LVsJDGQ=
+::fBEirQZwNQPfEVWB+kM9LVsJDGQ=
+::cRolqwZ3JBvQF1fEqQJQ
+::dhA7uBVwLU+EWDk=
 ::YQ03rBFzNR3SWATElA==
 ::dhAmsQZ3MwfNWATElA==
 ::ZQ0/vhVqMQ3MEVWAtB9wSA==
 ::Zg8zqx1/OA3MEVWAtB9wSA==
 ::dhA7pRFwIByZRRnk
-::Zh4grVQjdCyDJGyX8VAjFEoMGFfbAE+/Fb4I5/jHzeuToUVdd+0xa4DX3/SYcK5GqnaqcI4otg==
+::Zh4grVQjdCyDJGyX8VAjFEoMGFfbAE+/Fb4I5/jHzeuToUVdd+0xa4DX3/SYcK5FqnaqcI4otg==
 ::YB416Ek+ZW8=
 ::
 ::
 ::978f952a14a936cc963da21a135fa983
+:: Base64 Verify
 :: 最后修改：2018/5/11
 ::NEVER RELOAD BY
-set extension-num=1
+set custom-tool-enabled=false
 :reload
 set pi=3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
 set sqrtt=1.4142135623730950488016887242096980785696718753769480731766797379907324784621070388503875343276415727
@@ -50,8 +51,10 @@ set enablenewcommand=false
 set newcommand= 
 set errormessage.bool=false
 if exist %nowpath%data\files\errormessage.save set errormessage.bool=true & goto errmsgload
+if exist %nowpath%data\files\custom.toolsave goto toolload
 :errmsg.back
 :passload.back
+:toolload.back
 set filepath=C:\
 set unman=false
 setlocal enabledelayedexpansion
@@ -64,6 +67,7 @@ md %nowpath%data\ 1>nul 2>nul
 md %nowpath%data\commands\ 1>nul 2>nul
 md %nowpath%data\files\ 1>nul 2>nul
 md %nowpath%data\calc\ 1>nul 2>nul
+md %nowpath%data\tools
 :inv
 echo invalid unicode preview. > C:\consetInfo.set
 cd.> %systemdrive%\Windows\System32\test.txt || set unman=true
@@ -98,14 +102,22 @@ cls
 if exist %nowpath%data\commands\commanding.load goto comload
 :comload.back
 if "%unman%"=="true" echo 当前可能无法使用管理员权限，可能会影响部分功能的正确执行。
-echo Batch Console [v0.5]
+echo Batch Console [v0.6]
 echo 输入 help 查看帮助
 :int
 color %color%
 title Batch Console
+if "%unman%"=="true" title Batch Console - Non Admin
 set /p con=%username%~^>
+if "%con%"=="github" start https://github.com/Subilan/Batch-Console-Alpha & echo 已打开本程序开源页面。 & goto int
+if "%con%"=="blog" start https://subilan.win/ & echo 已打开作者博客。 & goto int
+if "%con%"=="build" start https://build.subilan.win/ & echo 已打开构建页面。 & goto int
+if "%con%"=="minecraft" start https://mc.subilan.win/ & echo 震惊...你居然？！ & goto int
+:: 这是我开的一个小型Minecraft服务器啦...有兴趣可以玩玩或者了解一下。
 if "%con%"=="help" goto help
 if "%con%"=="?" goto help
+if "%con%"=="lab" goto lab
+if "%con:~0,4%"=="tool" goto tool.choose
 if "%con:~0,4%"=="mode" goto mode.choose
 if "%con:~0,9%"=="setoutput" goto setoutput
 if "%con:~0,6%"=="output" goto output.choose
@@ -114,14 +126,14 @@ if "%con%"=="echo on" echo 无法打开回显。 & goto int
 if "%con%"=="@echo off" echo 无法关闭回显。 & goto int
 if "%con%"=="@echo on" echo 无法打开回显。 & goto int
 if "%con%"=="cls" echo 无法清屏。 & goto int
-if "%con:~0,4%"=="goto" echo 函数库功能目前不可用。 & goto int
+if "%con:~0,4%"=="goto" goto goto.choose
 if "%con:~0,3%"=="ftp" goto int
 if "%con:~0,7%"=="control" goto control.choose
 if "%con:~0,3%"=="del" goto del.faster
 if "%con:~0,8%"=="setlocal" echo SETLOCAL 已完全初始化。 & goto int
 if "%con:~0,3%"=="set" goto set.choose
 if "%con%"=="reload" goto reload.sure
-if "%con%"=="color 0" echo 不能将 COLOR 设置为0。 & goto int
+if "%con:~0,5%"=="color" goto color.choose
 if "%con%"=="help-cmd" help & goto int
 if "%con%"=="help -cmd" help & goto int
 if "%con%"=="help -?" goto help.help
@@ -150,6 +162,165 @@ if "%con%"=="%commandnamem%" %commandinm% & goto int
 :enter
 %con% %func.outputsystemerror%
 set con= 
+goto int
+
+:goto.choose
+if "%con:~5%"=="" echo 不能跳转至空白标签。 & goto int
+if "%con:~5%"==" " echo 不能跳转至空白标签。 & goto int
+if "%con:~5%"=="-?" goto goto.help
+if "%con:~5%"=="-list" goto goto.list
+set /p test=是否确认跳转至%con:~5%?(y/n)^>
+if "%test%"=="y" goto %con:~5%
+echo 用户取消或输入不正确。
+goto int
+:goto.list
+cls
+title 函数库功能表
+echo Goto List
+echo -----
+echo 主函数
+echo reload -重载函数
+echo begin -起始函数
+echo main -主程序
+echo resolve -自定义命令读取函数
+echo int -主程序的输入
+echo tool -工具函数
+echo edit -编辑函数
+echo color -颜色函数
+echo make -MAKE函数
+echo ReadSpecialLine -读取函数
+echo do -DO函数
+echo debug -调试函数
+echo show -展示函数
+echo log -日志函数
+echo -----
+echo 分函数
+echo choose -判定函数
+echo main -菜单/控制台函数
+echo help -帮助函数
+echo cfg -信息函数
+echo -----
+echo e.g. 若要访问主程序，则输入 goto main
+echo e.g.2 若要访问MAKE函数中的判定函数，则输入 goto make.choose
+echo e.g.3 若要访问LOG函数中的信息函数，则输入 goto log.cfg
+echo p.s. 对于大部分 goto 跳转的函数来说，可能会出现缺失变量而引起崩溃
+pause
+goto main
+
+:color.choose
+if "%con:~6%"=="-?" goto color.help
+if "%con:~6%"=="0" echo 不能将 COLOR 设置为0
+if "%con:~6%"=="yellow-milk" set color=FE & goto main
+if "%con:~6%"=="coding" set color=0A & goto main
+if "%con:~6%"=="blood" set color=C4 & goto main
+if "%con:~6%"=="tomato" set color=CF & goto main
+color %con:~6%
+set color=%con:~6%
+goto main
+
+:tool.choose
+if "%con:~0,5%"=="tools" echo 请检查拼写：tool(没有s) & goto int
+if "%con:~5%"=="-?" goto tool.help
+if "%con:~5%"=="-list" goto tool.list
+if "%con:~5%"=="-add" goto tool.add
+if "%con:~5%"=="clean" goto toolmain-clean
+if "%con:~5%"=="%custom-tool-name%" call "%custom-tool-path%"
+echo %con:~5% 不是可用的 Tool
+goto int
+:toolmain-clean
+title Batch Clean Tool v1.0
+echo 调用 Batch Clean Tool...
+echo now mode: debug
+ping 127.0.0.1 -n 2 >nul
+cls
+echo loading log...
+echo 已启用 Batch Clean Tool v1.0
+del /f /s /q %systemdrive%\*.tmp 
+del /f /s /q %systemdrive%\*._mp 
+del /f /s /q %systemdrive%\*.log 
+del /f /s /q %systemdrive%\*.gid 
+del /f /s /q %systemdrive%\*.chk 
+del /f /s /q %systemdrive%\*.old 
+del /f /s /q %windir%\*.bak 
+del /f /s /q %windir%\prefetch\*.* 
+rd /s /q %windir%\temp & md %windir%\temp 
+del /f /q %userprofile%\cookies\*.* 
+del /f /q %userprofile%\recent\*.* 
+del /f /s /q "%userprofile%\Local Settings\Temporary Internet Files\*.*" 
+del /f /s /q "%userprofile%\Local Settings\Temp\*.*" 
+del /f /s /q "%userprofile%\recent\*.*" 
+echo 已清除 TEMP 数据
+ping 127.0.0.1 -n 1 >nul
+echo 已清除 Local_TEMP 数据
+ping 127.0.0.1 -n 1 >nul
+echo 已清除 Dir_TEMP 数据
+ping 127.0.0.1 -n 1 >nul
+echo 已清除 日志 数据
+ping 127.0.0.1 -n 1 >nul
+echo 已清除 Check 数据
+ping 127.0.0.1 -n 1 >nul
+echo 已清除 Cookies 数据
+ping 127.0.0.1 -n 1 >nul
+echo 已清除 Prefetch 数据
+ping 127.0.0.1 -n 1 >nul
+echo 已清除 Recent 数据
+ping 127.0.0.1 -n 1 >nul
+echo 已清除 OLD 数据
+ping 127.0.0.1 -n 1 >nul
+echo 已清除 Gid 数据
+ping 127.0.0.1 -n 1 >nul
+echo 已清除 user_Recent 数据
+ping 127.0.0.1 -n 1 >nul
+echo 已清除 user_TIF 数据
+ping 127.0.0.1 -n 1 >nul
+echo 已清除 user_TEMP 数据
+ping 127.0.0.1 -n 2 >nul
+color 0A
+echo 清理已完成。
+ping 127.0.0.1 -n 3 >nul
+goto main
+:tool.list
+cls
+title Tool 列表
+echo Tool 列表
+echo.
+echo [1] Batch Clean Tool version 1.0 
+echo 别名：clean
+echo [2] Custom Tool Genius 1.0
+echo 别名：无
+if "%custom-tool-enabled%"=="true" echo [3] %custom-tool-nameg%
+if "%custom-tool-enabled%"=="true" echo 别名：%custom-tool-name%
+pause
+goto main
+:tool.add
+title Tool 添加
+echo 绑定可用的CMD程序
+set /p custom-tool-path=Tool 的路径^>
+echo 已设置 Tool 的路径为 %custom-tool-path%
+echo PS: Tool 的名称会展示在Tool 列表中。
+set /p custom-tool-nameg=Tool 的名称^>
+echo 已设置 Tool 的名称为%custom-tool-nameg%
+echo PS: Tool 的别名会使用在指令中。
+set /p custom-tool-name=Tool 的别名^>
+echo 核对中...
+echo.
+echo Tool 路径: %custom-tool-path%
+echo Tool 名称：%custom-tool-nameg%
+echo Tool 别名：%custom-tool-name%
+set /p test=这些信息是否正确？(y/n):
+if "%test%"=="y" goto tool.add-modify
+goto main
+:tool.add-modify
+echo Tool Enabled. > %nowpath%\data\files\custom.toolsave
+echo Tool Path > %nowpath%\data\tools\custom-tool-path.file
+echo "%custom-tool-path%" >> %nowpath%\data\tools\custom-tool-path.file
+echo Tool Name > %nowpath%\data\tools\custom-tool-name.file
+echo %custom-tool-nameg% >> %nowpath%\data\tools\custom-tool-name.file
+echo Tool Usage Name > %nowpath%\data\tools\custom-tool-usagename.file
+echo %custom-tool-name% >> %nowpath%\data\tools\custom-tool-usagename.file
+set custom-tool-enabled=true
+echo 成功写入。
+echo Tool 载入完成，现在输入 tool %custom-tool-name% 来启动你的自定义程序。
 goto int
 
 :startup.choose
@@ -314,7 +485,8 @@ echo 许多指令在这里得到简化，但依然会有很多的缺陷，
 echo 加之本程序很简陋，有待维护与发展。
 echo.
 echo 感谢您一直以来的支持，感谢您下载了本程序。
-echo 独家首发：Bat 展示讨论群。
+echo 作者博客：https://subilan.win/
+echo Github: https://github.com/Subilan/Batch-Console-Alpha
 pause
 goto main
 
@@ -331,15 +503,11 @@ goto int
 ::Config
 :log.cfg
 echo [UpdateLog Config]
-echo v0.5 更新日志信息
-echo 这是...今年最小的更新哦！
-echo 增添小指令：
-echo - startup 设置开机启动
-echo 取消 Devmode。
-echo 取消 Netmode。
-echo 取消的模式的指令会被转移到主程序（main），可能出现些许Bug。
-echo 添加 help 指令的参数（其实cmd已经存在了只是没有提到）
-echo 以及一些看不到的源码优化。
+echo v0.6 更新日志
+echo - 新增 tool 工具包，输入tool -?
+echo - 新增自定义主题，输入color -?
+echo - 新增 goto 函数库指令，输入goto -?
+echo 小部分的 Bug 改进。
 goto int
 :sys.cfg
 echo [System Config]
@@ -1128,6 +1296,33 @@ echo 目前可用的附带参数有：
 echo ?和cmd
 echo 不带参数代表显示BC内部的帮助。
 goto int
+:tool.help
+echo Usage: TOOL [-ADD/-LIST / (CUSTOM TOOL NAME)]
+echo 进行工具的调用，在作者下一次更新工具之前，你可以自定义一个小工具
+echo 并且使它出现在Tool List中且可被 call 调用。
+echo 使用 -add 参数来添加一个自定义bat工具。
+goto int
+:color.help
+echo Usage: COLOR [THEMENAME / ATTR]
+echo 自定义主程序 main 页面的主题颜色。
+echo 目前内置了可代替ATTR的英文，如
+echo yellow-milk 或者 coding 等
+echo 如果你不习惯用英文，依然可以用ATTR或set指令。
+goto int
+:: 暂时搁置
+:edit.help
+echo Usage: EDIT [VAR / PARAMETER] [STRING]
+echo 编辑 Batch Console 的内部变量以达到不一样的效果。
+echo 起初是无法使用 set 指令直接编辑批处理内部变量的，现在可以了。
+echo 参数 -list 可以列出当前版本中所有的内置变量。
+echo 但是，此编辑是临时性的，当你重新打开本程序后，原先存储的将会被重新读取，未存储的将会丢失。
+goto int
+:goto.help
+echo Usage: GOTO [FUNCTION / PARAMETER]
+echo 跳至 Batch Console 的一个函数。
+echo 参数 -list 可以列出当前版本中的所有内置函数。
+echo 警告：不推荐使用此指令，因为可能造成程序崩溃或不稳定。
+goto int
 
 :comload
 if exist %nowpath%data\commands\commandname.load goto continue.comload
@@ -1396,3 +1591,15 @@ if "%wim%"=="-?" wmic -?
 wmic %wim%
 goto sol
 
+:toolload
+if not exist "%nowpath%\data\tools\custom-tool-name.file" set custom-tool-enabled=false & del %nowpath%\data\files\custom.toolsave & goto toolload.back
+if not exist "%nowpath%\data\tools\custom-tool-usagename.file" set custom-tool-enabled=false & del %nowpath%\data\files\custom.toolsave & goto toolload.back
+if not exist "%nowpath%\data\tools\custom-tool-path.file" set custom-tool-enabled=false & del %nowpath%\data\files\custom.toolsave & goto toolload.back
+call :ReadSpecialLine "%nowpath%\data\tools\custom-tool-name.file" 1 custom-tool-nameg
+set custom-tool-nameg=%custom-tool-nameg:~0,-1%
+call :ReadSpecialLine "%nowpath%\data\tools\custom-tool-usagename.file" 1 custom-tool-name
+set custom-tool-name=%custom-tool-name:~0,-1%
+call :ReadSpecialLine "%nowpath%\data\tools\custom-tool-path.file" 1 custom-tool-path
+set custom-tool-path=%custom-tool-path:~0,-1%
+set custom-tool-enabled=true
+goto toolload.back
