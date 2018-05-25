@@ -1,41 +1,12 @@
-::[Bat To Exe Converter]
-::
-::YAwzoRdxOk+EWAjk
-::fBw5plQjdCyDJGyX8VAjFEoMGFfbAFuzBaEJ+u3o08iGtk4VaMBqNobY1dQ=
-::YAwzuBVtJxjWCl3EqQJgSA==
-::ZR4luwNxJguZRRnk
-::Yhs/ulQjdF+5
-::cxAkpRVqdFKZSDk=
-::cBs/ulQjdF+5
-::ZR41oxFsdFKZSDk=
-::eBoioBt6dFKZSDk=
-::cRo6pxp7LAbNWATEpCI=
-::egkzugNsPRvcWATEpCI=
-::dAsiuh18IRvcCxnZtBJQ
-::cRYluBh/LU+EWAnk
-::YxY4rhs+aU+JeA==
-::cxY6rQJ7JhzQF1fEqQJQ
-::ZQ05rAF9IBncCkqN+0xwdVs0
-::ZQ05rAF9IAHYFVzEqQJQ
-::eg0/rx1wNQPfEVWB+kM9LVsJDGQ=
-::fBEirQZwNQPfEVWB+kM9LVsJDGQ=
-::cRolqwZ3JBvQF1fEqQJQ
-::dhA7uBVwLU+EWDk=
-::YQ03rBFzNR3SWATElA==
-::dhAmsQZ3MwfNWATElA==
-::ZQ0/vhVqMQ3MEVWAtB9wSA==
-::Zg8zqx1/OA3MEVWAtB9wSA==
-::dhA7pRFwIByZRRnk
-::Zh4grVQjdCyDJGyX8VAjFEoMGFfbAE+/Fb4I5/jHzeuToUVdd+0xa4DX3/SYcK5FqnaqcI4otg==
-::YB416Ek+ZW8=
-::
-::
-::978f952a14a936cc963da21a135fa983
 :: Base64 Verify
 :: 最后修改：2018/5/11
 ::NEVER RELOAD BY
 set custom-tool-enabled=false
 :reload
+set ext-root=false
+set "newcommandsenabled-chinese=禁用"
+set "quickdeleteenabled-chinese=禁用"
+set "outputsystemerrorenabled-chinese=禁用"
 set pi=3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
 set sqrtt=1.4142135623730950488016887242096980785696718753769480731766797379907324784621070388503875343276415727
 set e=2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274
@@ -50,6 +21,8 @@ set color=0F
 set enablenewcommand=false
 set newcommand= 
 set errormessage.bool=false
+if exist %nowpath%data\files\rootLoad.save set ext-root=true
+if exist %nowpath%data\files\extDev.save set ext-root=3
 if exist %nowpath%data\files\errormessage.save set errormessage.bool=true & goto errmsgload
 if exist %nowpath%data\files\custom.toolsave goto toolload
 :errmsg.back
@@ -71,9 +44,9 @@ md %nowpath%data\tools
 :inv
 echo invalid unicode preview. > C:\consetInfo.set
 cd.> %systemdrive%\Windows\System32\test.txt || set unman=true
-if "%unman%"=="false" del %systemdrive%\Windows\System32\test.txt 1>nul 2>nul
+if /i "%unman%"=="false" del %systemdrive%\Windows\System32\test.txt 1>nul 2>nul
 del %systemdrive%\Windows\System32\test.txt
-if "%return%"=="0" goto return.zero
+if /i "%return%"=="0" goto return.zero
 cls
 title Batch Console
 :setcon
@@ -85,8 +58,8 @@ set fnum=1
 set listnum=1
 ::SETTINGS
 if exist C:\svd\savebackTrue.svd set saveback=true & goto skipr
-if exist C:\svd\opseTrue.svd set outputsystemerror=true & set func.outputsystemerror=  & goto skipr
-if exist C:\svd\qdFalse.svd set quickdelete=false & set func.quickdelete=  & goto skipr
+if exist C:\svd\opseTrue.svd set outputsystemerror=true & set func.outputsystemerror=  & set outputsystemerrorenabled-chinese=启用& goto skipr
+if exist C:\svd\qdFalse.svd set quickdelete=false & set func.quickdelete=  & set quickdeleteenabled-chinese=启用& goto skipr
 set quickdelete=true
 set func.quickdelete=/f /q
 set outputsystemerror=false
@@ -101,76 +74,78 @@ cls
 :resolve
 if exist %nowpath%data\commands\commanding.load goto comload
 :comload.back
-if "%unman%"=="true" echo 当前可能无法使用管理员权限，可能会影响部分功能的正确执行。
-echo Batch Console [v0.6]
+if /i "%unman%"=="true" echo 当前可能无法使用管理员权限，可能会影响部分功能的正确执行。
+echo Batch Console [v0.7]
 echo 输入 help 查看帮助
 :int
 color %color%
 title Batch Console
-if "%unman%"=="true" title Batch Console - Non Admin
+if /i "%unman%"=="true" title Batch Console - Non Admin
 set /p con=%username%~^>
-if "%con%"=="github" start https://github.com/Subilan/Batch-Console-Alpha & echo 已打开本程序开源页面。 & goto int
-if "%con%"=="blog" start https://subilan.win/ & echo 已打开作者博客。 & goto int
-if "%con%"=="build" start https://build.subilan.win/ & echo 已打开构建页面。 & goto int
-if "%con%"=="minecraft" start https://mc.subilan.win/ & echo 震惊...你居然？！ & goto int
+if /i "%con%"=="github" start https://github.com/Subilan/Batch-Console-Alpha & echo 已打开本程序开源页面。 & goto int
+if /i "%con%"=="blog" start https://subilan.win/ & echo 已打开作者博客。 & goto int
+if /i "%con%"=="build" start https://build.subilan.win/ & echo 已打开构建页面。 & goto int
+if /i "%con%"=="minecraft" start https://mc.subilan.win/ & echo 震惊...你居然？！ & goto int
 :: 这是我开的一个小型Minecraft服务器啦...有兴趣可以玩玩或者了解一下。
-if "%con%"=="help" goto help
-if "%con%"=="?" goto help
-if "%con%"=="lab" goto lab
-if "%con:~0,4%"=="tool" goto tool.choose
-if "%con:~0,4%"=="mode" goto mode.choose
-if "%con:~0,9%"=="setoutput" goto setoutput
-if "%con:~0,6%"=="output" goto output.choose
-if "%con%"=="echo off" echo 无法关闭回显。 & goto int
-if "%con%"=="echo on" echo 无法打开回显。 & goto int
-if "%con%"=="@echo off" echo 无法关闭回显。 & goto int
-if "%con%"=="@echo on" echo 无法打开回显。 & goto int
-if "%con%"=="cls" echo 无法清屏。 & goto int
-if "%con:~0,4%"=="goto" goto goto.choose
-if "%con:~0,3%"=="ftp" goto int
-if "%con:~0,7%"=="control" goto control.choose
-if "%con:~0,3%"=="del" goto del.faster
-if "%con:~0,8%"=="setlocal" echo SETLOCAL 已完全初始化。 & goto int
-if "%con:~0,3%"=="set" goto set.choose
-if "%con%"=="reload" goto reload.sure
-if "%con:~0,5%"=="color" goto color.choose
-if "%con%"=="help-cmd" help & goto int
-if "%con%"=="help -cmd" help & goto int
-if "%con%"=="help -?" goto help.help
-if "%con:~0,2%"=="do" goto do.choose
-if "%con:~0,6%"=="config" goto cfg.choose
-if "%con%"=="about" goto about
-if "%con:~0,4%"=="make" goto make.choose
-if "%con%"=="dcom" goto dcom
-if "%con:~0,5%"=="sleep" goto sleep
-if "%con:~0,9%"=="hibernate" goto hib
-if "%con:~0,8%"=="shutdown" goto shutdown
-if "%con:~0,7%"=="reboot" goto restart
-if "%con:~0,4%"=="open" goto open.choose
-if "%con:~0,8%"=="function" goto func.choose
-if "%con:~0,5%"=="clear" goto clear
-if "%con:~0,5%"=="debug" goto debug.choose
-if "%con:~0,4%"=="test" goto test.choose
-if "%con:~0,5%"=="uping" goto unlimitedPing
-if "%con:~0,3%"=="ftp" goto ftp
-if "%con:~0,7%"=="startup" goto startup.choose
-if "%con%"=="sping" goto sping
-if "%con%"=="wmic" echo 禁止内部切换：WMIC & goto int
-if "%con%"=="cmd" echo 禁止内部切换：CMD & goto int
-if "%enablenewcommand%"=="false" goto enter
-if "%con%"=="%commandnamem%" %commandinm% & goto int
+if /i "%con%"=="help" goto help
+if /i "%con%"=="?" goto help
+if /i "%con:~0,4%"=="tool" goto tool.choose
+if /i "%con:~0,4%"=="mode" goto mode.choose
+if /i "%con:~0,9%"=="setoutput" goto setoutput
+if /i "%con:~0,6%"=="output" goto output.choose
+if /i "%con%"=="echo off" echo 无法关闭回显。 & goto int
+if /i "%con%"=="echo on" echo 无法打开回显。 & goto int
+if /i "%con%"=="@echo off" echo 无法关闭回显。 & goto int
+if /i "%con%"=="@echo on" echo 无法打开回显。 & goto int
+if /i "%con%"=="cls" echo 无法清屏。 & goto int
+if /i "%con:~0,4%"=="goto" goto goto.choose
+if /i "%con:~0,3%"=="ftp" goto int
+if /i "%con:~0,7%"=="control" goto control.choose
+if /i "%con:~0,3%"=="del" goto del.faster
+if /i "%con:~0,8%"=="setlocal" echo SETLOCAL 已完全初始化。 & goto int
+if /i "%con:~0,3%"=="set" goto set.choose
+if /i "%con%"=="reload" goto reload.sure
+if /i "%con:~0,5%"=="color" goto color.choose
+if /i "%con%"=="help-cmd" help & goto int
+if /i "%con%"=="help -cmd" help & goto int
+if /i "%con%"=="help -?" goto help.help
+if /i "%con:~0,2%"=="do" goto do.choose
+if /i "%con:~0,6%"=="config" goto cfg.choose
+if /i "%con%"=="about" goto about
+if /i "%con:~0,4%"=="make" goto make.choose
+if /i "%con%"=="dcom" goto dcom
+if /i "%con:~0,5%"=="sleep" goto sleep
+if /i "%con:~0,9%"=="hibernate" goto hib
+if /i "%con:~0,8%"=="shutdown" goto shutdown
+if /i "%con:~0,7%"=="reboot" goto restart
+if /i "%con:~0,4%"=="open" goto open.choose
+if /i "%con:~0,8%"=="function" goto func.choose
+if /i "%con:~0,5%"=="clear" goto clear
+if /i "%con:~0,5%"=="debug" goto debug.choose
+if /i "%con:~0,4%"=="test" goto test.choose
+if /i "%con:~0,5%"=="uping" goto unlimitedPing
+if /i "%con:~0,3%"=="ftp" goto ftp
+if /i "%con:~0,7%"=="startup" goto startup.choose
+if /i "%con%"=="ext" goto extensions
+if /i "%con%"=="extensions" goto extensions
+if /i "%con%"=="extension" echo 检查拼写: Extension+s & goto int
+if /i "%con%"=="sping" goto sping
+if /i "%con%"=="wmic" echo 禁止内部切换：WMIC & goto int
+if /i "%con%"=="cmd" echo 禁止内部切换：CMD & goto int
+if /i "%enablenewcommand%"=="false" goto enter
+if /i "%con%"=="%commandnamem%" %commandinm% & goto int
 :enter
 %con% %func.outputsystemerror%
 set con= 
 goto int
 
 :goto.choose
-if "%con:~5%"=="" echo 不能跳转至空白标签。 & goto int
-if "%con:~5%"==" " echo 不能跳转至空白标签。 & goto int
-if "%con:~5%"=="-?" goto goto.help
-if "%con:~5%"=="-list" goto goto.list
+if /i "%con:~5%"=="" echo 不能跳转至空白标签。 & goto int
+if /i "%con:~5%"==" " echo 不能跳转至空白标签。 & goto int
+if /i "%con:~5%"=="-?" goto goto.help
+if /i "%con:~5%"=="-list" goto goto.list
 set /p test=是否确认跳转至%con:~5%?(y/n)^>
-if "%test%"=="y" goto %con:~5%
+if /i "%test%"=="y" goto %con:~5%
 echo 用户取消或输入不正确。
 goto int
 :goto.list
@@ -193,6 +168,7 @@ echo do -DO函数
 echo debug -调试函数
 echo show -展示函数
 echo log -日志函数
+echo extensions -EXT函数
 echo -----
 echo 分函数
 echo choose -判定函数
@@ -208,23 +184,23 @@ pause
 goto main
 
 :color.choose
-if "%con:~6%"=="-?" goto color.help
-if "%con:~6%"=="0" echo 不能将 COLOR 设置为0
-if "%con:~6%"=="yellow-milk" set color=FE & goto main
-if "%con:~6%"=="coding" set color=0A & goto main
-if "%con:~6%"=="blood" set color=C4 & goto main
-if "%con:~6%"=="tomato" set color=CF & goto main
+if /i "%con:~6%"=="-?" goto color.help
+if /i "%con:~6%"=="0" echo 不能将 COLOR 设置为0
+if /i "%con:~6%"=="yellow-milk" set color=FE & goto main
+if /i "%con:~6%"=="coding" set color=0A & goto main
+if /i "%con:~6%"=="blood" set color=C4 & goto main
+if /i "%con:~6%"=="tomato" set color=CF & goto main
 color %con:~6%
 set color=%con:~6%
 goto main
 
 :tool.choose
-if "%con:~0,5%"=="tools" echo 请检查拼写：tool(没有s) & goto int
-if "%con:~5%"=="-?" goto tool.help
-if "%con:~5%"=="-list" goto tool.list
-if "%con:~5%"=="-add" goto tool.add
-if "%con:~5%"=="clean" goto toolmain-clean
-if "%con:~5%"=="%custom-tool-name%" call "%custom-tool-path%"
+if /i "%con:~0,5%"=="tools" echo 请检查拼写：tool(没有s) & goto int
+if /i "%con:~5%"=="-?" goto tool.help
+if /i "%con:~5%"=="-list" goto tool.list
+if /i "%con:~5%"=="-add" goto tool.add
+if /i "%con:~5%"=="clean" goto toolmain-clean
+if /i "%con:~5%"=="%custom-tool-name%" call "%custom-tool-path%"
 echo %con:~5% 不是可用的 Tool
 goto int
 :toolmain-clean
@@ -271,7 +247,7 @@ echo 已清除 Gid 数据
 ping 127.0.0.1 -n 1 >nul
 echo 已清除 user_Recent 数据
 ping 127.0.0.1 -n 1 >nul
-echo 已清除 user_TIF 数据
+echo 已清除 user_Tif 数据
 ping 127.0.0.1 -n 1 >nul
 echo 已清除 user_TEMP 数据
 ping 127.0.0.1 -n 2 >nul
@@ -288,8 +264,8 @@ echo [1] Batch Clean Tool version 1.0
 echo 别名：clean
 echo [2] Custom Tool Genius 1.0
 echo 别名：无
-if "%custom-tool-enabled%"=="true" echo [3] %custom-tool-nameg%
-if "%custom-tool-enabled%"=="true" echo 别名：%custom-tool-name%
+if /i "%custom-tool-enabled%"=="true" echo [3] %custom-tool-nameg%
+if /i "%custom-tool-enabled%"=="true" echo 别名：%custom-tool-name%
 pause
 goto main
 :tool.add
@@ -308,7 +284,7 @@ echo Tool 路径: %custom-tool-path%
 echo Tool 名称：%custom-tool-nameg%
 echo Tool 别名：%custom-tool-name%
 set /p test=这些信息是否正确？(y/n):
-if "%test%"=="y" goto tool.add-modify
+if /i "%test%"=="y" goto tool.add-modify
 goto main
 :tool.add-modify
 echo Tool Enabled. > %nowpath%\data\files\custom.toolsave
@@ -324,8 +300,8 @@ echo Tool 载入完成，现在输入 tool %custom-tool-name% 来启动你的自定义程序。
 goto int
 
 :startup.choose
-if "%con:~8%"=="-?" goto startup.help
-if "%unman%"=="true" goto managementerror
+if /i "%con:~8%"=="-?" goto startup.help
+if /i "%unman%"=="true" goto managementerror
 echo 该项可能引起杀软的阻止，按照自己的需求决定。
 echo copy %con:~8% "%systemdrive%\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\"
 copy "%con:~8%" "%systemdrive%\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\" || echo 复制失败：阻止。 & goto int
@@ -333,8 +309,8 @@ echo 成功添加启动项 %con:~8%
 goto int
 
 :open.choose
-if "%con:~5%"=="-?" goto open.help
-if "%con:~5%"=="/?" goto open.help
+if /i "%con:~5%"=="-?" goto open.help
+if /i "%con:~5%"=="/?" goto open.help
 if /i "%con:~5%"=="font" start %systemdrive%\Windows\Fonts & goto int
 if /i "%con:~5%"=="fonts" start %systemdrive%\Windows\Fonts & goto int
 if /i "%con:~5%"=="字体" start %systemdrive%\Windows\Fonts & goto int
@@ -354,24 +330,24 @@ if /i "%con:~5%"=="32" start %systemdrive%\Windows\System32 & goto int
 if /i "%con:~5%"=="system64" start %systemdrive%\Windows\SysWOW64 & goto int
 if /i "%con:~5%"=="64" start %systemdrive%\Windows\SysWOW64 & goto int
 if /i "%con:~5%"=="syswow64" start %systemdrive%\Windows\SysWOW64 & goto int
-if /i "%con:~5%"=="programs32" start "%systemdrive%\Program Files (x86)" & goto int
-if /i "%con:~5%"=="programfiles32" start "%systemdrive%\Program Files (x86)" & goto int
-if /i "%con:~5%"=="program files32" start "%systemdrive%\Program Files (x86)" & goto int
-if /i "%con:~5%"=="program file32" start "%systemdrive%\Program Files (x86)" & goto int
-if /i "%con:~5%"=="program32" start "%systemdrive%\Program Files (x86)" & goto int
-if /i "%con:~5%"=="软件32" start "%systemdrive%\Program Files (x86)" & goto int
-if /i "%con:~5%"=="programs64" start "%systemdrive%\Program Files" & goto int
-if /i "%con:~5%"=="programfiles64" start "%systemdrive%\Program Files" & goto int
-if /i "%con:~5%"=="program files64" start "%systemdrive%\Program Files" & goto int
-if /i "%con:~5%"=="program file64" start "%systemdrive%\Program Files" & goto int
-if /i "%con:~5%"=="program64" start "%systemdrive%\Program Files" & goto int
-if /i "%con:~5%"=="软件64" start "%systemdrive%\Program Files" & goto int
-if /i "%con:~5%"=="programs" start "%systemdrive%\Program Files" & goto int
-if /i "%con:~5%"=="program files" start "%systemdrive%\Program Files" & goto int
-if /i "%con:~5%"=="program file" start "%systemdrive%\Program Files" & goto int
-if /i "%con:~5%"=="programfiles" start "%systemdrive%\Program Files" & goto int
-if /i "%con:~5%"=="program" start "%systemdrive%\Program Files" & goto int
-if /i "%con:~5%"=="软件" start "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="programs32" start "" "%systemdrive%\Program Files (x86)" & goto int
+if /i "%con:~5%"=="programfiles32" start "" "%systemdrive%\Program Files (x86)" & goto int
+if /i "%con:~5%"=="program files32" start "" "%systemdrive%\Program Files (x86)" & goto int
+if /i "%con:~5%"=="program file32" start "" "%systemdrive%\Program Files (x86)" & goto int
+if /i "%con:~5%"=="program32" start "" "%systemdrive%\Program Files (x86)" & goto int
+if /i "%con:~5%"=="软件32" start "" "%systemdrive%\Program Files (x86)" & goto int
+if /i "%con:~5%"=="programs64" start "" "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="programfiles64" start "" "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="program files64" start "" "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="program file64" start "" "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="program64" start "" "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="软件64" start "" "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="programs" start "" "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="program files" start "" "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="program file" start "" "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="programfiles" start "" "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="program" start "" "%systemdrive%\Program Files" & goto int
+if /i "%con:~5%"=="软件" start "" "%systemdrive%\Program Files" & goto int
 if /i "%con:~5%"=="old" start %systemdrive%\Windows.old & goto int
 if /i "%con:~5%"=="windows.old" start %systemdrive%\Windows.old & goto int
 if /i "%con:~5%"=="oldwindows" start %systemdrive%\Windows.old & goto int
@@ -392,26 +368,29 @@ if /i "%con:~5%"=="appdata" start %userprofile%\AppData\ & goto int
 if /i "%con:~5%"=="roaming" start %AppData% & goto int
 if /i "%con:~5%"=="local" start %userprofile%\AppData\Local & goto int
 if /i "%con:~5%"=="locallow" start %userprofile%\AppData\LocalLow & goto int
+if /i "%con:~5%"=="startup" start "" "%systemdrive%\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp" & goto int
+if /i "%con:~5%"=="programdata" start %systemdrive%\ProgramData\ & goto int
+if /i "%con:~5%"=="开始菜单" start "" "%systemdrive%\ProgramData\Microsoft\Windows\Start Menu\" & goto int
 echo 找不到 %con:~5%
 goto int
 
 :restart
-if "%con:~7%"=="-o" shutdown -r -o
-if "%con:~7%"=="/o" shutdown -r -o
-if "%con:~7%"=="-?" goto reboot.help
-if "%con:~7%"=="/?" goto reboot.help
+if /i "%con:~7%"=="-o" shutdown -r -o
+if /i "%con:~7%"=="/o" shutdown -r -o
+if /i "%con:~7%"=="-?" goto reboot.help
+if /i "%con:~7%"=="/?" goto reboot.help
 shutdown -r -t 0
 :shutdown
-if "%con:~9%"=="-?" goto shutdown.help
-if "%con:~9%"=="/?" goto shutdown.help
+if /i "%con:~9%"=="-?" goto shutdown.help
+if /i "%con:~9%"=="/?" goto shutdown.help
 shutdown -s -t 0
 :hib
-if "%con:~10%"=="-?" goto hibernate.help
-if "%con:~10%"=="/?" goto hibernate.help
+if /i "%con:~10%"=="-?" goto hibernate.help
+if /i "%con:~10%"=="/?" goto hibernate.help
 shutdown -h
 :sleep
-if "%con:~6%"=="-?" goto sleep.help
-if "%con:~6%"=="/?" goto sleep.help
+if /i "%con:~6%"=="-?" goto sleep.help
+if /i "%con:~6%"=="/?" goto sleep.help
 powercfg -h off 1>nul 2>nul
 rundll32.exe powrprof.dll,SetSuspendState 0,1,0
 powercfg -h on 1>nul 2>nul
@@ -423,7 +402,7 @@ echo 目前不存在被定义的指令。
 goto int
 :dcc
 set /p yn=删除(y/n):
-if "%yn%"=="y" goto delcommand
+if /i "%yn%"=="y" goto delcommand
 echo 用户取消操作。
 goto int
 :delcommand
@@ -434,10 +413,10 @@ set enablenewcommand=false
 goto int
 
 :make.choose
-if "%con:~5,3%"=="dir" goto makedir
-if "%con:~5,3%"=="com" goto makecom
-if "%con:~5%"=="-?" goto make.help
-if "%con:~5%"=="/?" goto make.help
+if /i "%con:~5,3%"=="dir" goto makedir
+if /i "%con:~5,3%"=="com" goto makecom
+if /i "%con:~5%"=="-?" goto make.help
+if /i "%con:~5%"=="/?" goto make.help
 echo %con:~5% 不是有效的 make 参数。
 goto int
 
@@ -448,7 +427,7 @@ echo 目前正在编辑%command%
 set /p commc=
 echo 是否确定将%command%的效用内容存储为%commc%？
 set /p yn=(y/n):
-if "%yn%"=="y" goto savecom
+if /i "%yn%"=="y" goto savecom
 echo 已放弃编辑 %con:~9%。
 goto int
 :savecom
@@ -487,27 +466,38 @@ echo.
 echo 感谢您一直以来的支持，感谢您下载了本程序。
 echo 作者博客：https://subilan.win/
 echo Github: https://github.com/Subilan/Batch-Console-Alpha
+echo.
+echo 鸣谢: 某人 会飞的胖鱼Flying(Flyfish233)
 pause
 goto main
 
 :cfg.choose
-if "%con:~7%"=="system" goto sys.cfg
-if "%con:~7%"=="user" goto user.cfg
-if "%con:~7%"=="hardware" goto hdw.cfg
-if "%con:~7%"=="/?" goto cfg.help
-if "%con:~7%"=="-?" goto cfg.help
-if "%con:~7%"=="log" goto log.cfg
+if /i "%con:~7%"=="system" goto sys.cfg
+if /i "%con:~7%"=="user" goto user.cfg
+if /i "%con:~7%"=="hardware" goto hdw.cfg
+if /i "%con:~7%"=="/?" goto cfg.help
+if /i "%con:~7%"=="-?" goto cfg.help
+if /i "%con:~7%"=="log" goto log.cfg
 echo 无效的参数 %con:~7%
 goto int
 
 ::Config
 :log.cfg
 echo [UpdateLog Config]
-echo v0.6 更新日志
-echo - 新增 tool 工具包，输入tool -?
-echo - 新增自定义主题，输入color -?
-echo - 新增 goto 函数库指令，输入goto -?
-echo 小部分的 Bug 改进。
+echo v0.7 更新日志
+echo - open 指令可打开项增加
+echo · 修复 open 指令无法打开部分目录的Bug。
+echo - Batch Calc 功能性加强
+echo · Ivy Project - 大数据加法运算！(BETA)
+echo · 这个功能开创了无set /a计算的新时代。
+echo - Extensions Beta 加入！
+echo · 使用 ext 或 extensions
+echo · 这是 Batch Console 最重大的功能性实现
+echo · 可能耗时好几个版本，并且预计在1.X时完成
+echo · 目前只是雏形，并无实际用处。
+echo - Settings 界面加入
+echo · 用户可以不使用指令而修改设置，使用 set -gui 
+echo - 增加大小写支持
 goto int
 :sys.cfg
 echo [System Config]
@@ -544,7 +534,7 @@ setlocal
 for /f "delims=" %%a in ('more +%2 %1') do endlocal&set "%3=%%a"&goto:eof
 
 :hdw.cfg
-if "%unman%"=="true" echo 权限不足。 & goto int
+if /i "%unman%"=="true" echo 权限不足。 & goto int
 echo [Hardware Config]
 echo 加载中...
 echo Wmic Diskdrive get Command~^>
@@ -589,12 +579,12 @@ del C:\cpuname.txt
 goto int
 
 :do.choose
-if "%con:~3,2%"=="-l" goto do.loop
-if "%con:~3,2%"=="-t" goto do.till
-if "%con:~3,2%"=="/l" goto do.loop
-if "%con:~3,2%"=="/t" goto do.till
-if "%con:~3,2%"=="/?" goto do.help
-if "%con:~3,2%"=="-?" goto do.help
+if /i "%con:~3,2%"=="-l" goto do.loop
+if /i "%con:~3,2%"=="-t" goto do.till
+if /i "%con:~3,2%"=="/l" goto do.loop
+if /i "%con:~3,2%"=="/t" goto do.till
+if /i "%con:~3,2%"=="/?" goto do.help
+if /i "%con:~3,2%"=="-?" goto do.help
 echo DO.CHH 未知参数或指令错误。
 goto int
 
@@ -604,8 +594,8 @@ goto int
 set a=6
 set zl=%con%
 :xh
-if "!zl:~%a%,1!"==" " goto over
-if "!zl:~%a%,1!"=="" goto err
+if /i "!zl:~%a%,1!"==" " goto over
+if /i "!zl:~%a%,1!"=="" goto err
 set /a a=%a%+1
 goto xh
 :over
@@ -618,7 +608,7 @@ set loops=!zl:~6,%a%!
 ::数字部分
 :doit
 set /a time=%time%+1
-if "%time%"=="%loops%" goto dol.comp
+if /i "%time%"=="%loops%" goto dol.comp
 %comm%
 goto doit
 
@@ -637,7 +627,7 @@ echo 输入 change [COMMAND] 以切换
 set comm=%con:~6%
 :till
 set /p tills=
-if "%tills%"=="back" goto int
+if /i "%tills%"=="back" goto int
 %comm%
 goto till
 
@@ -645,7 +635,7 @@ goto till
 echo 确定重新载入数据?
 echo 这会删除您的所有设置与资料。(不包括已保存的)
 set /p yn=(Y/N)^>
-if "%yn%"=="y" goto reload
+if /i "%yn%"=="y" goto reload
 goto main
 
 :del.faster
@@ -653,28 +643,68 @@ del %con:~4% %func.quickdelete%
 goto int
 
 :set.choose
-if "%unman%"=="true" echo fatal: managementerror 无权限。 & goto int
-if "%con:~4%"=="errormsg -?" goto errmsg.set.help
-if "%con:~4%"=="color -?" goto color.set.help
-if "%con:~4%"=="quickdelete -?" goto quickdelete.help
-if "%con:~4%"=="outputsystemerror -?" goto outputsystemerror.help
-if "%con:~4%"=="loops -?" goto loopset.help
-if "%con:~4,8%"=="errormsg" goto errmsg.set
-if "%con:~4,5%"=="color" goto color.set
-if "%con:~4,11%"=="quickdelete" goto quickdelete
-if "%con:~4,17%"=="outputsystemerror" goto outputsystemerror
-if "%con:~4,5%"=="loops" goto loopset
-if "%con:~4,16%"=="enablenewcommand" goto enablenewcommands
-if "%con:~4%"=="/?" goto set.help
-if "%con:~4%"=="-?" goto set.help
+if /i "%unman%"=="true" echo fatal: managementerror 无权限。 & goto int
+if /i "%con:~4%"=="errormsg -?" goto errmsg.set.help
+if /i "%con:~4%"=="color -?" goto color.set.help
+if /i "%con:~4%"=="quickdelete -?" goto quickdelete.help
+if /i "%con:~4%"=="outputsystemerror -?" goto outputsystemerror.help
+if /i "%con:~4%"=="loops -?" goto loopset.help
+if /i "%con:~4,8%"=="errormsg" goto errmsg.set
+if /i "%con:~4,5%"=="color" goto color.set
+if /i "%con:~4,11%"=="quickdelete" goto quickdelete
+if /i "%con:~4,17%"=="outputsystemerror" goto outputsystemerror
+if /i "%con:~4,5%"=="loops" goto loopset
+if /i "%con:~4,16%"=="enablenewcommand" goto enablenewcommands
+if /i "%con:~4%"=="/?" goto set.help
+if /i "%con:~4%"=="-?" goto set.help
+if /i "%con:~4%"=="-gui" goto settings
 %con%
 goto int
 
 ::settings
+::GUI
+:settings
+title Settings - 设置
+cls
+echo 设置 - GUI
+echo 帮助 help 当前可用。
+echo [1] 自定义指令 bc.custom-commands.bool (当前:%newcommandsenabled-chinese%)
+echo [2] 快速删除 bc.quickdelete.bool (当前:%quickdeleteenabled-chinese%)
+echo [3] 输出系统错误 bc.output.systemerror.bool (当前:%outputsystemerrorenabled-chinese%)
+echo [4] 错误信息设置 bc.var.errormessage $string
+:set.choose-insert
+set /p setc=CHOOSE~^>
+if /i "%setc%"=="back" goto main
+if /i "%setc%"=="help" goto settings.help
+if /i "%setc:~0,1%"=="1" if /i "%setc:~2%"=="true" set enablenewcommand=true & set newcommandsenabled-chinese=禁用& echo 已启用自定义指令。 & goto set.choose-insert
+if /i "%setc:~0,1%"=="1" if /i "%setc:~2%"=="false" set enablenewcommand=false & set newcommandsenabled-chinese=启用& echo 已禁用自定义指令。  & goto set.choose-insert
+if /i "%setc:~0,1%"=="2" if /i "%setc:~2%"=="true" set quickdelete=true & set quickdeleteenabled-chinese=启用& echo 已启用快速删除 & set func.quickdelete=/f /q & del C:\svd\qdFalse.svd 1>nul 2>nul & goto set.choose-insert
+if /i "%setc:~0,1%"=="2" if /i "%setc:~2%"=="false" set quickdelete=false & set quickdeleteenabled-chinese=禁用& echo 已禁用快速删除 & set func.quickdelete=  & echo cannot view the file in dos mode > C:\svd\qdFalse.svd & goto set.choose-insert
+if /i "%setc:~0,1%"=="3" if /i "%setc:~2%"=="true" set outputsystemerror=true & set outputsystemerrorenabled-chinese=启用& set func.outputsystemerror= & echo 已启用输出系统错误 & echo unkown host. > C:\svd\opseTrue.svd & goto set.choose-insert
+if /i "%setc:~0,1%"=="3" if /i "%setc:~2%"=="false" set outputsystemerror=false & set outputsystemerrorenabled-chinese=禁用& set func.outputsystemerror=2^>nul ^|^| goto error & echo 已禁用输出系统错误 & del C:\svd\opseTrue.svd 1>nul 2>nul & goto set.choose-insert
+if /i "%setc:~0,1%"=="4" goto settings.errormessage
+echo unknown usage.
+goto set.choose-insert
+:settings.help
+echo Usage: [No.] [BOOL] / [No.]
+echo 输入指定的序号后输入布尔值。
+echo 如要禁用快速删除[2]，那么即输入 2 false 即可。
+echo 如要跳转到错误信息设置[4]，那么即输入 4 即可。
+goto set.choose-insert
+:settings.errormessage
+echo default = 默认
+set /p errmsg=errormessage.内容~^>
+if /i "%errmsg%"=="default" set errormessage.bool=false & echo 已还原至默认信息 & goto int
+set errormessage=%errmsg%
+echo 已将错误信息设置为%errormessage%。
+echo ERRORMESSAGESAVES > %nowpath%\data\files\errormessage.save
+echo %errormessage% >> %nowpath%\data\files\errormessage.save
+goto set.choose-insert
+
 :enablenewcommands
-if "%con:~4,16%"=="enablenewcommand" set con=set enablenewcommands %con:~21%
-if "%con:~22%"=="true" set enablenewcommand=true & echo 已启用自定义指令。 & goto int
-if "%con:~22%"=="false" set enablenewcommand=false & echo 已禁用自定义指令。  & goto int
+if /i "%con:~4,16%"=="enablenewcommand" set con=set enablenewcommands %con:~21%
+if /i "%con:~22%"=="true" set enablenewcommand=true & set newcommandsenabled-chinese=启用& echo 已启用自定义指令。 & goto int
+if /i "%con:~22%"=="false" set enablenewcommand=false & set newcommandsenabled-chinese=禁用 & echo 已禁用自定义指令。  & goto int
 echo "%con:~22%" 不是有效的布尔值。
 goto int
 :loopset
@@ -686,22 +716,22 @@ goto int
 echo 不正确的数字 %con:~10%
 goto int
 :quickdelete
-if "%con:~16%"=="true" set quickdelete=true & echo 已启用快速删除 & set func.quickdelete=/f /q & del C:\svd\qdFalse.svd 1>nul 2>nul & goto int
-if "%con:~16%"=="false" set quickdelete=false & echo 已禁用快速删除 & set func.quickdelete=  & echo cannot view the file in dos mode > C:\svd\qdFalse.svd & goto int
+if /i "%con:~16%"=="true" set quickdelete=true & echo 已启用快速删除 & set quickdeleteenabled-chinese=启用& set func.quickdelete=/f /q & del C:\svd\qdFalse.svd 1>nul 2>nul & goto int
+if /i "%con:~16%"=="false" set quickdelete=false & echo 已禁用快速删除 & set quickdeleteenabled-chinese=禁用& set func.quickdelete=  & echo cannot view the file in dos mode > C:\svd\qdFalse.svd & goto int
 echo "%con:~16%" 不是有效的布尔值。
 goto int
 :outputsystemerror
-if "%con:~22%"=="true" set outputsystemerror=true & set func.outputsystemerror= & echo 已启用输出系统错误 & echo unkown host. > C:\svd\opseTrue.svd & goto int
-if "%con:~22%"=="false" set outputsystemerror=false & set func.outputsystemerror=2^>nul ^|^| goto error & echo 已禁用输出系统错误 & del C:\svd\opseTrue.svd 1>nul 2>nul & goto int
+if /i "%con:~22%"=="true" set outputsystemerror=true & set outputsystemerrorenabled-chinese=启用& set func.outputsystemerror= & echo 已启用输出系统错误 & echo unkown host. > C:\svd\opseTrue.svd & goto int
+if /i "%con:~22%"=="false" set outputsystemerror=false & set outputsystemerrorenabled-chinese=禁用& set func.outputsystemerror=2^>nul ^|^| goto error & echo 已禁用输出系统错误 & del C:\svd\opseTrue.svd 1>nul 2>nul & goto int
 :color.set
-if "%con:~10%"=="red" set color=0C & goto resolve
-if "%con:~10%"=="blue" set color=01 & goto resolve
-if "%con:~10%"=="yellow" set color=0E & goto resolve
-if "%con:~10%"=="green" set color=0A & goto resolve
-if "%con:~10%"=="purple" set color=05 & goto resolve
-if "%con:~10%"=="white" set color=0F & goto resolve
-if "%con:~10%"=="orange" echo 批处理内暂无橙色可供选择。 & goto resolve
-if "%con:~10%"=="indigo" set color=03 & goto resolve
+if /i "%con:~10%"=="red" set color=0C & goto resolve
+if /i "%con:~10%"=="blue" set color=01 & goto resolve
+if /i "%con:~10%"=="yellow" set color=0E & goto resolve
+if /i "%con:~10%"=="green" set color=0A & goto resolve
+if /i "%con:~10%"=="purple" set color=05 & goto resolve
+if /i "%con:~10%"=="white" set color=0F & goto resolve
+if /i "%con:~10%"=="orange" echo 批处理内暂无橙色可供选择。 & goto resolve
+if /i "%con:~10%"=="indigo" set color=03 & goto resolve
 if %con:~10,1% equ %con:~-1% echo 不能设置相同的颜色: %con:~10% & goto int
 set test1=%con:~10,1% & set test2=%con:~-1%
 set /a test=%test1%+%test2% && echo 错误的颜色指定：%con:~10%
@@ -715,7 +745,7 @@ echo 其输出位于$param %con:~10%
 echo 在color上无效。
 goto int
 :errmsg.set
-if "%con:~13%"=="default" set errormessage.bool=false & echo 已还原至默认信息 & goto int
+if /i "%con:~13%"=="default" set errormessage.bool=false & echo 已还原至默认信息 & goto int
 set errormessage=%con:~13%
 echo 已将错误信息设置为%errormessage%。
 echo ERRORMESSAGESAVES > %nowpath%\data\files\errormessage.save
@@ -723,56 +753,56 @@ echo %errormessage% >> %nowpath%\data\files\errormessage.save
 goto int
 
 :control.choose
-if "%con:~8%"=="/?" goto control.help
-if "%con:~8%"=="-?" goto control.help
-if "%con:~8%"=="internet" control inetcpl.cpl
-if "%con:~8%"=="web" control inetcpl.cpl
-if "%con:~8%"=="inetcpl" control inetcpl.cpl
-if "%con:~8%"=="game" control joy.cpl
-if "%con:~8%"=="joy" control joy.cpl
-if "%con:~8%"=="sound" control mmsys.cpl
-if "%con:~8%"=="mmsys" control mmsys.cpl
-if "%con:~8%"=="lang" control intl.cpl
-if "%con:~8%"=="language" control intl.cpl
-if "%con:~8%"=="area" control intl.cpl
-if "%con:~8%"=="area and language" control intl.cpl
-if "%con:~8%"=="intl" control intl.cpl
-if "%con:~8%"=="ncpa" control ncpa.cpl
-if "%con:~8%"=="internetmanager" control ncpa.cpl
-if "%con:~8%"=="netsetup"control netsetup.cpl
-if "%con:~8%"=="user" control lusrmgr.cpl
-if "%con:~8%"=="lusrmgr" control lusrmgr.cpl
-if "%con:~8%"=="odbccp32" control odbccp32.cpl
-if "%con:~8%"=="ODBC" control odbccp32.cpl
-if "%con:~8%"=="wscui" control wscui.cpl
-if "%con:~8%"=="windowssafecenter" control wscui.cpl
-if "%con:~8%"=="wuaucpl" control wuaucpl.cpl
-if "%con:~8%"=="windowsupdate" control wuaucpl.cpl
-if "%con:~8%"=="windowsautoupdate" control wuaucpl.cpl
-if "%con:~8%"=="igfxcpl" control igfxcpl.cpl
-if "%con:~8%"=="intel" control igfxcpl.cpl
-if "%con:~8%"=="intelgraphic" control igfxcpl.cpl
-if "%con:~8%"=="nvcpl" control nvcpl.cpl
-if "%con:~8%"=="nvgraphic" control nvcpl.cpl
-if "%con:~8%"=="access" control access.cpl
-if "%con:~8%"=="accessiblity" control access.cpl
-if "%con:~8%"=="appwiz" control appwiz.cpl
-if "%con:~8%"=="appman" control appwiz.cpl
-if "%con:~8%"=="appmanager" control appwiz.cpl
-if "%con:~8%"=="application" control appwiz.cpl
-if "%con:~8%"=="applications" control appwiz.cpl
-if "%con:~8%"=="desk" control desk.cpl
-if "%con:~8%"=="graphic" control desk.cpl
-if "%con:~8%"=="firewall" control firewall.cpl
-if "%con:~8%"=="hdwwiz" control hdwwiz.cpl
-if "%con:~8%"=="addhardware" control hdwwiz.cpl
-if "%con:~8%"=="sysdm" control sysdm.cpl
-if "%con:~8%"=="systeminfo" control sysdm.cpl
-if "%con:~8%"=="system" control sysdm.cpl
+if /i "%con:~8%"=="/?" goto control.help
+if /i "%con:~8%"=="-?" goto control.help
+if /i "%con:~8%"=="internet" control inetcpl.cpl
+if /i "%con:~8%"=="web" control inetcpl.cpl
+if /i "%con:~8%"=="inetcpl" control inetcpl.cpl
+if /i "%con:~8%"=="game" control joy.cpl
+if /i "%con:~8%"=="joy" control joy.cpl
+if /i "%con:~8%"=="sound" control mmsys.cpl
+if /i "%con:~8%"=="mmsys" control mmsys.cpl
+if /i "%con:~8%"=="lang" control intl.cpl
+if /i "%con:~8%"=="language" control intl.cpl
+if /i "%con:~8%"=="area" control intl.cpl
+if /i "%con:~8%"=="area and language" control intl.cpl
+if /i "%con:~8%"=="intl" control intl.cpl
+if /i "%con:~8%"=="ncpa" control ncpa.cpl
+if /i "%con:~8%"=="internetmanager" control ncpa.cpl
+if /i "%con:~8%"=="netsetup"control netsetup.cpl
+if /i "%con:~8%"=="user" control lusrmgr.cpl
+if /i "%con:~8%"=="lusrmgr" control lusrmgr.cpl
+if /i "%con:~8%"=="odbccp32" control odbccp32.cpl
+if /i "%con:~8%"=="ODBC" control odbccp32.cpl
+if /i "%con:~8%"=="wscui" control wscui.cpl
+if /i "%con:~8%"=="windowssafecenter" control wscui.cpl
+if /i "%con:~8%"=="wuaucpl" control wuaucpl.cpl
+if /i "%con:~8%"=="windowsupdate" control wuaucpl.cpl
+if /i "%con:~8%"=="windowsautoupdate" control wuaucpl.cpl
+if /i "%con:~8%"=="igfxcpl" control igfxcpl.cpl
+if /i "%con:~8%"=="intel" control igfxcpl.cpl
+if /i "%con:~8%"=="intelgraphic" control igfxcpl.cpl
+if /i "%con:~8%"=="nvcpl" control nvcpl.cpl
+if /i "%con:~8%"=="nvgraphic" control nvcpl.cpl
+if /i "%con:~8%"=="access" control access.cpl
+if /i "%con:~8%"=="accessiblity" control access.cpl
+if /i "%con:~8%"=="appwiz" control appwiz.cpl
+if /i "%con:~8%"=="appman" control appwiz.cpl
+if /i "%con:~8%"=="appmanager" control appwiz.cpl
+if /i "%con:~8%"=="application" control appwiz.cpl
+if /i "%con:~8%"=="applications" control appwiz.cpl
+if /i "%con:~8%"=="desk" control desk.cpl
+if /i "%con:~8%"=="graphic" control desk.cpl
+if /i "%con:~8%"=="firewall" control firewall.cpl
+if /i "%con:~8%"=="hdwwiz" control hdwwiz.cpl
+if /i "%con:~8%"=="addhardware" control hdwwiz.cpl
+if /i "%con:~8%"=="sysdm" control sysdm.cpl
+if /i "%con:~8%"=="systeminfo" control sysdm.cpl
+if /i "%con:~8%"=="system" control sysdm.cpl
 goto int
 
 :error
-if "%errormessage.bool%"=="false" goto normal.error
+if /i "%errormessage.bool%"=="false" goto normal.error
 echo %errormessage%
 goto int
 :normal.error
@@ -780,12 +810,12 @@ echo %con% 不是存在或被定义的指令
 goto int
 
 :mode.choose
-if "%con:~5%"=="wmic" goto main.wmic
-if "%con:~5%"=="calc" goto main.calc
-if "%con:~5%"=="/?" goto mode.help
-if "%con:~5%"=="-?" goto mode.help
-if "%con:~5%"=="wmic -?" goto mode.help-wmic
-if "%con:~5%"=="calc -?" goto mode.help-calc
+if /i "%con:~5%"=="wmic" goto main.wmic
+if /i "%con:~5%"=="calc" goto main.calc
+if /i "%con:~5%"=="/?" goto mode.help
+if /i "%con:~5%"=="-?" goto mode.help
+if /i "%con:~5%"=="wmic -?" goto mode.help-wmic
+if /i "%con:~5%"=="calc -?" goto mode.help-calc
 echo 不正确的 MODE 选择: %con:~5%。
 goto int
 
@@ -795,11 +825,11 @@ echo 已将 OUTPUT 出点设置为 %con:~10%
 goto int
 
 :output.choose
-if "%con:~7,2%"=="-?" goto output.help
-if "%con:~7,2%"=="/?" goto output.help
-if "%outputpath%"=="none" echo 未设置入点。 & goto int
-if "%con:~7,2%"=="/c" set out=^> & set cover=true & set num=10
-if "%con:~7,2%"=="-c" set out=^> & set cover=true & set num=10
+if /i "%con:~7,2%"=="-?" goto output.help
+if /i "%con:~7,2%"=="/?" goto output.help
+if /i "%outputpath%"=="none" echo 未设置入点。 & goto int
+if /i "%con:~7,2%"=="/c" set out=^> & set cover=true & set num=10
+if /i "%con:~7,2%"=="-c" set out=^> & set cover=true & set num=10
 echo !con:~%num%! %out% %outputpath%
 echo .output^>!con:~%num%! to %outputpath%
 set num=7
@@ -812,34 +842,34 @@ echo undo 撤销操作
 :sp-lines
 set /p lines=请输入 PING 的线程:
 if %lines% GTR 15 echo 超过此返回可能会导致大量性能下降。
-if "%lines%"=="back" goto main
-if "%lines%"=="undo" echo 尚无可撤销的操作。
+if /i "%lines%"=="back" goto main
+if /i "%lines%"=="undo" echo 尚无可撤销的操作。
 goto sp-packages
 :sp-packages
 set /p packs=请输入每个包的大小(字节):
 if %packs% LSS 1 echo 错误的数字选择: 小于1 & goto sp-packages
 if %packs% GTR 65500 echo 错误的数字选择: 大于65500 & goto sp-packages
-if "%packs%"=="back" goto main
-if "%packs%"=="undo" goto sp-lines
+if /i "%packs%"=="back" goto main
+if /i "%packs%"=="undo" goto sp-lines
 goto sp-times
 :sp-times
 set /p times=请输入 PING 的次数:
 if %times% GTR 500 echo 错误的数字选择: 大于500 & goto sp-times
 if %times% LSS 1 echo 错误的数字选择: 小于1 & goto sp-times
-if "%times%"=="back" goto main
-if "%times%"=="undo" goto sp-packages
+if /i "%times%"=="back" goto main
+if /i "%times%"=="undo" goto sp-packages
 goto sp-ip
 :sp-ip
 set /p ip=请输入 PING 的域名或 IP 地址:
-if "%ip:~0,1%"=="0" echo 不能以0开头。
-if "%ip%"=="back" goto main
-if "%packs%"=="undo" goto sp-times
+if /i "%ip:~0,1%"=="0" echo 不能以0开头。
+if /i "%ip%"=="back" goto main
+if /i "%packs%"=="undo" goto sp-times
 pause
 set loop=0
 set num=1
 :getloop
 set /a loop=%loop%+1
-if "%loop%"=="%lines%" goto sp-back
+if /i "%loop%"=="%lines%" goto sp-back
 echo @echo off >> ping%num%.bat
 echo mode con cols=30 lines=30 >> ping%num%.bat
 echo ping %ip% -n %times% -l %packs% >> ping%num%.bat
@@ -855,7 +885,7 @@ set loop=0
 set num=1
 :getloop2
 set /a loop2=%loop2%+1
-if "%loop2%"=="%lines%" goto main
+if /i "%loop2%"=="%lines%" goto main
 del ping%num%.bat
 set /a num=%num%+1
 goto getloop2
@@ -873,10 +903,10 @@ del sping.cmd 1>nul 2>nul || echo 删除失败。
 goto main
 
 :test.choose
-if "%con:~5%"=="/?" goto test.help
-if "%con:~5%"=="-?" goto test.help
-if "%con:~5,5%"=="-gfw" goto gfw.test
-if "%con:~5,5%"=="/gfw" goto gfw.test
+if /i "%con:~5%"=="/?" goto test.help
+if /i "%con:~5%"=="-?" goto test.help
+if /i "%con:~5,5%"=="-gfw" goto gfw.test
+if /i "%con:~5,5%"=="/gfw" goto gfw.test
 goto net.test
 
 :net.test
@@ -915,16 +945,16 @@ echo 已成功打开关于 %con:~4% 的 FTP 链接。
 goto int
 
 :clear
-if "%con:~6%"=="-?" goto clear.help
-if "%con:~6%"=="/?" goto clear.help
+if /i "%con:~6%"=="-?" goto clear.help
+if /i "%con:~6%"=="/?" goto clear.help
 echo 当前没有缓存/临时文件。
 goto int
 
 :debug.choose
-if "%con:~6%"=="-?" goto debug.help
-if "%con:~6%"=="/?" goto debug.help
-if "%con:~6,5%"=="-view" goto debug.view
-if "%con:~6,5%"=="-edit" goto debug.edit
+if /i "%con:~6%"=="-?" goto debug.help
+if /i "%con:~6%"=="/?" goto debug.help
+if /i "%con:~6,5%"=="-view" goto debug.view
+if /i "%con:~6,5%"=="-edit" goto debug.edit
 echo 错误的参数: %con:~6%
 goto int
 
@@ -946,13 +976,13 @@ pause
 goto int
 
 :func.choose
-if "%con:~9%"=="-?" goto function.help
-if "%con:~9%"=="/?" goto function.help
+if /i "%con:~9%"=="-?" goto function.help
+if /i "%con:~9%"=="/?" goto function.help
 cd.>%systemdrive%\Windows\System32\test.txt || goto managementerror
 del %systemdrive%\Windows\System32\test.txt
-if "%con:~9%"=="-add" goto function.add
-if "%con:~9%"=="-remove" goto function.remove
-if "%con:~9%"=="-call" goto function.call
+if /i "%con:~9%"=="-add" goto function.add
+if /i "%con:~9%"=="-remove" goto function.remove
+if /i "%con:~9%"=="-call" goto function.call
 echo %con:~9% 不是一个有效的参数。
 goto int
 :function.add
@@ -966,14 +996,14 @@ echo - 存储
 echo 对于编写的批处理函数，已自动加上 @echo off 指令。
 :leta
 set /p func=FUNCTION.PATH^>
-if "%func:~0,7%"=="/saveto" goto batorcmd
-if "%func:~0,6%"=="/input" goto input.batorcmd
+if /i "%func:~0,7%"=="/saveto" goto batorcmd
+if /i "%func:~0,6%"=="/input" goto input.batorcmd
 echo 您尚未设置 SAVETO 路径或 INPUT 路径，或者输入了错误的指令。
 goto leta
 :input.batorcmd
-if "%func:~-1%"=="\" echo 尚未填写文件信息。 & goto leta
-if "%func:~-4%"==".cmd" set svp=%func:~7% & echo 已设置输出路径 & goto inputsth
-if "%func:~-4%"==".bat" set svp=%func:~7% & echo 已设置输出路径 & goto inputsth
+if /i "%func:~-1%"=="\" echo 尚未填写文件信息。 & goto leta
+if /i "%func:~-4%"==".cmd" set svp=%func:~7% & echo 已设置输出路径 & goto inputsth
+if /i "%func:~-4%"==".bat" set svp=%func:~7% & echo 已设置输出路径 & goto inputsth
 echo 不能设置非 .CMD 或 .BAT 的文件。
 goto leta
 :inputsth
@@ -985,28 +1015,28 @@ set /p funcname=请输入函数名称:
 set funcpath%funcname%=%svp% & set funcpath%funcnum%==%svp%
 goto main
 :batorcmd
-if "%func:~-1%"=="\" goto nameyourfile
-if "%func:~-4%"==".cmd" set svp=%func:~8% & echo 已设置输出路径 & goto letb
-if "%func:~-4%"==".bat" set svp=%func:~8% & echo 已设置输出路径 & goto letb
+if /i "%func:~-1%"=="\" goto nameyourfile
+if /i "%func:~-4%"==".cmd" set svp=%func:~8% & echo 已设置输出路径 & goto letb
+if /i "%func:~-4%"==".bat" set svp=%func:~8% & echo 已设置输出路径 & goto letb
 echo 不能设置非 .CMD 或 .BAT 的文件。
 goto leta
 :nameyourfile
 set paths=%func:~8%
 echo 请输入函数快捷方式的名称
 set /p name=
-if "%name%"=="\" goto nameyourfile
-if "%name:~-4%"==".cmd" set svp=%paths%%name% & echo 已设置输出路径 & goto letb
-if "%name:~-4%"==".bat" set svp=%paths%\%name% & echo 已设置输出路径 & goto letb
+if /i "%name%"=="\" goto nameyourfile
+if /i "%name:~-4%"==".cmd" set svp=%paths%%name% & echo 已设置输出路径 & goto letb
+if /i "%name:~-4%"==".bat" set svp=%paths%\%name% & echo 已设置输出路径 & goto letb
 goto batorcmd
 :letb
 echo @echo off >> %svp%
 echo 键入 /back 以返回
 :letc
 set /p func=FUNCTION.ADD^>
-if "%func%"=="/back" goto goback
-if "%func%"=="/open" start %svp% & goto letb
-if "%func%"=="/where" echo 目前存储在 %svp% & goto letb
-if "%func%"=="/save" goto savefunc
+if /i "%func%"=="/back" goto goback
+if /i "%func%"=="/open" start %svp% & goto letb
+if /i "%func%"=="/where" echo 目前存储在 %svp% & goto letb
+if /i "%func%"=="/save" goto savefunc
 echo %func% >> %svp% 2>nul || goto func.err
 goto letc
 :func.err
@@ -1033,7 +1063,7 @@ goto main
 echo 输入 back 以返回。
 :list.select
 set /p ls=请输入函数名称或序号以调用:
-if "%ls%"=="back" goto main
+if /i "%ls%"=="back" goto main
 set /a dim=%ls%+1 2>nul && call !funcpath%ls%!
 call !funcpath%ls%!
 echo %ls% 不是存在的函数名称或序号。
@@ -1043,7 +1073,7 @@ goto main
 echo 输入 back 以返回。
 :del.select
 set /p ds=请输入函数名称或者序号以删除:
-if "%ds%"=="back" goto main
+if /i "%ds%"=="back" goto main
 set /a dim=%ds%+1 2>nul && del !funcpath%ds%! 1>nul 2>nul & echo 成功删除序号为 %ds% 的函数 & goto main
 del !funcpath%ds%! 1>nul 2>nul& 成功删除 %ds% & goto main
 echo %ds% 不是存在的函数名称或序号。
@@ -1056,7 +1086,7 @@ title Batch Console ^> Help Files ^> Normal
 cls
 echo 欢迎查看帮助。
 echo.
-echo SET [VARIABLE] [STRING/BOOL] 设置系统变量、自定义变量或者BC变量以达到不一样的设置效果。
+echo SET [VARIABLE / PARAMETER] [STRING/BOOL] 设置系统变量、自定义变量或者BC变量以达到不一样的设置效果。
 echo MODE [MODENAME] 切换到指定模式以完成特殊操作。
 echo OUTPUT [STRING] 输出字符串到指定位置。
 echo SETOUTPUT [PATH] 设置输出字符串的位置。
@@ -1075,6 +1105,7 @@ echo DEBUG 调试存在的函数。
 echo TEST [-GFW] 测试网络/GFW对于BAT协议的可用性
 echo UPING [IP ADD] 使用-t参数对某一IP进行Ping操作。
 echo SPING 使用进程线程进行同时性多PING。
+echo EXT(ENSIONS) 预览 Extensions Beta。
 echo.
 echo 提示：输入指令后跟上-?参数即可查看详细帮助。
 pause
@@ -1163,7 +1194,7 @@ echo 在此项下，NUM 表示输入 TIMES 的位数，如十位数则为 2.
 echo 默认情况下为 1.
 goto int
 :set.help
-echo Usage: SET [VARIABLE_NAME] = [STRING]
+echo Usage: SET [VARIABLE_NAME] = [STRING] / [PARAMETER]
 echo SET [BC_SETTINGVAR] [BOOL]/[STRING/NUM]
 echo 设置一个变量以进行临时调用或修改 Batch Console 的相应变量布尔值
 echo 以达到另外的设置效果。一些布尔值在设置后会被保存，不会被重置。
@@ -1171,6 +1202,7 @@ echo 目前受支持的 BC_SETTINGVAR 包括
 echo outputsystemerror, quickdelete, 
 echo loops, color, errormsg等。
 echo 有关每一项的相关用法，请使用 set [VARIABLE_NAME] -?
+echo 目前支持参数 -gui 来展开用户设置界面而不使用指令设置。
 goto int
 :errmsg.set.help
 echo Usage: set errormsg [STRING]
@@ -1267,11 +1299,12 @@ echo rand(om) -范围随机数
 echo copy -复制最近一次的结果
 echo show -显示常量(见show -?)
 echo back -返回至main
+echo ivy -大数据加法(BETA)
 echo ======================================================
-echo 输入指定的函数名或全名，可调用相关函数进行操作。
-echo 其中，许多函数的算法采用的是Batch原生。
-echo 为了避免出现大规模的计算错误或溢出，会出现限制量。
-echo 若不存在以上文件请自行创建。
+echo 在0.7版本中加入了大数据加法的运算函数。
+echo 该函数主要是计算超过32位精度的整数大数据（理论上可以支持无数位）
+echo 算法来自Bat展示讨论群内的某人(是网名)。
+echo 该算法在移植过程中出现部分问题，导致在计算超过32位内容时可能出现结果不准确等情况。
 pause
 goto main.calc
 :show.help
@@ -1333,6 +1366,7 @@ call :ReadSpecialLine %nowpath%data\commands\commanding.load 1 commandinmo
 call :ReadSpecialLine %nowpath%data\commands\commandname.load 1 commandnameo
 set commandinm=%commandinmo:~0,-1%
 set commandnamem=%commandnameo:~0,-1%
+set newcommandsenabled-chinese=启用
 goto comload.back
 
 :errmsgload
@@ -1354,23 +1388,210 @@ echo 输入 ? 查看帮助
 if not "%opt%"=="" echo %opt%
 :char
 set /p cal=
-if "%cal%"=="?" goto calc.help
-if "%cal%"=="power" goto calc.power
-if "%cal%"=="fact" goto calc.factorial
-if "%cal%"=="factorial" goto calc.factorial
-if "%cal%"=="rand" goto calc.random
-if "%cal%"=="random" goto calc.random
-if "%cal%"=="loop" goto calc.loop
-if "%cal%"=="addon" goto calc.loop-addon
-if "%cal%"=="sqrt" goto calc.sqrt
-if "%cal%"=="back" goto main
-if "%cal%"=="copy" echo %cliphood% | clip & echo %cliphood% 已复制到剪贴板 & goto char
-if "%cal:~0,4%"=="show" goto calc.show
+if /i "%cal%"=="help" goto calc.help
+if /i "%cal%"=="?" goto calc.help
+if /i "%cal%"=="power" goto calc.power
+if /i "%cal%"=="fact" goto calc.factorial
+if /i "%cal%"=="factorial" goto calc.factorial
+if /i "%cal%"=="rand" goto calc.random
+if /i "%cal%"=="random" goto calc.random
+if /i "%cal%"=="loop" goto calc.loop
+if /i "%cal%"=="addon" goto calc.loop-addon
+if /i "%cal%"=="sqrt" goto calc.sqrt
+if /i "%cal%"=="back" goto main
+if /i "%cal%"=="copy" echo %cliphood% | clip & echo %cliphood% 已复制到剪贴板 & goto char
+if /i "%cal%"=="ivy" goto calc.ivy
+if /i "%cal:~0,4%"=="show" goto calc.show
 call :calc.core
 :calc.output
 set cliphood=%opt%
 goto char-output
 
+:calc.ivy
+cls
+:set1.choiceback
+cls
+title Ivy Project [BETA]
+echo Beta Core [v0.1]
+echo 输入完成后按 y 确认，b 返回上一步。
+echo 请输入"加数1":
+choice /c 1234567890yb /n /m "%shu1%"
+if "%errorlevel%"=="1" set shu1=%shu1%1&set /a s1c=%s1c%+1
+if "%errorlevel%"=="2" set shu1=%shu1%2&set /a s1c=%s1c%+1
+if "%errorlevel%"=="3" set shu1=%shu1%3&set /a s1c=%s1c%+1
+if "%errorlevel%"=="4" set shu1=%shu1%4&set /a s1c=%s1c%+1
+if "%errorlevel%"=="5" set shu1=%shu1%5&set /a s1c=%s1c%+1
+if "%errorlevel%"=="6" set shu1=%shu1%6&set /a s1c=%s1c%+1
+if "%errorlevel%"=="7" set shu1=%shu1%7&set /a s1c=%s1c%+1
+if "%errorlevel%"=="8" set shu1=%shu1%8&set /a s1c=%s1c%+1
+if "%errorlevel%"=="9" set shu1=%shu1%9&set /a s1c=%s1c%+1
+if "%errorlevel%"=="10" set shu1=%shu1%0&set /a s1c=%s1c%+1
+if "%errorlevel%"=="11" goto set2
+if "%errorlevel%"=="b" call :ivy.clear & goto main.calc
+goto set1.choiceback
+:set2
+:set2.choiceback
+cls
+title Ivy Project [BETA]
+echo Beta Core [v0.1]
+echo 输入完成后按 y 确认。
+echo 请输入"加数2":
+choice /c 1234567890yb /n /m "%shu2%"
+if "%errorlevel%"=="1" set shu2=%shu2%1&set /a s2c=%s2c%+1
+if "%errorlevel%"=="2" set shu2=%shu2%2&set /a s2c=%s2c%+1
+if "%errorlevel%"=="3" set shu2=%shu2%3&set /a s2c=%s2c%+1
+if "%errorlevel%"=="4" set shu2=%shu2%4&set /a s2c=%s2c%+1
+if "%errorlevel%"=="5" set shu2=%shu2%5&set /a s2c=%s2c%+1
+if "%errorlevel%"=="6" set shu2=%shu2%6&set /a s2c=%s2c%+1
+if "%errorlevel%"=="7" set shu2=%shu2%7&set /a s2c=%s2c%+1
+if "%errorlevel%"=="8" set shu2=%shu2%8&set /a s2c=%s2c%+1
+if "%errorlevel%"=="9" set shu2=%shu2%9&set /a s2c=%s2c%+1
+if "%errorlevel%"=="10" set shu2=%shu2%0&set /a s2c=%s2c%+1
+if "%errorlevel%"=="11" goto over
+if "%errorlevel%"=="12" call :ivy.clear & goto main.calc
+goto set2.choiceback
+:over
+set s1=%shu1:~-1%
+set s2=%shu2:~-1%
+set wz=-1
+:xh
+call :add.core
+set jieguo=%jg%%jieguo%
+set /a lswz1=%s1c%+%wz%
+set /a lswz2=%s2c%+%wz%
+set /a wz=%wz%-1
+set s1=!shu1:~%wz%,1!
+set s2=!shu2:~%wz%,1!
+if %lswz1% leq 0 set s1=0
+if %lswz2% leq 0 set s2=0
+if %lswz1% leq 0 if %lswz2% leq 0 if "%jws%" equ "" goto s2over
+goto xh
+:s2over
+cls
+set opt=%jieguo%
+set cliphood=%jieguo%
+call :ivy.clear
+goto main.calc
+:ivy.clear
+set shu1= 
+set shu2= 
+set s1= 
+set s2= 
+set jg= 
+set jw= 
+set jws= 
+set jieguo= 
+set lswz1= 
+set lswz2= 
+set s1c= 
+set s2c= 
+set wz= 
+
+::CORE
+:add.core
+:: 核心算法by 某人
+if "%s1%"=="0" if "%s2%"=="0" set jg=0&set "jw="
+if "%s1%"=="1" if "%s2%"=="0" set jg=1&set "jw="
+if "%s1%"=="2" if "%s2%"=="0" set jg=2&set "jw="
+if "%s1%"=="3" if "%s2%"=="0" set jg=3&set "jw="
+if "%s1%"=="4" if "%s2%"=="0" set jg=4&set "jw="
+if "%s1%"=="5" if "%s2%"=="0" set jg=5&set "jw="
+if "%s1%"=="6" if "%s2%"=="0" set jg=6&set "jw="
+if "%s1%"=="7" if "%s2%"=="0" set jg=7&set "jw="
+if "%s1%"=="8" if "%s2%"=="0" set jg=8&set "jw="
+if "%s1%"=="9" if "%s2%"=="0" set jg=9&set "jw="
+if "%s1%"=="0" if "%s2%"=="1" set jg=1&set "jw="
+if "%s1%"=="1" if "%s2%"=="1" set jg=2&set "jw="
+if "%s1%"=="2" if "%s2%"=="1" set jg=3&set "jw="
+if "%s1%"=="3" if "%s2%"=="1" set jg=4&set "jw="
+if "%s1%"=="4" if "%s2%"=="1" set jg=5&set "jw="
+if "%s1%"=="5" if "%s2%"=="1" set jg=6&set "jw="
+if "%s1%"=="6" if "%s2%"=="1" set jg=7&set "jw="
+if "%s1%"=="7" if "%s2%"=="1" set jg=8&set "jw="
+if "%s1%"=="8" if "%s2%"=="1" set jg=9&set "jw="
+if "%s1%"=="9" if "%s2%"=="1" set jg=0&set jw=1
+if "%s1%"=="0" if "%s2%"=="2" set jg=2&set "jw="
+if "%s1%"=="1" if "%s2%"=="2" set jg=3&set "jw="
+if "%s1%"=="2" if "%s2%"=="2" set jg=4&set "jw="
+if "%s1%"=="3" if "%s2%"=="2" set jg=5&set "jw="
+if "%s1%"=="4" if "%s2%"=="2" set jg=6&set "jw="
+if "%s1%"=="5" if "%s2%"=="2" set jg=7&set "jw="
+if "%s1%"=="6" if "%s2%"=="2" set jg=8&set "jw="
+if "%s1%"=="7" if "%s2%"=="2" set jg=9&set "jw="
+if "%s1%"=="8" if "%s2%"=="2" set jg=0&set jw=1
+if "%s1%"=="9" if "%s2%"=="2" set jg=1&set jw=1
+if "%s1%"=="0" if "%s2%"=="3" set jg=3&set "jw="
+if "%s1%"=="1" if "%s2%"=="3" set jg=4&set "jw="
+if "%s1%"=="2" if "%s2%"=="3" set jg=5&set "jw="
+if "%s1%"=="3" if "%s2%"=="3" set jg=6&set "jw="
+if "%s1%"=="4" if "%s2%"=="3" set jg=7&set "jw="
+if "%s1%"=="5" if "%s2%"=="3" set jg=8&set "jw="
+if "%s1%"=="6" if "%s2%"=="3" set jg=9&set "jw="
+if "%s1%"=="7" if "%s2%"=="3" set jg=0&set jw=1
+if "%s1%"=="8" if "%s2%"=="3" set jg=1&set jw=1
+if "%s1%"=="9" if "%s2%"=="3" set jg=2&set jw=1
+if "%s1%"=="0" if "%s2%"=="4" set jg=4&set "jw="
+if "%s1%"=="1" if "%s2%"=="4" set jg=5&set "jw="
+if "%s1%"=="2" if "%s2%"=="4" set jg=6&set "jw="
+if "%s1%"=="3" if "%s2%"=="4" set jg=7&set "jw="
+if "%s1%"=="4" if "%s2%"=="4" set jg=8&set "jw="
+if "%s1%"=="5" if "%s2%"=="4" set jg=9&set "jw="
+if "%s1%"=="6" if "%s2%"=="4" set jg=0&set jw=1
+if "%s1%"=="7" if "%s2%"=="4" set jg=1&set jw=1
+if "%s1%"=="8" if "%s2%"=="4" set jg=2&set jw=1
+if "%s1%"=="9" if "%s2%"=="4" set jg=3&set jw=1
+if "%s1%"=="0" if "%s2%"=="5" set jg=5&set "jw="
+if "%s1%"=="1" if "%s2%"=="5" set jg=6&set "jw="
+if "%s1%"=="2" if "%s2%"=="5" set jg=7&set "jw="
+if "%s1%"=="3" if "%s2%"=="5" set jg=8&set "jw="
+if "%s1%"=="4" if "%s2%"=="5" set jg=9&set "jw="
+if "%s1%"=="5" if "%s2%"=="5" set jg=0&set jw=1
+if "%s1%"=="6" if "%s2%"=="5" set jg=1&set jw=1
+if "%s1%"=="7" if "%s2%"=="5" set jg=2&set jw=1
+if "%s1%"=="8" if "%s2%"=="5" set jg=3&set jw=1
+if "%s1%"=="9" if "%s2%"=="5" set jg=4&set jw=1
+if "%s1%"=="0" if "%s2%"=="6" set jg=6&set "jw="
+if "%s1%"=="1" if "%s2%"=="6" set jg=7&set "jw="
+if "%s1%"=="2" if "%s2%"=="6" set jg=8&set "jw="
+if "%s1%"=="3" if "%s2%"=="6" set jg=9&set "jw="
+if "%s1%"=="4" if "%s2%"=="6" set jg=0&set jw=1
+if "%s1%"=="5" if "%s2%"=="6" set jg=1&set jw=1
+if "%s1%"=="6" if "%s2%"=="6" set jg=2&set jw=1
+if "%s1%"=="7" if "%s2%"=="6" set jg=3&set jw=1
+if "%s1%"=="8" if "%s2%"=="6" set jg=4&set jw=1
+if "%s1%"=="9" if "%s2%"=="6" set jg=5&set jw=1
+if "%s1%"=="0" if "%s2%"=="7" set jg=7&set "jw="
+if "%s1%"=="1" if "%s2%"=="7" set jg=8&set "jw="
+if "%s1%"=="2" if "%s2%"=="7" set jg=9&set "jw="
+if "%s1%"=="3" if "%s2%"=="7" set jg=0&set jw=1
+if "%s1%"=="4" if "%s2%"=="7" set jg=1&set jw=1
+if "%s1%"=="5" if "%s2%"=="7" set jg=2&set jw=1
+if "%s1%"=="6" if "%s2%"=="7" set jg=3&set jw=1
+if "%s1%"=="7" if "%s2%"=="7" set jg=4&set jw=1
+if "%s1%"=="8" if "%s2%"=="7" set jg=5&set jw=1
+if "%s1%"=="9" if "%s2%"=="7" set jg=6&set jw=1
+if "%s1%"=="0" if "%s2%"=="8" set jg=8&set "jw="
+if "%s1%"=="1" if "%s2%"=="8" set jg=9&set "jw="
+if "%s1%"=="2" if "%s2%"=="8" set jg=0&set jw=1
+if "%s1%"=="3" if "%s2%"=="8" set jg=1&set jw=1
+if "%s1%"=="4" if "%s2%"=="8" set jg=2&set jw=1
+if "%s1%"=="5" if "%s2%"=="8" set jg=3&set jw=1
+if "%s1%"=="6" if "%s2%"=="8" set jg=4&set jw=1
+if "%s1%"=="7" if "%s2%"=="8" set jg=5&set jw=1
+if "%s1%"=="8" if "%s2%"=="8" set jg=6&set jw=1
+if "%s1%"=="9" if "%s2%"=="8" set jg=7&set jw=1
+if "%s1%"=="0" if "%s2%"=="9" set jg=9&set "jw="
+if "%s1%"=="1" if "%s2%"=="9" set jg=0&set jw=1
+if "%s1%"=="2" if "%s2%"=="9" set jg=1&set jw=1
+if "%s1%"=="3" if "%s2%"=="9" set jg=2&set jw=1
+if "%s1%"=="4" if "%s2%"=="9" set jg=3&set jw=1
+if "%s1%"=="5" if "%s2%"=="9" set jg=4&set jw=1
+if "%s1%"=="6" if "%s2%"=="9" set jg=5&set jw=1
+if "%s1%"=="7" if "%s2%"=="9" set jg=6&set jw=1
+if "%s1%"=="8" if "%s2%"=="9" set jg=7&set jw=1
+if "%s1%"=="9" if "%s2%"=="9" set jg=8&set jw=1
+if "%jws%"=="1" set /a jg=%jg%+1
+if %jg% lss 10 (set jws=%jw%) else (set /a "jws=1,jg-=10")
 :calc.core
 for /f "delims=" %%a in ('powershell "%cal%"') do set opt=%%a & goto :eof
 
@@ -1396,7 +1617,7 @@ goto power.loop
 :power.loop
 set /a dimshu=%dimshu%*%dishu%
 set /a time=%time%+1
-if "%time%"=="%zhishu%" goto power.end
+if /i "%time%"=="%zhishu%" goto power.end
 goto power.loop
 :power.end
 set opt=%dimshu%
@@ -1406,8 +1627,8 @@ goto char-output
 :calc.factorial
 set /p fact=请输入"阶乘操作数":
 if %fact% GTR 16 echo 限制：阶乘操作数不能大于16。 & goto char
-if "%fact%"=="1" echo 1 & set cliphood=1 & goto char
-if "%fact%"=="0" echo 0 & set cliphood=0 & goto char
+if /i "%fact%"=="1" echo 1 & set cliphood=1 & goto char
+if /i "%fact%"=="0" echo 0 & set cliphood=0 & goto char
 goto factorial
 :factorial
 set a=%fact%
@@ -1416,7 +1637,7 @@ set b=%fact%
 set /a a=%a%-1
 set /a b=%b%*%a%
 if %errorlevel% NEQ 0 echo 未知错误：返回值NEQ 0 & goto char
-if "%a%"=="1" set opt=%b% & set cliphood=%b% & goto char-output
+if /i "%a%"=="1" set opt=%b% & set cliphood=%b% & goto char-output
 goto fact.loop
 
 :calc.random
@@ -1440,7 +1661,7 @@ for /l %%a in (1,1,100) do set /a b=(b+a/b)/2
 set /a c=b*b,a/=10000
 set sqr=%b:~,-2%.%b:~-2%
 set sqrr=%b:~-2%
-if "%sqrr%"=="00" set sqr=%sqr:~0,-3% & set cliphood=%sqr:~0,-3% & echo %sqr:~0,-3% & goto char
+if /i "%sqrr%"=="00" set sqr=%sqr:~0,-3% & set cliphood=%sqr:~0,-3% & echo %sqr:~0,-3% & goto char
 echo 约%sqr%
 set cliphood=%sqr%
 goto char
@@ -1492,12 +1713,12 @@ echo 无法识别的项数。
 goto char
 
 :calc.show
-if "%cal:~5%"=="-?" goto show.help
-if "%cal:~5,2%"=="pi" goto show.pi
-if "%cal:~5,3%"=="rho" goto show.rho
-if "%cal:~5,1%"=="e" goto show.e
-if "%cal:~5,5%"=="sqrt2" goto show.sqrtt
-if "%cal:~5,5%"=="alpha" goto show.alpha
+if /i "%cal:~5%"=="-?" goto show.help
+if /i "%cal:~5,2%"=="pi" goto show.pi
+if /i "%cal:~5,3%"=="rho" goto show.rho
+if /i "%cal:~5,1%"=="e" goto show.e
+if /i "%cal:~5,5%"=="sqrt2" goto show.sqrtt
+if /i "%cal:~5,5%"=="alpha" goto show.alpha
 echo %cal:~5% 不是一个有效的常量名称。
 goto char
 
@@ -1585,9 +1806,9 @@ echo Wmic [vBeta]
 echo 输入 ? 以查看帮助
 :sol
 set /p wim=
-if "%wim%"=="?" goto wmic.help
-if "%wim%"=="back" goto main
-if "%wim%"=="-?" wmic -?
+if /i "%wim%"=="?" goto wmic.help
+if /i "%wim%"=="back" goto main
+if /i "%wim%"=="-?" wmic -?
 wmic %wim%
 goto sol
 
@@ -1603,3 +1824,104 @@ call :ReadSpecialLine "%nowpath%\data\tools\custom-tool-path.file" 1 custom-tool
 set custom-tool-path=%custom-tool-path:~0,-1%
 set custom-tool-enabled=true
 goto toolload.back
+
+::Extensions Main
+:extensions
+if "%ext-root%"=="true" set workgroup=root
+if "%ext-root%"=="false" set workgroup=%username%
+if "%ext-root%"=="3" set workgroup=dev
+if "%ext-root%"=="" echo 错误的框架进入权限。 & goto int
+if "%ext-root%"==" " echo 错误的框架进入权限。 & goto int
+if not defined ext-root echo 错误的框架定义。 & goto int
+cls
+echo Extensions Module [r1.0]
+echo 输入 ? 查看帮助。
+:cov
+title Extensions - 模组框架管理
+set /p ext=EXTENSIONS@%workgroup%^>
+if "%ext%"=="?" goto extensions.help
+if "%ext%"=="root" goto extensions.root
+if "%ext%"=="/back" goto main
+if "%ext%"=="/list" goto extensions.list
+if "%ext:~0,6%"=="/check" goto extensions.check
+:: Package
+if "%ext%"=="bc.core7" echo boot -i bc.core7 safe & goto int
+if "%ext%"=="beer128" echo 找不到存在的对应函数标签，这可能是一个内置逻辑函数。 & goto cov
+if "%ext%"=="v64v" echo boot -i visualstudiobase64verify safe & echo 找不到指定的文件。 & goto cov
+if "%ext%"=="calc.core2" echo boot -i calc.core & echo 不正确的输入，Calc Core 无法处理。 & goto cov
+if "%ext%"=="rioeivy" echo boot -i rioeivy & goto calc.ivy
+if "%ext%"=="ext" echo boot -i ext & echo redirect to function label :cov & goto cov
+echo "%ext%"不是有效的入点和出点，也不是有效的读取文件。
+goto cov
+
+:extensions.help
+echo do -i call help in process.extensions bc perm:high admin /all
+cls
+title Help - Extensions
+echo Extensions 帮助
+echo 使用含 / 的指令来向 Extensions CORE 发送指令。
+echo 直接输入 Extensions 的包名来入/出 Extensions。
+echo.
+echo /list 显示 Extensions 的列表
+echo /check [No.] 显示列表中对应序号的 Extensions 包名
+echo /back 返回主函数
+echo.
+pause
+goto extensions
+:extensions.list
+echo do -i show info /extensions local perm:high super root
+if "%ext-root%"=="false" echo 权限不足: Localgroup Root & goto cov
+echo Extensions 列表
+echo [1] Batch Console CORE v0.7
+echo [2] Boot Engine EXE Re: Github v1.28
+echo [3] Visual Studio Code Base64 Verify
+echo [4] Batch Calculator CORE v0.2
+echo [5] Ivy v0.1
+echo [6] Extensions CORE vR
+goto cov
+
+:extensions.check
+if "%ext:~7%"=="1" echo Check: 包名 bc.core7 & goto cov
+if "%ext:~7%"=="2" echo Check: 包名 beer128 & goto cov
+if "%ext:~7%"=="3" echo Check: 包名 v64v & goto cov
+if "%ext:~7%"=="4" echo Check: 包名 calc.core2 & goto cov
+if "%ext:~7%"=="5" echo Check: 包名 rioeivy & goto cov
+if "%ext:~7%"=="6" echo Check: 包名 ext & goto cov
+echo %ext:~7%不是已存在的Extensions。
+goto cov
+
+:extensions.root
+title 入点判定
+if "%unman%"=="true" echo 不正确的选项: No such permission from Windows & goto cov
+title 入点: Node @ "Root 激活程序"
+echo 您正在尝试激活"Root 激活程序"，请问是否继续?
+echo Y = YES, N = NO, M = More Information
+:extensions.root.selection
+set /p test=(y/n/m):
+if "%test%"=="y" goto extensions.root-inside
+if "%test%"=="n" goto extensions
+if "%test%"=="m" goto extensions.about.root
+echo 错误的选择: %test%
+goto extensions.root.selection
+:extensions.about.root
+echo 关于 "Root 激活程序"
+echo 名称: Root 激活程序
+echo 作者: Subilan
+echo 版本: vR
+echo 兼容性: Batch Console v0.7
+echo Ext类型: bti-ext
+goto extensions.root.selection
+:extensions.root-inside
+echo do -i extensions.root extensions RootManager /add %username%
+ping 127.0.0.1 -n 1 >nul
+echo do -i extensions.root-inside extensions RootManager /open @source
+ping 127.0.0.1 -n 2 >nul
+echo calling from: Extensions Root Core
+ping 127.0.0.1 -n 1 >nul
+cls
+echo 获取权限中: Root
+cd.> %nowpath%\data\files\rootLoad.save
+set ext-root=true
+set workgroup=root
+goto extensions
+
