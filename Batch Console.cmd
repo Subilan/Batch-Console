@@ -77,7 +77,7 @@ cls
 if exist %~dp0data\commands\commanding.load goto comload
 :comload.back
 if /i "%unman%"=="true" echo 当前可能无法使用管理员权限，可能会影响部分功能的正确执行。
-echo Batch Console [v0.7]
+echo Batch Console [v0.8]
 echo 输入 help 查看帮助
 :int
 color %color%
