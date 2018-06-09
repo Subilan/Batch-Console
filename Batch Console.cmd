@@ -4,6 +4,7 @@
 set custom-tool-enabled=false
 :reload
 set ext-root=false
+if exist %~dp0\data\files\rootLoad.save set ext-root=true
 set "newcommandsenabled-chinese=禁用"
 set "quickdeleteenabled-chinese=禁用"
 set "outputsystemerrorenabled-chinese=禁用"
@@ -15,16 +16,16 @@ set alpha=2.502907875095892822283902873
 set rho=1.324717957244746025960908854478097340734
 :: RHO 39位
 set algor=powershell
-set nowpath=%~dp0
-set data=%nowpath%\data\
+set data=%~dp0\data\
 set color=0F
 set enablenewcommand=false
 set newcommand= 
 set errormessage.bool=false
-if exist %nowpath%data\files\rootLoad.save set ext-root=true
-if exist %nowpath%data\files\extDev.save set ext-root=3
-if exist %nowpath%data\files\errormessage.save set errormessage.bool=true & goto errmsgload
-if exist %nowpath%data\files\custom.toolsave goto toolload
+if exist %~dp0\data\extensions\newpath.save goto newext.load
+if exist %~dp0\data\files\extDev.save set ext-root=3
+if exist %~dp0\data\files\errormessage.save set errormessage.bool=true & goto errmsgload
+if exist %~dp0\data\files\custom.toolsave goto toolload
+:newext.back
 :errmsg.back
 :passload.back
 :toolload.back
@@ -36,11 +37,12 @@ setlocal enableextensions
 md %appdata%\Console\ 1>nul 2>nul
 md C:\ 1>nul 2>nul
 md C:\svd\ 1>nul 2>nul
-md %nowpath%data\ 1>nul 2>nul
-md %nowpath%data\commands\ 1>nul 2>nul
-md %nowpath%data\files\ 1>nul 2>nul
-md %nowpath%data\calc\ 1>nul 2>nul
-md %nowpath%data\tools
+md %~dp0\data\ 1>nul 2>nul
+md %~dp0\data\commands\ 1>nul 2>nul
+md %~dp0\data\files\ 1>nul 2>nul
+md %~dp0\data\calc\ 1>nul 2>nul
+md %~dp0\data\tools\ 1>nul 2>nul
+md %appdata%\Console\ 1>nul 2>nul
 :inv
 echo invalid unicode preview. > C:\consetInfo.set
 cd.> %systemdrive%\Windows\System32\test.txt || set unman=true
@@ -72,7 +74,7 @@ goto main
 :main
 cls
 :resolve
-if exist %nowpath%data\commands\commanding.load goto comload
+if exist %~dp0data\commands\commanding.load goto comload
 :comload.back
 if /i "%unman%"=="true" echo 当前可能无法使用管理员权限，可能会影响部分功能的正确执行。
 echo Batch Console [v0.7]
@@ -287,13 +289,13 @@ set /p test=这些信息是否正确？(y/n):
 if /i "%test%"=="y" goto tool.add-modify
 goto main
 :tool.add-modify
-echo Tool Enabled. > %nowpath%\data\files\custom.toolsave
-echo Tool Path > %nowpath%\data\tools\custom-tool-path.file
-echo "%custom-tool-path%" >> %nowpath%\data\tools\custom-tool-path.file
-echo Tool Name > %nowpath%\data\tools\custom-tool-name.file
-echo %custom-tool-nameg% >> %nowpath%\data\tools\custom-tool-name.file
-echo Tool Usage Name > %nowpath%\data\tools\custom-tool-usagename.file
-echo %custom-tool-name% >> %nowpath%\data\tools\custom-tool-usagename.file
+echo Tool Enabled. > %~dp0\data\files\custom.toolsave
+echo Tool Path > %~dp0\data\tools\custom-tool-path.file
+echo "%custom-tool-path%" >> %~dp0\data\tools\custom-tool-path.file
+echo Tool Name > %~dp0\data\tools\custom-tool-name.file
+echo %custom-tool-nameg% >> %~dp0\data\tools\custom-tool-name.file
+echo Tool Usage Name > %~dp0\data\tools\custom-tool-usagename.file
+echo %custom-tool-name% >> %~dp0\data\tools\custom-tool-usagename.file
 set custom-tool-enabled=true
 echo 成功写入。
 echo Tool 载入完成，现在输入 tool %custom-tool-name% 来启动你的自定义程序。
@@ -397,7 +399,7 @@ powercfg -h on 1>nul 2>nul
 goto int
 
 :dcom
-if exist %nowpath%data\commands\commanding.load goto dcc
+if exist %~dp0data\commands\commanding.load goto dcc
 echo 目前不存在被定义的指令。
 goto int
 :dcc
@@ -406,8 +408,8 @@ if /i "%yn%"=="y" goto delcommand
 echo 用户取消操作。
 goto int
 :delcommand
-del %nowpath%data\commands\commanding.load
-del %nowpath%data\commands\commandname.load
+del %~dp0data\commands\commanding.load
+del %~dp0data\commands\commandname.load
 echo 已删除%commandnamem%
 set enablenewcommand=false
 goto int
@@ -431,13 +433,13 @@ if /i "%yn%"=="y" goto savecom
 echo 已放弃编辑 %con:~9%。
 goto int
 :savecom
-echo read.commandname > %nowpath%data\commands\commandname.load
-echo %command% >> %nowpath%data\commands\commandname.load
-echo read.commanding >> %nowpath%data\commands\commanding.load
-echo %commc% >> %nowpath%data\commands\commanding.load
+echo read.commandname > %~dp0data\commands\commandname.load
+echo %command% >> %~dp0data\commands\commandname.load
+echo read.commanding >> %~dp0data\commands\commanding.load
+echo %commc% >> %~dp0data\commands\commanding.load
 echo 已存储 %command% 内容为 %commc%
-call :ReadSpecialLine %nowpath%data\commands\commandname.load 1 commandnamem
-call :ReadSpecialLine %nowpath%data\commands\commanding.load 1 commandinm
+call :ReadSpecialLine %~dp0data\commands\commandname.load 1 commandnamem
+call :ReadSpecialLine %~dp0data\commands\commanding.load 1 commandinm
 set enablenewcommand=true
 echo 该指令将在配置文件存在的情况下生效。
 goto int
@@ -464,7 +466,8 @@ echo 许多指令在这里得到简化，但依然会有很多的缺陷，
 echo 加之本程序很简陋，有待维护与发展。
 echo.
 echo 感谢您一直以来的支持，感谢您下载了本程序。
-echo 作者博客：https://subilan.win/
+echo 作者博客: https://subilan.win/
+echo 构建页面: https://build.subilan.win/
 echo Github: https://github.com/Subilan/Batch-Console-Alpha
 echo.
 echo 鸣谢: 某人 会飞的胖鱼Flying(Flyfish233)
@@ -484,20 +487,13 @@ goto int
 ::Config
 :log.cfg
 echo [UpdateLog Config]
-echo v0.7 更新日志
-echo - open 指令可打开项增加
-echo · 修复 open 指令无法打开部分目录的Bug。
-echo - Batch Calc 功能性加强
-echo · Ivy Project - 大数据加法运算！(BETA)
-echo · 这个功能开创了无set /a计算的新时代。
-echo - Extensions Beta 加入！
-echo · 使用 ext 或 extensions
-echo · 这是 Batch Console 最重大的功能性实现
-echo · 可能耗时好几个版本，并且预计在1.X时完成
-echo · 目前只是雏形，并无实际用处。
-echo - Settings 界面加入
-echo · 用户可以不使用指令而修改设置，使用 set -gui 
-echo - 增加大小写支持
+echo v0.8 更新日志
+echo - Extensions 新增
+echo · 绑定受支持的.exe或独立文件、bat等。
+echo - More languages supported.(Release after 6/15)
+echo - 一些细节优化。
+echo - 新附属项目: Batch Terminate(于 6/15 之后发布)
+echo - 修复了 Ivy 计算闪退的问题
 goto int
 :sys.cfg
 echo [System Config]
@@ -579,12 +575,9 @@ del C:\cpuname.txt
 goto int
 
 :do.choose
-if /i "%con:~3,2%"=="-l" goto do.loop
-if /i "%con:~3,2%"=="-t" goto do.till
-if /i "%con:~3,2%"=="/l" goto do.loop
-if /i "%con:~3,2%"=="/t" goto do.till
-if /i "%con:~3,2%"=="/?" goto do.help
-if /i "%con:~3,2%"=="-?" goto do.help
+if "%con:~3,2%"=="-l" goto do.loop
+if "%con:~3,2%"=="-t" goto do.till
+if "%con:~3,2%"=="-?" goto do.help
 echo DO.CHH 未知参数或指令错误。
 goto int
 
@@ -594,8 +587,8 @@ goto int
 set a=6
 set zl=%con%
 :xh
-if /i "!zl:~%a%,1!"==" " goto over
-if /i "!zl:~%a%,1!"=="" goto err
+if "!zl:~%a%,1!"==" " goto over
+if "!zl:~%a%,1!"=="" goto err
 set /a a=%a%+1
 goto xh
 :over
@@ -608,7 +601,7 @@ set loops=!zl:~6,%a%!
 ::数字部分
 :doit
 set /a time=%time%+1
-if /i "%time%"=="%loops%" goto dol.comp
+if "%time%"=="%loops%" goto dol.comp
 %comm%
 goto doit
 
@@ -697,8 +690,8 @@ set /p errmsg=errormessage.内容~^>
 if /i "%errmsg%"=="default" set errormessage.bool=false & echo 已还原至默认信息 & goto int
 set errormessage=%errmsg%
 echo 已将错误信息设置为%errormessage%。
-echo ERRORMESSAGESAVES > %nowpath%\data\files\errormessage.save
-echo %errormessage% >> %nowpath%\data\files\errormessage.save
+echo ERRORMESSAGESAVES > %~dp0\data\files\errormessage.save
+echo %errormessage% >> %~dp0\data\files\errormessage.save
 goto set.choose-insert
 
 :enablenewcommands
@@ -748,8 +741,8 @@ goto int
 if /i "%con:~13%"=="default" set errormessage.bool=false & echo 已还原至默认信息 & goto int
 set errormessage=%con:~13%
 echo 已将错误信息设置为%errormessage%。
-echo ERRORMESSAGESAVES > %nowpath%\data\files\errormessage.save
-echo %errormessage% >> %nowpath%\data\files\errormessage.save
+echo ERRORMESSAGESAVES > %~dp0\data\files\errormessage.save
+echo %errormessage% >> %~dp0\data\files\errormessage.save
 goto int
 
 :control.choose
@@ -1358,27 +1351,26 @@ echo 警告：不推荐使用此指令，因为可能造成程序崩溃或不稳定。
 goto int
 
 :comload
-if exist %nowpath%data\commands\commandname.load goto continue.comload
+if exist %~dp0data\commands\commandname.load goto continue.comload
 echo 缺少LOAD文件。 & goto comload.back
 :continue.comload
 set enablenewcommand=true
-call :ReadSpecialLine %nowpath%data\commands\commanding.load 1 commandinmo
-call :ReadSpecialLine %nowpath%data\commands\commandname.load 1 commandnameo
+call :ReadSpecialLine %~dp0data\commands\commanding.load 1 commandinmo
+call :ReadSpecialLine %~dp0data\commands\commandname.load 1 commandnameo
 set commandinm=%commandinmo:~0,-1%
 set commandnamem=%commandnameo:~0,-1%
 set newcommandsenabled-chinese=启用
 goto comload.back
 
 :errmsgload
-call :ReadSpecialLine1 %nowpath%\data\files\errormessage.save 1 errormessage
-echo %errormessage%
-goto errmsg.back
+call :ReadSpecialLine1 %~dp0\data\files\errormessage.save 1 errormessage
 :ReadSpecialLine1
 setlocal
-for /f "delims=" %%a in ('more +%2 %1') do endlocal&set "%3=%%a"&goto:eof
+for /f "delims=" %%a in ('more +%2 %1') do endlocal&set "%3=%%a"
+goto errmsg.back
 
 :main.calc
-if exist "%nowpath%\data\calc\power_max.txt" (call :ReadSpecialLine %nowpath%\data\calc\power_max.txt 1 powerMAX) else (set powerMAX=30)
+if exist "%~dp0\data\calc\power_max.txt" (call :ReadSpecialLine %~dp0\data\calc\power_max.txt 1 powerMAX) else (set powerMAX=30)
 cls
 :main.calc-skipcls
 color 0E
@@ -1408,14 +1400,15 @@ set cliphood=%opt%
 goto char-output
 
 :calc.ivy
+:zhujiemian
+set s1c=0
+set s2c=0
+:set1
 cls
-:set1.choiceback
-cls
-title Ivy Project [BETA]
-echo Beta Core [v0.1]
-echo 输入完成后按 y 确认，b 返回上一步。
-echo 请输入"加数1":
-choice /c 1234567890yb /n /m "%shu1%"
+echo Ivy Beta [v0.2]
+echo 输入 y 以确定
+echo 请输入第一个加数:
+choice /c 1234567890y /n /m "%shu1%"
 if "%errorlevel%"=="1" set shu1=%shu1%1&set /a s1c=%s1c%+1
 if "%errorlevel%"=="2" set shu1=%shu1%2&set /a s1c=%s1c%+1
 if "%errorlevel%"=="3" set shu1=%shu1%3&set /a s1c=%s1c%+1
@@ -1427,16 +1420,13 @@ if "%errorlevel%"=="8" set shu1=%shu1%8&set /a s1c=%s1c%+1
 if "%errorlevel%"=="9" set shu1=%shu1%9&set /a s1c=%s1c%+1
 if "%errorlevel%"=="10" set shu1=%shu1%0&set /a s1c=%s1c%+1
 if "%errorlevel%"=="11" goto set2
-if "%errorlevel%"=="b" call :ivy.clear & goto main.calc
-goto set1.choiceback
+goto set1
 :set2
-:set2.choiceback
 cls
-title Ivy Project [BETA]
-echo Beta Core [v0.1]
-echo 输入完成后按 y 确认。
-echo 请输入"加数2":
-choice /c 1234567890yb /n /m "%shu2%"
+echo Ivy Beta [v0.2]
+echo 输入 y 以确定
+echo 请输入第二个加数:
+choice /c 1234567890y /n /m "%shu2%"
 if "%errorlevel%"=="1" set shu2=%shu2%1&set /a s2c=%s2c%+1
 if "%errorlevel%"=="2" set shu2=%shu2%2&set /a s2c=%s2c%+1
 if "%errorlevel%"=="3" set shu2=%shu2%3&set /a s2c=%s2c%+1
@@ -1448,14 +1438,13 @@ if "%errorlevel%"=="8" set shu2=%shu2%8&set /a s2c=%s2c%+1
 if "%errorlevel%"=="9" set shu2=%shu2%9&set /a s2c=%s2c%+1
 if "%errorlevel%"=="10" set shu2=%shu2%0&set /a s2c=%s2c%+1
 if "%errorlevel%"=="11" goto over
-if "%errorlevel%"=="12" call :ivy.clear & goto main.calc
-goto set2.choiceback
+goto set2
 :over
 set s1=%shu1:~-1%
 set s2=%shu2:~-1%
 set wz=-1
 :xh
-call :add.core
+call :ivy.core
 set jieguo=%jg%%jieguo%
 set /a lswz1=%s1c%+%wz%
 set /a lswz2=%s2c%+%wz%
@@ -1470,26 +1459,23 @@ goto xh
 cls
 set opt=%jieguo%
 set cliphood=%jieguo%
-call :ivy.clear
+set shu1=
+set shu2=
+set shu1=
+set shu2=
+set s1=
+set s2=
+set jg=
+set jw=
+set jws=
+set jieguo=
+set lswz1=
+set lswz2=
+set s1c=
+set s2c=
 goto main.calc
-:ivy.clear
-set shu1= 
-set shu2= 
-set s1= 
-set s2= 
-set jg= 
-set jw= 
-set jws= 
-set jieguo= 
-set lswz1= 
-set lswz2= 
-set s1c= 
-set s2c= 
-set wz= 
 
-::CORE
-:add.core
-:: 核心算法by 某人
+:ivy.core
 if "%s1%"=="0" if "%s2%"=="0" set jg=0&set "jw="
 if "%s1%"=="1" if "%s2%"=="0" set jg=1&set "jw="
 if "%s1%"=="2" if "%s2%"=="0" set jg=2&set "jw="
@@ -1592,6 +1578,7 @@ if "%s1%"=="8" if "%s2%"=="9" set jg=7&set jw=1
 if "%s1%"=="9" if "%s2%"=="9" set jg=8&set jw=1
 if "%jws%"=="1" set /a jg=%jg%+1
 if %jg% lss 10 (set jws=%jw%) else (set /a "jws=1,jg-=10")
+
 :calc.core
 for /f "delims=" %%a in ('powershell "%cal%"') do set opt=%%a & goto :eof
 
@@ -1813,14 +1800,14 @@ wmic %wim%
 goto sol
 
 :toolload
-if not exist "%nowpath%\data\tools\custom-tool-name.file" set custom-tool-enabled=false & del %nowpath%\data\files\custom.toolsave & goto toolload.back
-if not exist "%nowpath%\data\tools\custom-tool-usagename.file" set custom-tool-enabled=false & del %nowpath%\data\files\custom.toolsave & goto toolload.back
-if not exist "%nowpath%\data\tools\custom-tool-path.file" set custom-tool-enabled=false & del %nowpath%\data\files\custom.toolsave & goto toolload.back
-call :ReadSpecialLine "%nowpath%\data\tools\custom-tool-name.file" 1 custom-tool-nameg
+if not exist "%~dp0\data\tools\custom-tool-name.file" set custom-tool-enabled=false & del %~dp0\data\files\custom.toolsave & goto toolload.back
+if not exist "%~dp0\data\tools\custom-tool-usagename.file" set custom-tool-enabled=false & del %~dp0\data\files\custom.toolsave & goto toolload.back
+if not exist "%~dp0\data\tools\custom-tool-path.file" set custom-tool-enabled=false & del %~dp0\data\files\custom.toolsave & goto toolload.back
+call :ReadSpecialLine "%~dp0\data\tools\custom-tool-name.file" 1 custom-tool-nameg
 set custom-tool-nameg=%custom-tool-nameg:~0,-1%
-call :ReadSpecialLine "%nowpath%\data\tools\custom-tool-usagename.file" 1 custom-tool-name
+call :ReadSpecialLine "%~dp0\data\tools\custom-tool-usagename.file" 1 custom-tool-name
 set custom-tool-name=%custom-tool-name:~0,-1%
-call :ReadSpecialLine "%nowpath%\data\tools\custom-tool-path.file" 1 custom-tool-path
+call :ReadSpecialLine "%~dp0\data\tools\custom-tool-path.file" 1 custom-tool-path
 set custom-tool-path=%custom-tool-path:~0,-1%
 set custom-tool-enabled=true
 goto toolload.back
@@ -1837,6 +1824,7 @@ cls
 echo Extensions Module [r1.0]
 echo 输入 ? 查看帮助。
 :cov
+echo %root-pass%
 title Extensions - 模组框架管理
 set /p ext=EXTENSIONS@%workgroup%^>
 if "%ext%"=="?" goto extensions.help
@@ -1844,13 +1832,20 @@ if "%ext%"=="root" goto extensions.root
 if "%ext%"=="/back" goto main
 if "%ext%"=="/list" goto extensions.list
 if "%ext:~0,6%"=="/check" goto extensions.check
+if "%ext%"=="/add" goto extensions.add
+if "%ext%"=="/add /?" goto extensions.add.help
+if "%ext%"=="/del" goto extensions.del
+if "%ext%"=="/root -a" goto extensions.root
+if "%ext%"=="/root -p" goto extensions.root.pass.change
+if "%ext%"=="/root" echo 需要参数进行。 & goto cov
 :: Package
-if "%ext%"=="bc.core7" echo boot -i bc.core7 safe & goto int
+if "%ext%"=="bc.core8" echo boot -i bc.core7 safe & goto int
 if "%ext%"=="beer128" echo 找不到存在的对应函数标签，这可能是一个内置逻辑函数。 & goto cov
 if "%ext%"=="v64v" echo boot -i visualstudiobase64verify safe & echo 找不到指定的文件。 & goto cov
-if "%ext%"=="calc.core2" echo boot -i calc.core & echo 不正确的输入，Calc Core 无法处理。 & goto cov
+if "%ext%"=="calc.core3" echo boot -i calc.core & echo 不正确的输入，Calc Core 无法处理。 & goto cov
 if "%ext%"=="rioeivy" echo boot -i rioeivy & goto calc.ivy
 if "%ext%"=="ext" echo boot -i ext & echo redirect to function label :cov & goto cov
+if "%ext%"=="%ext-new.pkgname%" set /p extpara=EXTENSIONS@parameters^> & "%ext-new.path%" %extpara% & set extpara= & goto cov
 echo "%ext%"不是有效的入点和出点，也不是有效的读取文件。
 goto cov
 
@@ -1860,33 +1855,40 @@ cls
 title Help - Extensions
 echo Extensions 帮助
 echo 使用含 / 的指令来向 Extensions CORE 发送指令。
+echo 带上 /? 参数可查看该指令的帮助（如果有的话）。
 echo 直接输入 Extensions 的包名来入/出 Extensions。
 echo.
 echo /list 显示 Extensions 的列表
 echo /check [No.] 显示列表中对应序号的 Extensions 包名
 echo /back 返回主函数
+echo /add 绑定受支持的可执行文件
+echo /del 删除受支持的可执行文件
+echo /root [-P/-A] -P 参数编辑密码，-A 参数获取权限
 echo.
+echo 任何时候，输入 /back 都能返回，输入 ? 都能获得帮助。
 pause
 goto extensions
 :extensions.list
 echo do -i show info /extensions local perm:high super root
 if "%ext-root%"=="false" echo 权限不足: Localgroup Root & goto cov
 echo Extensions 列表
-echo [1] Batch Console CORE v0.7
+echo [1] Batch Console CORE v0.8
 echo [2] Boot Engine EXE Re: Github v1.28
 echo [3] Visual Studio Code Base64 Verify
-echo [4] Batch Calculator CORE v0.2
-echo [5] Ivy v0.1
+echo [4] Batch Calculator CORE v0.3
+echo [5] Ivy v0.2
 echo [6] Extensions CORE vR
+if "%ext-new%"=="true" if exist "%ext-new.path%" echo [7] %ext-new.name%
 goto cov
 
 :extensions.check
-if "%ext:~7%"=="1" echo Check: 包名 bc.core7 & goto cov
+if "%ext:~7%"=="1" echo Check: 包名 bc.core8 & goto cov
 if "%ext:~7%"=="2" echo Check: 包名 beer128 & goto cov
 if "%ext:~7%"=="3" echo Check: 包名 v64v & goto cov
-if "%ext:~7%"=="4" echo Check: 包名 calc.core2 & goto cov
+if "%ext:~7%"=="4" echo Check: 包名 calc.core3 & goto cov
 if "%ext:~7%"=="5" echo Check: 包名 rioeivy & goto cov
 if "%ext:~7%"=="6" echo Check: 包名 ext & goto cov
+if "%ext:~7%"=="7" if "%ext-new%"=="true" if exist "%ext-new.path%" echo Check: 包名 %ext-new.pkgname% & goto cov
 echo %ext:~7%不是已存在的Extensions。
 goto cov
 
@@ -1907,21 +1909,144 @@ goto extensions.root.selection
 echo 关于 "Root 激活程序"
 echo 名称: Root 激活程序
 echo 作者: Subilan
-echo 版本: vR
-echo 兼容性: Batch Console v0.7
-echo Ext类型: bti-ext
+echo 版本: v0.3
+echo 兼容性: Batch Console v0.7 +
+echo Ext 类型: bti-ext
 goto extensions.root.selection
 :extensions.root-inside
 echo do -i extensions.root extensions RootManager /add %username%
 ping 127.0.0.1 -n 1 >nul
 echo do -i extensions.root-inside extensions RootManager /open @source
 ping 127.0.0.1 -n 2 >nul
+:extensions.root.pass
+set /p root-pass=设置 Root 密钥:
+if "%root-pass%"=="/back" goto cov
+cls
+set /p test=确认 Root 密钥:
+if "%test%"=="%root-pass%" goto extensions.root.pass.begin
+echo 验证失败: 前后密码不一致。 & set root-pass= & set test= & goto extensions.root.pass
+:extensions.root.pass.begin
+echo password:
+echo %root-pass% > %appdata%\Console\root.pass
 echo calling from: Extensions Root Core
 ping 127.0.0.1 -n 1 >nul
 cls
 echo 获取权限中: Root
-cd.> %nowpath%\data\files\rootLoad.save
+cd.> %~dp0\data\files\rootLoad.save
 set ext-root=true
 set workgroup=root
 goto extensions
+:extensions.root.pass.change
+set /p root-pass.change=输入 Root 密钥以继续:
+if "%root-pass.change%"=="/back" goto cov
+if "%root-pass.change%"=="%root-pass:~0,-2%" goto extensions.root.pass.change.begin
+echo 错误的密钥。
+goto cov
+:extensions.root.pass.change.begin
+set /p root-pass.change=EXTENSIONS@root-change^>
+if "%root-pass.change%"=="?" echo /del 删除密码 & echo /set 重设密码 & echo /back 返回 & goto extensions.root.pass.change.begin
+if "%root-pass.change%"=="/del" goto extensions.root.pass.del
+if "%root-pass.change%"=="/set" goto extensions.root.pass.re
+if "%root-pass.change%"=="/back" goto cov
+echo 未选择或错误的选项。
+goto extensions.root.pass.change.begin
+:extensions.root.pass.del
+set /p test=确定要删除密码?(y/n):
+if "%test%"=="y" set root-pass= & del %appdata%\Console\root.pass & set no-root-pass=true & echo 已删除密码。 & goto extensions.root.pass.change.begin
+echo 用户取消。
+goto extensions.root.pass.change.begin
+:extensions.root.pass.re
+set /p root-pass=请输入新密码:
+echo 是否保存新密码为 %root-pass% ?
+echo 这将重新启动 Batch Console。
+set /p test=y/n:
+if "%test%"=="y" set root-pass=%root-pass% & echo %root-pass% > %appdata%\Console\root.pass & goto extensions.root.pass.change.begin
+set test= 
+set root-pass= 
+echo 用户取消。
+goto extensions.root.pass.change.re
 
+
+:extensions.add
+if "%ext-root%"=="false" echo 权限不足：root permission needed
+if exist %appdata%\Console\root.pass goto extensions.add.login
+goto extensions.add.process
+:extensions.add.login
+set /p test=提供 Root 密钥:
+if "%test%"=="%root-pass:~0,-2%" goto extensions.add.process
+echo 密码错误。
+goto cov
+:extensions.add.process
+echo /add -extensions process create
+ping 127.0.0.1 -n 1 >nul
+echo patching...
+ping 127.0.0.1 -n 2 >nul
+set /p 
+cls
+title 入点: Node @ "Extensions Add Helper"
+echo 欢迎来到 Extensions 绑定助手。
+ping 127.0.0.1 -n 2 >nul
+echo 请输入你要绑定的可执行文件的绝对路径。
+echo 如：C:\Windows\explorer.exe
+set /p ext-new.path=
+ping 127.0.0.1 -n 1 >nul
+echo 请输入该可执行文件的显示名。
+echo 如 Batch Console CORE v0.8
+set /p ext-new.name=
+ping 127.0.0.1 -n 1 >nul
+echo 请输入该可执行文件的包名。
+echo 如 bc.corev8
+set /p ext-new.pkgname=
+echo 信息:
+echo 绝对路径:"%ext-new.path%"
+echo 显示名称:"%ext-new.name%"
+echo 包名:"%ext-new.pkgname%"
+set /p test=以上信息是否正确?(y/n)^>
+if "%test%"=="y" goto ext-add.mod
+echo Creation Failed: 用户取消。
+goto extensions
+:ext-add.mod
+echo %ext-new.path% > %~dp0\data\extensions\newpath.save
+echo %ext-new.name% > %~dp0\data\extensions\newname.save
+echo %ext-new.pkgname% > %~dp0\data\extensions\newpkgname.save
+set ext-new=true
+echo 已绑定 "%ext-new.path%"
+pause
+goto extensions
+:extensions.add.help
+echo 关于 "Extensions Add Helper"
+echo 名称: Extensions 绑定助手
+echo 作者: Subilan
+echo 版本: v0.1
+echo 兼容性: Batch Console v0.8 +
+echo Ext 类型: bti-ext
+echo 补充说明: 若要绑定请输入 /add 跟随向导走流程。
+echo 此后，你输入的一切入口语句均会被当做参数提交至绑定的可执行文件。
+echo 比如你绑定 rundll32 则当你输入 powrprof.dll,SetSuspendState 0,1,0 则会休眠。
+echo powrprof.dll,SetSuspendState 0,1,0 是 rundll32 的一个参数。
+echo 这代表，在正常的 cmd 里输入 rundll32.exe powrprof.dll,SetSuspendState 0,1,0 会得到一样的效果。
+goto cov
+
+:extensions.del
+title 入点: Node @ "Extensions Deletion"
+echo do -i /ins ext-deletion /a /d /s /perm:%username%
+ping 127.0.0.1 -n 2 >nul
+echo 初始化... Enter ? for help.
+ping 127.0.0.1 -n 1 >nul
+if not "%ext-new%"=="true" echo 没有可被删除的 Extensions & goto cov
+:ext-del
+set /p ext-del=EXTENSIONS@ext-del^>
+if "%ext-del%"=="?" echo 输入指定文件的包名即可删除。 & goto ext-del
+if "%ext-del%"=="%ext-new.pkgname%" set ext-new=false & set ext-new.path= & set ext-new.name= & set ext-new.pkgname= & echo 已删除%ext-del%。 & goto cov
+echo 错误的包名或指令。
+goto cov
+
+:newext.load
+if not exist %~dp0data\extensions\newname.save goto newext.back
+if not exist %~dp0data\extensions\newpkgname.save goto newext.back
+set nowpath=%~dp0
+set /p ext-new.path=<%nowpath%\data\extensions\newpath.save
+set /p ext-new.name=<%nowpath%\data\extensions\newname.save
+set /p ext-new.pkgname=<%nowpath%\data\extensions\newpkgname.save
+set ext-new=true
+goto newext.back
