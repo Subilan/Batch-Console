@@ -4,6 +4,6 @@
 所以，如果你有任何问题，请前往[博客](https://o.subilan.win/index.php/batch-console.html/)进行查看和探索。
 
 # Language Information
-The global language version is comming, soon!
+The English version is comming, soon!
 And if you have any problem or question, please go to [my website](https://o.subilan.win/index.php/batch-console-en.html) to find more help.
 ###### By the way, if your Chinese is pretty good or you learn Chinese well, you can help me to translate Batch Console Beta to Chinese.
