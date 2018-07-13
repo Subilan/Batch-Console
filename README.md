@@ -3,6 +3,8 @@
 然而，v1.0 也许是最不稳定的一个版本，甚至采用的新的命令语法。
 所以，如果你有任何问题，请前往[博客](https://o.subilan.win/index.php/batch-console.html/)进行查看和探索。
 
+对于 install.cmd，是新增的一个机制，貌似可以让主程序更简单吧。。也有可能更复杂哦。
+
 # Language Information
 The English version is comming, soon!
 And if you have any problem or question, please go to [my website](https://o.subilan.win/index.php/batch-console-en.html) to find more help.
